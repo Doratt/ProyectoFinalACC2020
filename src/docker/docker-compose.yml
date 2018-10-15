@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+
+  db:
+    build: ./postgres
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+       - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: ticketsystem
+
+volumes:
+  pgdata:
