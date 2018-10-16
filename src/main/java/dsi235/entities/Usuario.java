@@ -51,9 +51,6 @@ public class Usuario implements Serializable {
     @Column(name = "nombre")
     private String nombre;
     @Basic(optional = false)
-    @Column(name = "id_profesion")
-    private int idProfesion;
-    @Basic(optional = false)
     @Column(name = "correo")
     private String correo;
     @Basic(optional = false)
