@@ -10,10 +10,10 @@ import dsi235.entities.Ticket;
 
 public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	// TODO
-	@Query
+	@Query("select t from Ticket t")
 	List<Ticket> findCompetadosByEncargado(Long idUsuario, Short idEstado);
 
-	@Query
+	@Query("select t from Ticket t")
 	List<Ticket> findNoCompletadosByEncargado(Long idUsuario, Short idEstado);
 
 	// findCompletadosByIdUsuario

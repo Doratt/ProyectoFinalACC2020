@@ -35,7 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
     , @NamedQuery(name = "Usuario.findByIdUsuario", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario")
     , @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre")
-    , @NamedQuery(name = "Usuario.findByIdProfesion", query = "SELECT u FROM Usuario u WHERE u.idProfesion = :idProfesion")
     , @NamedQuery(name = "Usuario.findByCorreo", query = "SELECT u FROM Usuario u WHERE u.correo = :correo")
     , @NamedQuery(name = "Usuario.findByContrasena", query = "SELECT u FROM Usuario u WHERE u.contrasena = :contrasena")
     , @NamedQuery(name = "Usuario.findByActivo", query = "SELECT u FROM Usuario u WHERE u.activo = :activo")})
@@ -86,10 +85,9 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(Long idUsuario, String nombre, int idProfesion, String correo, String contrasena, boolean activo) {
+    public Usuario(Long idUsuario, String nombre, String correo, String contrasena, boolean activo) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
-        this.idProfesion = idProfesion;
         this.correo = correo;
         this.contrasena = contrasena;
         this.activo = activo;
@@ -111,14 +109,7 @@ public class Usuario implements Serializable {
         this.nombre = nombre;
     }
 
-    public int getIdProfesion() {
-        return idProfesion;
-    }
-
-    public void setIdProfesion(int idProfesion) {
-        this.idProfesion = idProfesion;
-    }
-
+   
     public String getCorreo() {
         return correo;
     }
