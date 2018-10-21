@@ -1,16 +1,17 @@
 package dsi235.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AbstractCrudController<T, ID> {
 	
-	public T findById(ID id);
+	public Optional<T> findById(ID id);
 	
 	public List<T> findAll();
 	
 	public T save(T entity);
 	
-	public void deleteById(int id);
+	public void deleteById(ID id);
 	
 	public void delete(T entity);
 	

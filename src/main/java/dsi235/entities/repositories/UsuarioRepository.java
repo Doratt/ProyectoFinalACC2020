@@ -7,8 +7,10 @@ import org.springframework.data.repository.CrudRepository;
 import dsi235.entities.Usuario;
 
 public interface UsuarioRepository extends CrudRepository<Usuario, Long>{
-	Usuario findByidUsuario(Long idUsuario); 
+	
+	public Usuario findByCorreoAndContrasena(String correo, String contrasena); 
 	
 	//findTecnicosBySucursal
-	List<Usuario> findByIdSucursal_IdSucursalAndIdDepartamento_IdDepartamento(Short idSucursal, Integer idDepartamento);
+	public List<Usuario> findByIdSucursal_IdSucursalAndIdDepartamento_IdDepartamento(Short idSucursal, Integer idDepartamento);
+	
 }

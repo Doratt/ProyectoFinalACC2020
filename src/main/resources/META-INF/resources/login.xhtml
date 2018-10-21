@@ -6,21 +6,26 @@
 
 <h:head>
   <title>Login</title>
+  <h:outputStylesheet name="css/login.css" />
 </h:head>
 
 <h:body>
   <h:form id="login-form">
 
     <div class="login-wrapper">
-    	<p:message for="txtNombre"/>
+		<p:messages showDetail="true"></p:messages>
     	<p:outputLabel>Correo</p:outputLabel>
     	<p:inputText placeholder="example@example.com" requiredMessage="Ingrese su correo" 
-    	 validatorMessage="Ingrese un correo válido" id="txtNombre" required="true" maxlength="100"/>
-    	<p:message for="txtContrasena"/>
+    	 validatorMessage="Ingrese un correo válido" id="txtNombre" required="true" maxlength="100"
+    	 value="#{loginbb.correo}"
+    	 />
+    	
     	<p:outputLabel>Contraseña</p:outputLabel>
-    	<p:inputText id="txtContrasena" required="true" type="password" requiredMessage="Ingrese su contraseña"
+    	<p:inputText id="txtContrasena" required="true" type="password" 
+    	requiredMessage="Ingrese su contraseña" value="#{loginbb.contrasena}"
     	maxlength="100"/>
-    	<p:commandButton value="Login" type="submit" update="login-form"></p:commandButton>
+    	<p:commandButton value="Login" type="submit" update="login-form" 
+    	action="#{loginbb.login()}"></p:commandButton>
     </div>
 
   </h:form>

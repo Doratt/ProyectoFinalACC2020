@@ -6,6 +6,7 @@
 package dsi235.controllers.implementaciones;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
@@ -37,6 +38,12 @@ public class ComentarioControllerImpl extends AbstractCrudControllerImpl<Comenta
 	@Override
 	CrudRepository<Comentario, Long> getRepository() {
 		return this.repo;
+	}
+
+	@Override
+	public Optional<Comentario> findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
     
 }

@@ -23,7 +23,7 @@ public class UsuarioControllerImpl extends AbstractCrudControllerImpl<Usuario, L
 
 	@Override
 	public Usuario autenticar(String correo, String contrasena) {
-		return null;
+		return usuarioRepository.findByCorreoAndContrasena(correo, contrasena);
 	}
 
 	@Override

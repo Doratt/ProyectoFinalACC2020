@@ -6,6 +6,7 @@
 package dsi235.controllers.implementaciones;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -13,28 +14,28 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author doratt
  */
-public abstract class AbstractCrudControllerImpl<T,ID>{
-	
+public abstract class AbstractCrudControllerImpl<T, ID> {
+
 	abstract CrudRepository<T, ID> getRepository();
-	
-    public T findById(ID id){
-        return null;
-    }
-	
-	public List<T> findAll(){
-        return null;    
-        }
-	
-	public T save(T entity){
-        return null;    
-        }
-	
-	public void deleteById(int id){
-            
-        }
-	
-	public void delete(T entity){
-            
-        }
-	
+
+	public Optional<T> findById(ID id) {
+		return getRepository().findById(id);
+	}
+
+	public List<T> findAll() {
+		return (List<T>) getRepository().findAll();
+	}
+
+	public T save(T entity) {
+		return getRepository().save(entity);
+	}
+
+	public void deleteById(ID id) {
+		getRepository().deleteById(id);
+	}
+
+	public void delete(T entity) {
+		getRepository().delete(entity);
+	}
+
 }

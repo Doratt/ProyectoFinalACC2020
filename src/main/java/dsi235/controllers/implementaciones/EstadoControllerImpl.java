@@ -34,5 +34,8 @@ public class EstadoControllerImpl extends AbstractCrudControllerImpl<Estado, Sho
 	CrudRepository<Estado, Short> getRepository() {
 		return this.estadoRepository;
 	}
+
+
+
     
 }
