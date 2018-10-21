@@ -39,7 +39,7 @@ public class UsuarioRol implements Serializable {
     @Column(name = "id_usuario_rol")
     private Integer idUsuarioRol;
     @JoinColumn(name = "id_rol", referencedColumnName = "id_rol")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Rol idRol;
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

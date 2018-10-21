@@ -3,24 +3,26 @@ package dsi235.boundary.backingBeans;
 import java.io.Serializable;
 
 import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.annotation.SessionScope;
 
 import dsi235.controllers.UsuarioController;
 import dsi235.entities.Usuario;
 
-@ManagedBean(value="loginbb")
-@SessionScope
-public class LoginBackingBean implements Serializable {
+@ManagedBean(value = "loginSessionBean")
+@SessionScoped
+public class LoginSessionBean implements Serializable {
 
-	private static final long serialVersionUID = 6524787123398319687L;
+	public static final long serialVersionUID = 6524787123398319687L;
 
 	private String correo;
 	private String contrasena;
 	private Usuario usuarioLogueado;
+	private final static String MAIN_URL = "paginaprincipal.jsf?faces-redirect=true";
 
 	private UsuarioController usuarioController;
 
@@ -28,29 +30,24 @@ public class LoginBackingBean implements Serializable {
 		usuarioLogueado = usuarioController.autenticar(correo, contrasena);
 
 		if (usuarioLogueado == null) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Credenciales inválidas"));
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Credenciales inválidas", ""));
 			return null;
 		} else {
-			return "helloworld.jsf";
+			return MAIN_URL;
 		}
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public boolean isLoggedIn() {
+		return usuarioLogueado != null;
+	}
+
+	public String redirect() {
+		if(isLoggedIn()) {
+			return null;
+		}
+		return MAIN_URL;
+	}
 	
 	
 	
@@ -63,10 +60,6 @@ public class LoginBackingBean implements Serializable {
 
 	public Usuario getUsuarioLogueado() {
 		return usuarioLogueado;
-	}
-
-	public void setUsuarioLogueado(Usuario usuarioLogueado) {
-		this.usuarioLogueado = usuarioLogueado;
 	}
 
 	public String getCorreo() {

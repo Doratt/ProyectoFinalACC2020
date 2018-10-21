@@ -62,7 +62,7 @@ public class Usuario implements Serializable {
     private List<TicketEncargado> ticketEncargadoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario", fetch = FetchType.LAZY)
     private List<Ticket> ticketList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario", fetch = FetchType.EAGER)
     private List<UsuarioRol> usuarioRolList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario", fetch = FetchType.LAZY)
     private List<UsuarioProfesion> usuarioProfesionList;
