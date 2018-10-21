@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import dsi235.controllers.RolController;
 import dsi235.entities.Rol;
-import dsi235.repositories.RolRepository;
+import dsi235.entities.repositories.RolRepository;
 
 /**
  *

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import dsi235.controllers.EstadoController;
 import dsi235.entities.Estado;
-import dsi235.repositories.EstadoRepository;
+import dsi235.entities.repositories.EstadoRepository;
 
 /**
  *

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import dsi235.controllers.RetroalimentacionController;
 import dsi235.entities.Retroalimentacion;
 import dsi235.entities.Ticket;
-import dsi235.repositories.RetroalimentacionRepository;
+import dsi235.entities.repositories.RetroalimentacionRepository;
 
 /**
  *

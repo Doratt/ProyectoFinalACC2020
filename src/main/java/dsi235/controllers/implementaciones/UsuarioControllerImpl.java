@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 
 import dsi235.controllers.UsuarioController;
 import dsi235.entities.Usuario;
-import dsi235.repositories.UsuarioRepository;
+import dsi235.entities.repositories.UsuarioRepository;
 
 @Controller
 public class UsuarioControllerImpl extends AbstractCrudControllerImpl<Usuario, Long> implements UsuarioController {

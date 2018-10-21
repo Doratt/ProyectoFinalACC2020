@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import dsi235.controllers.UsuarioRolController;
 import dsi235.entities.UsuarioRol;
-import dsi235.repositories.UsuarioRolRepository;
+import dsi235.entities.repositories.UsuarioRolRepository;
 
 /**
  *

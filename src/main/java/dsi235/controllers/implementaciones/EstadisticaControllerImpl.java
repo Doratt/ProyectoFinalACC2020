@@ -10,7 +10,7 @@ import dsi235.controllers.EstadisticaController;
 import dsi235.entities.Ticket;
 import dsi235.entities.estadisticas.NumeroTickets;
 import dsi235.entities.estadisticas.TiempoResolucion;
-import dsi235.repositories.TicketRepository;
+import dsi235.entities.repositories.TicketRepository;
 
 @Controller
 public class EstadisticaControllerImpl implements EstadisticaController{

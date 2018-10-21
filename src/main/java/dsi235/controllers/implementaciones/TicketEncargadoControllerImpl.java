@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import dsi235.controllers.TicketEncargadoController;
 import dsi235.entities.TicketEncargado;
-import dsi235.repositories.TicketEncargadoRepository;
+import dsi235.entities.repositories.TicketEncargadoRepository;
 
 /**
  *

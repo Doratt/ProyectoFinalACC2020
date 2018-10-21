@@ -1,4 +1,4 @@
-package dsi235.repositories;
+package dsi235.entities.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import dsi235.controllers.TicketController;
 import dsi235.entities.Ticket;
-import dsi235.repositories.TicketRepository;
+import dsi235.entities.repositories.TicketRepository;
 
 /**
  *

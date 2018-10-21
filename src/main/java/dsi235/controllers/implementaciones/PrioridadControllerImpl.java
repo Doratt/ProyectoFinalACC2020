@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import dsi235.controllers.PrioridadController;
 import dsi235.entities.Prioridad;
-import dsi235.repositories.PrioridadRepository;
+import dsi235.entities.repositories.PrioridadRepository;
 
 /**
  *

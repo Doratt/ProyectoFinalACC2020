@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import dsi235.controllers.ComentarioController;
 import dsi235.entities.Comentario;
-import dsi235.repositories.ComentarioRepository;
+import dsi235.entities.repositories.ComentarioRepository;
 
 /**
  *
