@@ -21,14 +21,14 @@
 			<p:inputText placeholder="example@example.com"
 				requiredMessage="Ingrese su correo"
 				validatorMessage="Ingrese un correo válido" id="txtNombre"
-				required="true" maxlength="100" value="#{loginSessionBean.correo}" />
+				required="true" maxlength="100" value="#{loginBackingBean.correo}" />
 
 			<p:outputLabel>Contraseña</p:outputLabel>
 			<p:inputText id="txtContrasena" required="true" type="password"
 				requiredMessage="Ingrese su contraseña"
-				value="#{loginSessionBean.contrasena}" maxlength="100" />
+				value="#{loginBackingBean.contrasena}" maxlength="100" />
 			<p:commandButton value="Login" type="submit" update="login-form"
-				action="#{loginSessionBean.login()}"></p:commandButton>
+				action="#{loginBackingBean.login()}"></p:commandButton>
 		</div>
 
 	</h:form>
