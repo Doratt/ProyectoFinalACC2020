@@ -20,7 +20,7 @@ public class LoginBackingBean implements Serializable {
 	private String contrasena;
 	private final static String MAIN_URL = "paginaprincipal.jsf?faces-redirect=true";
 	// Autowired
-	LoginSessionBean sessionBean;
+	private LoginSessionBean sessionBean;
 
 	public String login() {
 
