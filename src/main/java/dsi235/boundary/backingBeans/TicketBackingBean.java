@@ -28,7 +28,7 @@ public class TicketBackingBean implements Serializable {
 	private Ticket ticket;
 	private String descripcion;
 	private Usuario usuarioLogeado;
-	private TicketControllerImpl tci;
+	private TicketController tc;
 	
 	
 	public void crearTicket() {
@@ -36,7 +36,7 @@ public class TicketBackingBean implements Serializable {
 		ticket.setDescripcion(getDescripcion());
 		ticket.setFechaSolicitud(Date.from(Instant.now()));
 		try {
-			tci.save(getTicket());
+			tc.save(getTicket());
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.FACES_MESSAGES, "Su ticket se creo con éxito"));
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Parece que hubo un problema con la creación de tu ticket"));
@@ -75,16 +75,14 @@ public class TicketBackingBean implements Serializable {
 	}
 
 
-	public TicketControllerImpl getTci() {
-		return tci;
+	public TicketController getTc() {
+		return tc;
 	}
 
-
-	public void setTci(TicketControllerImpl tci) {
-		this.tci = tci;
+	@Autowired
+	public void setTc(TicketController tc) {
+		this.tc = tc;
 	}
-	
-	
 	
 	
 }
