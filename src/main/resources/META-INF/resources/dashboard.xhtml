@@ -10,28 +10,26 @@
 </h:head>
 <h:body>
 
-<h:form id="tickets_pendientes_form">
-<p:dataTable id="ticketsNoCompletados" var="tick" value="#{dtSelectionView.cars2}" selectionMode="single" selection="#{dtSelectionView.selectedCar}" rowKey="#{car.id}">
-        <f:facet name="header">
-            Single with Row Click
-        </f:facet>
-        <p:column headerText="Id">
-            <h:outputText value="#{car.id}" />
-        </p:column>
-        <p:column headerText="Year">
-            <h:outputText value="#{car.year}" />
-        </p:column>
-        <p:column headerText="Brand">
-            <h:outputText value="#{car.brand}" />
-        </p:column>
-        <p:column headerText="Color">
-            <h:outputText value="#{car.color}" />
-        </p:column>
-        <f:facet name="footer">
-            <p:commandButton process="singleDT" update=":form:carDetail" icon="ui-icon-search" value="View" oncomplete="PF('carDialog').show()" />
-        </f:facet>
-    </p:dataTable>
-</h:form>
+	<h:form id="tickets_pendientes_form">
+
+		<p:dataTable id="tickets_pendientes_table" var="ticket" value="#{ticketBackingBeans.ticketsPendientes}"
+			paginator="true" rows="5"
+			paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}">
+			<f:facet name="header">
+            Menú de productos
+            </f:facet>
+			<p:column headerText="Solicitante">
+				<h:outputText value="#{ticket.idUsuario.nombre}" />
+			</p:column>
+			<p:column headerText="Descripcion">
+				<h:outputText value="#{ticket.descripcion}" />
+			</p:column>
+			<p:column headerText="Fecha de solicitud">
+				<h:outputText value="#{ticket.fechaSolicitud}"/>
+			</p:column>
+		</p:dataTable>
+
+	</h:form>
 
 </h:body>
 </html>

@@ -2,9 +2,12 @@ package dsi235.boundary.backingBeans;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -34,7 +37,13 @@ public class TicketBackingBean implements Serializable {
 	private TicketController tc;
 	private LoginSessionBean sessionBean;
 	private EstadosLoader el;
-	private LazyDataModel<Ticket> ldmt;
+	private List<Ticket> ticketsPendientes;
+	
+	
+	 @PostConstruct
+	    public void init() {
+		 ticketsPendientes = tc.findNoCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario(), el.getEstados().get(5).getIdEstado());
+	 }
 	
 	public void crearTicket() {
 		setTicket(new Ticket());
@@ -95,8 +104,17 @@ public class TicketBackingBean implements Serializable {
 		this.sessionBean = sessionBean;
 	}
 
+	@Autowired
 	public void setEl(EstadosLoader el) {
 		this.el = el;
+	}
+
+	public List<Ticket> getTicketsPendientes() {
+		return ticketsPendientes;
+	}
+
+	public void setTicketsPendientes(List<Ticket> ticketsPendientes) {
+		this.ticketsPendientes = ticketsPendientes;
 	}
 
 

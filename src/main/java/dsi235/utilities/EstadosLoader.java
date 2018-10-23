@@ -7,22 +7,21 @@ import java.util.List;
 import javax.inject.Singleton;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import dsi235.controllers.EstadoController;
 import dsi235.entities.Estado;
 
 @Singleton
+@Component
 public class EstadosLoader{
 
-	private EstadoController ec;
+	
 	private List<Estado> estados;
-	private EstadosLoader() {
-		setEstados(ec.findAll());		
-	}
-
+	
 	@Autowired
-	public void setEc(EstadoController ec) {
-		this.ec = ec;
+	public EstadosLoader(EstadoController ec) {
+		setEstados(ec.findAll());		
 	}
 
 	public List<Estado> getEstados() {
