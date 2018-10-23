@@ -40,6 +40,8 @@ html {
 }
 
 body {
+	width: 100%;
+	margin: 0;
 	background: rgba(255, 255, 255, 1);
 	background: -moz-linear-gradient(-45deg, rgba(255, 255, 255, 1) 0%,
 		rgba(221, 238, 223, 1) 100%);
@@ -57,4 +59,11 @@ body {
 		endColorstr='#ddeedf', GradientType=1);
 	background-attachment: fixed;
 	background-repeat: no-repeat;
+}
+
+@media (max-width: 600px) {
+    .login-wrapper {
+    	width: calc(100% - 50px);
+    	margin: 0 auto;
+    }
 }
