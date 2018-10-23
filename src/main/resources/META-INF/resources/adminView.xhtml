@@ -9,11 +9,20 @@
     <ui:composition template="layout.xhtml">
     <ui:define name="title">Admin</ui:define>
     <ui:define name="content">
-    <p:dataTable>    
-    <p:column headerText="ID"/>
-    <p:column headerText="Solicitante"/>
-    <p:column headerText=""/>
-    <p:column/>
+       <p:dataTable id="ticket_data" value="#{adminBackingBean.model}" var="adm" emptyMessage="No hay tickets pendientes"
+                         lazy="true" rows="4" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink}
+                         {NextPageLink} {LastPageLink}" ><!-- selectionMode="single" selection="#{adminBackingBean.ticket}" >
+                <p:ajax event="rowSelect" listener="" update=":formIngreso" /> -->
+                 
+    <p:column headerText="Solicitante">
+    <p:outputLabel value="#{adm.idUsuario}" />
+    </p:column>
+    <p:column headerText="Descripcion">
+    <p:outputLabel value="#{adm.descripcion}" />
+    </p:column>
+    <p:column headerText="Fecha Solicitud">
+    <p:outputLabel value="#{adm.fechaSolicitud}" />
+    </p:column>
     </p:dataTable>
     </ui:define>
 </ui:composition>
