@@ -14,7 +14,7 @@ public class UsuarioControllerTest {
 	
 	@Test
 	public void findByCorreoAndContrasenaTest() {
-		assertEquals("uno", "uno");
+		assertEquals("uno", "uno no...");
 	}
 
 

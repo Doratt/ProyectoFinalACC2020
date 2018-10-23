@@ -29,5 +29,8 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	// no asignados
 	List<Ticket> findByIdEstado_IdEstadoInAndIdUsuario_IdSucursal_IdSucursal(Short idSucursal,
 			Short idEstado);
+	
+	//nuevo
+	Page<Ticket> findAll(Pageable pageable);
 
 }

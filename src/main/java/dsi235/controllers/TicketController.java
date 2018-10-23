@@ -2,6 +2,9 @@ package dsi235.controllers;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import dsi235.entities.Ticket;
 
 public interface TicketController extends AbstractCrudController<Ticket, Long>{
@@ -25,6 +28,7 @@ public interface TicketController extends AbstractCrudController<Ticket, Long>{
 	
 	public Ticket gestionarEstadoTicket(int idTicket, int idEstado);
 	
-	
+	public Page<Ticket> findAll(Pageable pageable);
+
 	
 }

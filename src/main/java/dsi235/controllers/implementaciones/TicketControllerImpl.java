@@ -1,4 +1,5 @@
 /*
+
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -8,6 +9,8 @@ package dsi235.controllers.implementaciones;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Controller;
 
@@ -87,6 +90,11 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 	@Override
 	CrudRepository<Ticket, Long> getRepository() {
 		return this.ticketRepository;
+	}
+
+	@Override
+	public Page<Ticket> findAll(Pageable pageable) {
+		return this.ticketRepository.findAll(pageable);
 	}
     
 }
