@@ -14,7 +14,7 @@ public interface TicketController extends AbstractCrudController<Ticket, Long>{
 	//Ordenado por prioridad
 	public List<Ticket> findNoCompletadosByEncargado(int idEncargado, int fisrt, int pageSize);
 	
-	public List<Ticket> findCompletadosByUsuario(int idUsuario, int fisrt, int pageSize);
+	public List<Ticket> findCompletadosByUsuario(Long idUsuario, int fisrt, int pageSize);
 	
 	public List<Ticket> findNoCompletadosByUsuario(Long idUsuario, Short idEstado);
 	
