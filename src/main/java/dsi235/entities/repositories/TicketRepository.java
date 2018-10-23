@@ -1,8 +1,11 @@
 package dsi235.entities.repositories;
 
+
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -10,20 +13,21 @@ import dsi235.entities.Ticket;
 
 public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	// TODO
-	@Query("select t from Ticket t")
-	List<Ticket> findCompetadosByEncargado(Long idUsuario, Short idEstado);
+	//para parametros = ?1 donde 1 es el primer parametro
+	@Query("select t from Ticket t WHERE t.idUsuario.idUsuario = ?1 AND t.idEstado.idEstado = ?2 ORDER BY t.fechaCompletado DESC")
+	Page<Ticket> findCompletadosByEncargado(Long idUsuario, Short idEstado, Pageable pageable);
 
 	@Query("select t from Ticket t")
 	List<Ticket> findNoCompletadosByEncargado(Long idUsuario, Short idEstado);
 
-	// findCompletadosByIdUsuario
-	List<Ticket> findByIdUsuario_IdUsuarioAndIdEstado_IdEstado(Long idUsuario, Short idEstado);
+	// findCompletadosByIdUsuario agregar paginador
+	Page<Ticket> findByIdUsuario_IdUsuarioAndIdEstado_IdEstado(Long idUsuario, Short idEstado, Pageable pageable);
 
 	// no completado por usuario
 	List<Ticket> findByIdUsuario_IdUsuarioAndIdEstado_IdEstadoNot(Long idUsuario, Short idEstado);
 
-	// no asigandos
-	List<Ticket> findByIdEstado_IdEstadoInAndIdUsuario_IdSucursal_IdSucursal(Collection<Short> idsEstado,
-			Short idSucursal);
+	// no asignados
+	List<Ticket> findByIdEstado_IdEstadoInAndIdUsuario_IdSucursal_IdSucursal(Short idSucursal,
+			Short idEstado);
 
 }
