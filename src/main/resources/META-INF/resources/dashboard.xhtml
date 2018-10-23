@@ -12,11 +12,11 @@
 
 	<h:form id="tickets_pendientes_form">
 
-		<p:dataTable id="tickets_pendientes_table" var="ticket" value="#{ticketBackingBeans.ticketsPendientes}"
+		<p:dataTable id="tickets_pendientes_table" var="ticket" value="#{ticketBackingBean.ticketsPendientes}"
 			paginator="true" rows="5"
 			paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}">
 			<f:facet name="header">
-            Menú de productos
+            Tickets No Completados
             </f:facet>
 			<p:column headerText="Solicitante">
 				<h:outputText value="#{ticket.idUsuario.nombre}" />

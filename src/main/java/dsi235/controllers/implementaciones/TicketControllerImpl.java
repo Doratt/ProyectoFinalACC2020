@@ -50,8 +50,8 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 
 	@Override
 	public List<Ticket> findNoCompletadosByUsuario(Long idUsuario, Short idEstado) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.ticketRepository.findByIdUsuario_IdUsuarioAndIdEstado_IdEstadoNot(idUsuario, idEstado);
 	}
 
 	@Override

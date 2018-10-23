@@ -22,7 +22,7 @@ import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
 import dsi235.utilities.EstadosLoader;
 
-@ManagedBean(value="ticketBackingBeans")
+@ManagedBean(value="ticketBackingBean")
 @SessionScope
 public class TicketBackingBean implements Serializable {
 
@@ -42,7 +42,7 @@ public class TicketBackingBean implements Serializable {
 	
 	 @PostConstruct
 	    public void init() {
-		 ticketsPendientes = tc.findNoCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario(), el.getEstados().get(5).getIdEstado());
+		 setTicketsPendientes(tc.findNoCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario(), el.getEstados().get(4).getIdEstado()));
 	 }
 	
 	public void crearTicket() {
