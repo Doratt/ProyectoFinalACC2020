@@ -49,7 +49,7 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 	}
 
 	@Override
-	public List<Ticket> findNoCompletadosByUsuario(int idUsuario, int fisrt, int pageSize) {
+	public List<Ticket> findNoCompletadosByUsuario(Long idUsuario, Short idEstado) {
 		// TODO Auto-generated method stub
 		return null;
 	}
