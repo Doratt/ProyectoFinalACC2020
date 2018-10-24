@@ -6,29 +6,42 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Login</title>
+	<title>${LoginLN['login.pagina.titulo']}</title>
 	<h:outputStylesheet name="css/login.css" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </h:head>
 
 <h:body>
-	<h2 class="titulo">Ticket System</h2>
+	<h2 class="titulo">${LoginLN['login.titulo']}</h2>
+        <h:form>
+            <p:panelGrid>
+                <h:outputLabel for="listaIdioma" value="Idioma"/>
+                <h:selectOneListbox id="listaIdioma" value="${sesionDeUsuarioBean.codigoIdioma}" size="2" 
+                                    valueChangeListener="${sesionDeUsuarioBean.cambioDeIdiomaHandler}"
+                                    onchange="submit()">
+                    <f:selectItems value="${sesionDeUsuarioBean.paises}"></f:selectItems>
+                </h:selectOneListbox>
+            </p:panelGrid>
+                
+        </h:form>
+        
+        
 	<h:form id="login-form">
 
 		<div class="login-wrapper">
 			<p:messages></p:messages>
-			<p:outputLabel>Correo</p:outputLabel>
-			<p:inputText placeholder="example@example.com"
-				requiredMessage="Ingrese su correo"
-				validatorMessage="Ingrese un correo válido" id="txtNombre"
-				required="true" maxlength="100" value="#{loginBackingBean.correo}" />
+			<p:outputLabel>${LoginLN['login.correo.titulo']}</p:outputLabel>
+			<p:inputText placeholder="${LoginLN['login.correo.placeholder']}"
+				requiredMessage="${LoginLN['login.correo.requiredMessage']}"
+				validatorMessage="${LoginLN['login.correo.validatorMessage']}" id="txtNombre"
+				required="true" maxlength="100" value="#{LoginBackingBean.correo}" />
 
-			<p:outputLabel>Contraseña</p:outputLabel>
+			<p:outputLabel>${LoginLN['login.contrasena.titulo']}</p:outputLabel>
 			<p:inputText id="txtContrasena" required="true" type="password"
-				requiredMessage="Ingrese su contraseña"
-				value="#{loginBackingBean.contrasena}" maxlength="100" />
-			<p:commandButton value="Login" type="submit" update="login-form"
-				action="#{loginBackingBean.login()}"></p:commandButton>
+				requiredMessage="${LoginLN['login.contrasena.requiredMessage']}"
+				value="#{LoginBackingBean.contrasena}" maxlength="100" />
+			<p:commandButton value="${LoginLN['login.btnLogin']}" type="submit" update="login-form"
+				action="#{LoginBackingBean.login()}"></p:commandButton>
 		</div>
 
 	</h:form>
