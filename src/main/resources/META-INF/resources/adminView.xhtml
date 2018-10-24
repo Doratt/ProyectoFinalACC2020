@@ -12,7 +12,7 @@
 		<h:form id="form">
 			<p:dataTable id="ticket_data" value="#{adminBackingBean.model}"
 				var="adm" emptyMessage="No hay tickets pendientes" lazy="true"
-				rows="5" paginator="true" reflow="true"
+				rows="6" paginator="true" reflow="true"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink}
                          {NextPageLink} {LastPageLink}"
 				selectionMode="single" selection="#{adminBackingBean.ticket}">
@@ -34,20 +34,63 @@
 			</p:dataTable>
 		</h:form>
 
-		<p:dialog header="Crear nuevo ticket" widgetVar="ticketInfo"
-			modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		<p:dialog header="Asignar ticket" widgetVar="ticketInfo" modal="true"
+			resizable="false">
 
 			<h:form id="frmInfoTicket">
-				<div>
-					<p:outputLabel value="Info del ticket"></p:outputLabel>
-				</div>
-				
-				<div>
-					<p:outputLabel value="#{adminBackingBean.ticket.fechaSolicitud}"></p:outputLabel>
-				</div>
+
+				<h:panelGrid>
+					<p:row>
+						<p:column colspan="2">
+							<h:outputLabel>ID</h:outputLabel>
+
+						</p:column>
+						<p:column colspan="2">
+							<p:outputLabel 
+								value="#{adminBackingBean.ticket.idTicket}"></p:outputLabel>
+						</p:column>
+
+
+						<p:column>
+							<h:outputLabel for="list" value="Prioridad" />
+					  <p:selectOneMenu id="list" value="#{adminBackingBean.ticket}">
+						<f:selectItem itemLabel="Alta" itemValue="1" />
+						<f:selectItem itemLabel="Media" itemValue="2" />
+						<f:selectItem itemLabel="Baja" itemValue="3" />
+					</p:selectOneMenu></p:column>
+					</p:row>
+					<p:row>
+
+						<p:column>
+							<h:outputLabel>Solicitante</h:outputLabel>
+						</p:column>
+
+						<p:column >
+							<p:outputLabel
+								value="#{adminBackingBean.ticket.idUsuario.nombre}"></p:outputLabel>
+						</p:column>
+						<p:column></p:column>
+					</p:row>
+					<p:row>
+
+						<p:column>
+							<h:outputLabel>Fecha</h:outputLabel>
+						</p:column>
+						<p:column>
+
+							<p:outputLabel
+								value="#{adminBackingBean.ticket.fechaSolicitud}"></p:outputLabel>
+
+						</p:column>
+						<p:column></p:column>
+					</p:row>
+				</h:panelGrid>
+
+
+
+
 				<p:commandButton type="submit" value="Crear Ticket"
-					actionListener="#{dashboardBackingBean.crearTicket()}"
-					></p:commandButton>
+					actionListener="#{dashboardBackingBean.crearTicket()}"></p:commandButton>
 			</h:form>
 
 		</p:dialog>

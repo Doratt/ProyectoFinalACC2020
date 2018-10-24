@@ -21,9 +21,13 @@ public class EstadosLoader{
 	
 	@Autowired
 	public EstadosLoader(EstadoController ec) {
-		setEstados(ec.findAll());		
+		this.estados=ec.findAll();		
 	}
 
+	public Estado get(int indexEstado) {
+		return this.estados.get(indexEstado);
+	}
+	
 	public List<Estado> getEstados() {
 		return estados;
 	}

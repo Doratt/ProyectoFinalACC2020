@@ -11,7 +11,7 @@ public class FilterConfig {
   public FilterRegistrationBean<LoginFilter> loginFilter() {
     FilterRegistrationBean<LoginFilter> registration = new FilterRegistrationBean<LoginFilter>();
     registration.setFilter(new LoginFilter());
-    registration.addUrlPatterns("/paginaprincipal.jsf");
+    registration.addUrlPatterns("/paginaprincipal.jsf", "/dashboard.jsf");
     return registration;
   }
 }
