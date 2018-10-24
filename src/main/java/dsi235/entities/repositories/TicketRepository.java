@@ -20,6 +20,8 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	//No completado por encargado
 	@Query("select t from TicketEncargado te JOIN te.idTicket t WHERE te.idUsuario.idUsuario = ?1 AND t.idEstado.idEstado != ?2")   
 	List<Ticket> findNoCompletadosByEncargado(Long idUsuario, Short idEstado);
+	
+	
 
 	//completado por usuario
 	@Query("select t from Ticket t WHERE t.idUsuario.idUsuario = ?1 AND t.idEstado.idEstado = ?2 ORDER BY t.fechaCompletado DESC")
@@ -29,10 +31,10 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	List<Ticket> findByIdUsuario_IdUsuarioAndIdEstado_IdEstadoNot(Long idUsuario, Short idEstado);
 
 	// no asignados
-	List<Ticket> findByIdEstado_IdEstadoInAndIdUsuario_IdSucursal_IdSucursal(Short idSucursal,
-			Short idEstado);
+	Page<Ticket> findByIdEstado_IdEstadoInAndIdUsuario_IdSucursal_IdSucursal(Short idSucursal,
+			Short idEstado, Pageable pg);
 	
 	//nuevo
-	Page<Ticket> findAll(Pageable pageable);
+	//Page<Ticket> findAll(Pageable pageable);
 
 }

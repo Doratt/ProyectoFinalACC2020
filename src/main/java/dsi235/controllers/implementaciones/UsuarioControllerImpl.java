@@ -28,8 +28,7 @@ public class UsuarioControllerImpl extends AbstractCrudControllerImpl<Usuario, L
 
 	@Override
 	public List<Usuario> findTecnicosBySucursal(Short idSucursal, Integer idDepartamento) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.usuarioRepository.findByIdSucursal_IdSucursalAndIdDepartamento_IdDepartamento(idSucursal, idDepartamento);
 	}
 
 	@Override

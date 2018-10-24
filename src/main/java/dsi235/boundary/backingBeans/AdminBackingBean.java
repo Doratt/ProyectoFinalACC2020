@@ -22,7 +22,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import dsi235.controllers.TicketController;
+import dsi235.controllers.UsuarioController;
+import dsi235.entities.Estado;
 import dsi235.entities.Ticket;
+import dsi235.entities.Usuario;
+import dsi235.utilities.ESTADO;
+import dsi235.utilities.EstadosLoader;
 
 @ManagedBean(value = "adminBackingBean")
 @ViewScoped
@@ -33,16 +38,27 @@ public class AdminBackingBean implements Serializable{
 	private TicketController tc;
 	private Ticket ticket;
 	private Integer idDepartamento;
+	private LoginSessionBean loginObj;
+	private Usuario usuarioLogueado;
+	private EstadosLoader el;
+	private Estado estado;
+	private List<Usuario> users;
+	private UsuarioController uc;
+
 	
 	@PostConstruct
 	private void init() {
+	this.usuarioLogueado=loginObj.getUsuarioLogueado();
+	this.estado=el.get(ESTADO.creado.value);
 	inicializarModelo();		
 	}
 	
-	/*public void select(SelectEvent ev) {
-		this.ticket=(Ticket)ev.getObject();
-		System.out.println(this.ticket.getIdTicket()+"---"+this.ticket.getIdUsuario().getNombre());
-	}*/
+	public void select(SelectEvent ev) {
+		users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(),idDepartamento);
+	}
+	
+	
+	
 	
 	public void inicializarModelo() {
 		try {
@@ -92,12 +108,17 @@ public class AdminBackingBean implements Serializable{
 
 	public List<Ticket> cargarDatos(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         List<Ticket> salida = null;
+        Page<Ticket> page=null;
         try {
             if (this.tc != null) {
-            	Page<Ticket> page=this.tc.findAll(PageRequest.of(first, pageSize));
+            	page=this.tc.findNoasignadosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(),this.estado.getIdEstado(),PageRequest.of(first, pageSize));
                 salida = page.getContent();
+                System.out.println(PageRequest.of(first, pageSize));
+                System.out.println(salida);
                 if (this.model != null) {
-                    this.model.setRowCount(page.getSize());
+                    System.out.println(page.getTotalElements());
+                	this.model.setRowCount((Integer.valueOf(String.valueOf(page.getTotalElements()))));
+                    
                 }
             }
         } catch (Exception ex) {
@@ -155,6 +176,42 @@ public class AdminBackingBean implements Serializable{
 	public void setIdDepartamento(Integer idDepartamento) {
 		this.idDepartamento = idDepartamento;
 	}
+
+	public LoginSessionBean getLoginObj() {
+		return loginObj;
+	}
+
+	@Autowired
+	public void setLoginObj(LoginSessionBean loginObj) {
+		this.loginObj = loginObj;
+	}
+
+	public EstadosLoader getEl() {
+		return el;
+	}
+
+	@Autowired
+	public void setEl(EstadosLoader el) {
+		this.el = el;
+	}
+
+	public List<Usuario> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<Usuario> users) {
+		this.users = users;
+	}
+
+	public UsuarioController getUc() {
+		return uc;
+	}
+
+	@Autowired
+	public void setUc(UsuarioController uc) {
+		this.uc = uc;
+	}
+	
 	
 	
 	

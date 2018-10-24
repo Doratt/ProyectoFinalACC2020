@@ -15,6 +15,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import dsi235.controllers.TicketController;
 import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
+import dsi235.utilities.ESTADO;
 import dsi235.utilities.EstadosLoader;
 
 @ManagedBean(value="dashboardBackingBean")
@@ -46,7 +47,7 @@ public class DashboardBackingBean implements Serializable {
 		ticket.setIdUsuario(sessionBean.getUsuarioLogueado());
 		if(getDescripcion().length()<= 3000) {
 			ticket.setDescripcion(getDescripcion());
-			ticket.setIdEstado(el.getEstados().get(0));
+			ticket.setIdEstado(el.get(ESTADO.creado.value));
 			descripcion= null;
 			try {
 				tc.save(getTicket());

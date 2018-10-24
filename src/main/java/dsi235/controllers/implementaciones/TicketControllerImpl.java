@@ -98,9 +98,11 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 	}
 
 	@Override
-	public Page<Ticket> findAll(Pageable pageable) {
-		return this.ticketRepository.findAll(pageable);
+	public Page<Ticket> findNoasignadosBySucursal(Short idSucursal, Short idEstado, Pageable pg) {
+		return this.ticketRepository.findByIdEstado_IdEstadoInAndIdUsuario_IdSucursal_IdSucursal(idSucursal, idEstado, pg);
 	}
+
+	
 
 
     

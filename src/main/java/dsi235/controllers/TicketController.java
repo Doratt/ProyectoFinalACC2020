@@ -28,7 +28,8 @@ public interface TicketController extends AbstractCrudController<Ticket, Long>{
 	
 	public Ticket gestionarEstadoTicket(int idTicket, int idEstado);
 	
-	public Page<Ticket> findAll(Pageable pageable);
+	public Page<Ticket> findNoasignadosBySucursal(Short idSucursal,
+			Short idEstado, Pageable pg);
 
 	
 }
