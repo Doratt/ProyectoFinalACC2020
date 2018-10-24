@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.context.annotation.SessionScope;
 
 import dsi235.controllers.TicketController;
@@ -19,31 +20,33 @@ public class historialUsuarioBackingBean implements Serializable{
 	private static final long serialVersionUID = 2432906255201655180L;
 	
 	private Ticket ticket;
-	private String descripcion;
 	private Usuario usuarioLogeado;
 	private TicketController tc;
 	private LoginSessionBean sessionBean;
-	private List<Ticket> historialTicket;
+	private Page<Ticket> historialTicketUsuario;
+	private Page<Ticket> historialTicketTecnico;
+	
 	
 	@PostConstruct
     public void init() {
-		historialTicket= tc.findCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario(), 1, 5);
+		historialTicketUsuario= tc.findCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario(), 1, 5);
+		historialTicketTecnico= tc.findCompletadosByEncargado(sessionBean.getUsuarioLogueado().getIdUsuario(), 1, 5);
 	}
 	
+	public Page<Ticket> getHistorialTicketTecnico() {
+		return historialTicketTecnico;
+	}
+
+	public void setHistorialTicketTecnico(Page<Ticket> historialTicketTecnico) {
+		this.historialTicketTecnico = historialTicketTecnico;
+	}
+
 	public Ticket getTicket() {
 		return ticket;
 	}
 
 	public void setTicket(Ticket ticket) {
 		this.ticket = ticket;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
 	}
 
 	public Usuario getUsuarioLogeado() {
@@ -70,12 +73,12 @@ public class historialUsuarioBackingBean implements Serializable{
 		this.sessionBean = sessionBean;
 	}
 
-	public List<Ticket> getHistorialTicket() {
-		return historialTicket;
+	public Page<Ticket> getHistorialTicket() {
+		return historialTicketUsuario;
 	}
 
-	public void setHistorialTicket(List<Ticket> historialTicket) {
-		this.historialTicket = historialTicket;
+	public void setHistorialTicket(Page<Ticket> historialTicket) {
+		this.historialTicketUsuario = historialTicket;
 	}
 
 }

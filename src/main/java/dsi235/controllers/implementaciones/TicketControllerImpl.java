@@ -40,21 +40,19 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 		ticket.setFechaSolicitud(Date.from(Instant.now()));
 		return this.ticketRepository.save(ticket);
 	}
-	
-	@Override
-	public List<Ticket> findCompletadosByEncargado(int idEncargado, int fisrt, int pageSize) {
+	public Page<Ticket> findCompletadosByEncargado(Long idEncargado, int first, int pageSize) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Ticket> findNoCompletadosByEncargado(int idEncargado, int fisrt, int pageSize) {
+	public List<Ticket> findNoCompletadosByEncargado(Long idEncargado, Short idEstado) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Ticket> findCompletadosByUsuario(Long idUsuario, int fisrt, int pageSize) {
+	public Page<Ticket> findCompletadosByUsuario(Long idUsuario, int first, int pageSize) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -104,5 +102,7 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 	public Page<Ticket> findAll(Pageable pageable) {
 		return this.ticketRepository.findAll(pageable);
 	}
+
+
     
 }
