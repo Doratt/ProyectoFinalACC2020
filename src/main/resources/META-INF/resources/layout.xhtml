@@ -19,8 +19,8 @@
 	</div>
 	<div id="menu-lateral" class="west">
 		<div class="usuario">
-			<h4>Usuario Logueado</h4>
-			<h5>correo@gmail.com</h5>
+			<p:outputLabel style="display: block; margin-top: 20px;" value="#{loginSessionBean.usuarioLogueado.nombre}"></p:outputLabel>
+			<p:outputLabel style="display: block; margin-top: 15px;" value="#{loginSessionBean.usuarioLogueado.correo}"></p:outputLabel>
 		</div>
 		<div class="contenedor-links">
 
@@ -28,13 +28,17 @@
 			<a href="historialUsuario.jsf"><i class="fa fa-history" />Historial</a>
 
 
-			<p:panelGrid rendered="true">
+			<p:panelGrid rendered="#{loginSessionBean.isTecnico()}">
 				<h4>Técnico</h4> 
 				<a href="asignaciones.jsf"><i class="fa fa-list-alt" />Asignaciones pendientes</a>
 				<a href="historialTecnico.jsf"><i class="fa fa-history" />Historial de
 					asignaciones</a>
 			</p:panelGrid>
-			<p:panelGrid rendered="true">
+			<p:panelGrid rendered="#{loginSessionBean.isAdministrador()}">
+				<h4>Administrador</h4> 
+				<a href="adminView.jsf"><i class="fa fa-list-alt" />Asignación de Tickets</a>
+			</p:panelGrid>
+			<p:panelGrid rendered="#{loginSessionBean.isGerente()}">
 				<h4>Gerente</h4> 
 				<a href="dashboard.jsf"><i class="fa fa-bar-chart" />Estadísticas</a>
 				<a href="dashboard.jsf"><i class="fa fa-user-circle-o" />Gestionar roles</a>

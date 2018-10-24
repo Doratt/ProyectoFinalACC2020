@@ -63,7 +63,7 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 	}
 
 	@Override
-	public List<Ticket> findNoAsignados(Short idSucursal, int fisrt, int pageSize) {
+	public List<Ticket> findNoAsignados(Short idSucursal, int first, int pageSize) {
 		// TODO Auto-generated method stub
 		return null;
 	}

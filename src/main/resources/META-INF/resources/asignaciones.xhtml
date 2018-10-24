@@ -11,7 +11,7 @@
     <ui:define name="content">
     	<h:form id="formAsignaciones">
     	<p:dataTable var="ticket" value="#{asignacionesBackingBean.tickets}"
-			paginator="true" rows="10"
+			paginator="true" rows="10" reflow="true" emptyMessage="No hay asignaciones pendientes"
 			paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
 			sortBy="#{ticket.fechaSolicitud}">
 			<f:facet name="header">

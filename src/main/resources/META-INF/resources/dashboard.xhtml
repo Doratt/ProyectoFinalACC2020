@@ -16,7 +16,7 @@
 	<h:form id="frmTicketsPendientes">
 
 		<p:dataTable id="tickets_pendientes_table" var="ticket" value="#{dashboardBackingBean.ticketsPendientes}"
-			paginator="true" rows="10"
+			paginator="true" rows="10" 
 			paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
 			sortBy="#{ticket.fechaSolicitud}" reflow="true">
 			<f:facet name="header">
@@ -39,7 +39,7 @@
 	</h:form>
 
 <h:form>
-<p:commandButton value="Crear Ticket" onclick="PF('createTicket').show()"></p:commandButton>
+<p:commandButton value="Crear Ticket" update=":frmCrearTicket" onclick="PF('createTicket').show()"></p:commandButton>
 </h:form>
 
 <p:dialog header="Crear nuevo ticket" widgetVar="createTicket" modal="true" showEffect="fade" hideEffect="fade" resizable="false"

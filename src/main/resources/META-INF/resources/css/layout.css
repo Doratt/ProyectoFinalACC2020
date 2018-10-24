@@ -47,6 +47,9 @@ html, body {
 	border-radius: 5px;
 }
 
+.contenedor-links{
+	margin-top: 15px;
+}
 .contenedor-links a {
 	display: block;
 	padding: 10px;

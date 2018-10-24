@@ -3,32 +3,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
-	<title>Historial</title>
+	<title>Historial (Técnico)</title>
 </h:head>
-<h:body>
+<ui:composition template="layout.xhtml">
+	<ui:define name="title">Historial (Técnico)</ui:define>
+	<ui:define name="content">
 
-<h:form id="historial_tecnico_form">
 
-		<p:dataTable id="historial_tecnico_table" var="ticket" value="#{historialUsuarioBackingBean.historialTicket}"
-			paginator="true" rows="5"
-			paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}">
-			<f:facet name="header">
-            Historial de tickets completados por usuario
+		<h:form id="historial_tecnico_form">
+
+			<p:dataTable id="historial_tecnico_table" var="ticket"
+				value="#{historialUsuarioBackingBean.historialTicket}"
+				paginator="true" rows="5" reflow="true"
+				paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}">
+				<f:facet name="header">
+            Historial de tickets completados por técnico
             </f:facet>
-			<p:column headerText="Numero de Ticket">
-				<h:outputText value="#{ticket.id}" />
-			</p:column>
-			<p:column headerText="Descripcion">
-				<h:outputText value="#{ticket.descripcion}" />
-			</p:column>
-			<p:column headerText="Fecha de solicitud">
-				<h:outputText value="#{ticket.fechaSolicitud}"/>
-			</p:column>
-		</p:dataTable>
+				<p:column headerText="Numero de Ticket">
+					<h:outputText value="#{ticket.id}" />
+				</p:column>
+				<p:column headerText="Descripcion">
+					<h:outputText value="#{ticket.descripcion}" />
+				</p:column>
+				<p:column headerText="Fecha de solicitud">
+					<h:outputText value="#{ticket.fechaSolicitud}" />
+				</p:column>
+			</p:dataTable>
 
-	</h:form>
-</h:body>
+		</h:form>
+	</ui:define>
+</ui:composition>
 </html>

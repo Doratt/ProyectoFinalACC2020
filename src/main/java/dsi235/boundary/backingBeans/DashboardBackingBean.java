@@ -58,6 +58,7 @@ public class DashboardBackingBean implements Serializable {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Parece que hubo un problema con la creación de tu ticket"));
 			}
 		}
+		this.ticket = new Ticket();
 	}
 
 
