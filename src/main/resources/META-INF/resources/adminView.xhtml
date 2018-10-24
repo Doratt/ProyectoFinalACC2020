@@ -12,7 +12,7 @@
 		<h:form id="form">
 			<p:dataTable id="ticket_data" value="#{adminBackingBean.model}"
 				var="adm" emptyMessage="No hay tickets pendientes" lazy="true"
-				rows="5" paginator="true"
+				rows="5" paginator="true" reflow="true"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink}
                          {NextPageLink} {LastPageLink}"
 				selectionMode="single" selection="#{adminBackingBean.ticket}">
@@ -35,9 +35,9 @@
 				</h:form>
 		
 
-		<p:dialog header="Asignación" widgetVar="modalAsignacion" modal="true"
+		<p:dialog header="Asignación" widgetVar="modalAsignacion" modal="true" draggable="false"
 			height="190">
-				<h:form id="formAsignacion" >
+				<h:form id="formAsignacion">
 				<p:panelGrid  columns="2" cellpadding="5" >
 					<p:outputLabel value="ID" />
 					<p:outputLabel value="#{adminbackingBean.ticket.idTicket}" />

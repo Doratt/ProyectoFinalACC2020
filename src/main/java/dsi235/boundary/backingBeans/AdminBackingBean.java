@@ -36,8 +36,7 @@ public class AdminBackingBean implements Serializable{
 	
 	@PostConstruct
 	private void init() {
-	inicializarModelo();	
-		
+	inicializarModelo();		
 	}
 	
 	/*public void select(SelectEvent ev) {
