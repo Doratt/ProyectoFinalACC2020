@@ -43,7 +43,7 @@ public class DashboardBackingBean implements Serializable {
 	
 	 @PostConstruct
 	    public void init() {
-		 setTicketsPendientes(tc.findNoCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario(), el.getEstados().get(4).getIdEstado()));
+		 setTicketsPendientes(tc.findNoCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario(), Short.valueOf("5")));
 	 }
 	
 	public void crearTicket() {
