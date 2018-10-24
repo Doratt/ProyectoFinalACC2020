@@ -10,13 +10,13 @@
 	<ui:define name="title">Admin</ui:define>
 	<ui:define name="content">
 		<h:form id="form">
-			<p:dataTable id="ticket_data" value="#{adminBackingBean.model}"
+			<p:dataTable id="ticket_data" value="#{adminBackingBean.model}" paginatorPosition="bottom"
 				var="adm" emptyMessage="No hay tickets pendientes" lazy="true"
 				rows="6" paginator="true" reflow="true"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink}
                          {NextPageLink} {LastPageLink}"
 				selectionMode="single" selection="#{adminBackingBean.ticket}">
-				<p:ajax event="rowSelect" oncomplete="PF('ticketInfo').show();"
+				<p:ajax event="rowSelect" listener="#{adminBackingBean.select}"   oncomplete="PF('ticketInfo').show();"
 					update=":frmInfoTicket" />
 
 				<p:column headerText="ID">

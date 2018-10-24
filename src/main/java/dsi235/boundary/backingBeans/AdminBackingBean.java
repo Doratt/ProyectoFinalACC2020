@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import dsi235.controllers.TicketController;
+import dsi235.controllers.UsuarioController;
 import dsi235.entities.Estado;
 import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
@@ -41,6 +42,8 @@ public class AdminBackingBean implements Serializable{
 	private Usuario usuarioLogueado;
 	private EstadosLoader el;
 	private Estado estado;
+	private List<Usuario> users;
+	private UsuarioController uc;
 
 	
 	@PostConstruct
@@ -50,10 +53,12 @@ public class AdminBackingBean implements Serializable{
 	inicializarModelo();		
 	}
 	
-	/*public void select(SelectEvent ev) {
-		this.ticket=(Ticket)ev.getObject();
-		System.out.println(this.ticket.getIdTicket()+"---"+this.ticket.getIdUsuario().getNombre());
-	}*/
+	public void select(SelectEvent ev) {
+		users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(),idDepartamento);
+	}
+	
+	
+	
 	
 	public void inicializarModelo() {
 		try {
@@ -103,13 +108,16 @@ public class AdminBackingBean implements Serializable{
 
 	public List<Ticket> cargarDatos(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         List<Ticket> salida = null;
+        Page<Ticket> page=null;
         try {
             if (this.tc != null) {
-            	Page<Ticket> page=this.tc.findNoasignadosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(),this.estado.getIdEstado(),PageRequest.of(first, pageSize));
+            	page=this.tc.findNoasignadosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(),this.estado.getIdEstado(),PageRequest.of(first, pageSize));
                 salida = page.getContent();
+                System.out.println(PageRequest.of(first, pageSize));
+                System.out.println(salida);
                 if (this.model != null) {
                     System.out.println(page.getTotalElements());
-                	this.model.setRowCount((int)page.getTotalElements());
+                	this.model.setRowCount((Integer.valueOf(String.valueOf(page.getTotalElements()))));
                     
                 }
             }
@@ -185,6 +193,23 @@ public class AdminBackingBean implements Serializable{
 	@Autowired
 	public void setEl(EstadosLoader el) {
 		this.el = el;
+	}
+
+	public List<Usuario> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<Usuario> users) {
+		this.users = users;
+	}
+
+	public UsuarioController getUc() {
+		return uc;
+	}
+
+	@Autowired
+	public void setUc(UsuarioController uc) {
+		this.uc = uc;
 	}
 	
 	
