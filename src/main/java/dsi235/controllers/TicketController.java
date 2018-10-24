@@ -9,16 +9,16 @@ import dsi235.entities.Ticket;
 
 public interface TicketController extends AbstractCrudController<Ticket, Long>{
 	
-	public List<Ticket> findCompletadosByEncargado(int idEncargado, int fisrt, int pageSize);
+	public Page<Ticket> findCompletadosByEncargado(Long idEncargado, int fisrt, int pageSize);
 
 	//Ordenado por prioridad
-	public List<Ticket> findNoCompletadosByEncargado(int idEncargado, int fisrt, int pageSize);
+	public List<Ticket> findNoCompletadosByEncargado(Long idEncargado, Short idEstado);
 	
-	public List<Ticket> findCompletadosByUsuario(Long idUsuario, int fisrt, int pageSize);
+	public Page<Ticket> findCompletadosByUsuario(Long idUsuario, int first, int pageSize);
 	
 	public List<Ticket> findNoCompletadosByUsuario(Long idUsuario, Short idEstado);
 	
-	public List<Ticket> findNoAsignados(Short idSucursal, int fisrt, int pageSize);
+	public List<Ticket> findNoAsignados(Short idSucursal, int first, int pageSize);
 	
 	public Ticket reabrirTicket(int idTicket);
 	
