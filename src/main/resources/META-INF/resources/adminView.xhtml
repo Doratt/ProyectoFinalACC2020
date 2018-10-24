@@ -6,24 +6,67 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <ui:composition template="layout.xhtml">
-    <ui:define name="title">Admin</ui:define>
-    <ui:define name="content">
-       <p:dataTable id="ticket_data" value="#{adminBackingBean.model}" var="adm" emptyMessage="No hay tickets pendientes"
-                         lazy="true" rows="4" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink}
-                         {NextPageLink} {LastPageLink}" ><!-- selectionMode="single" selection="#{adminBackingBean.ticket}" >
-                <p:ajax event="rowSelect" listener="" update=":formIngreso" /> -->
-                 
-    <p:column headerText="Solicitante">
-    <p:outputLabel value="#{adm.idUsuario}" />
-    </p:column>
-    <p:column headerText="Descripcion">
-    <p:outputLabel value="#{adm.descripcion}" />
-    </p:column>
-    <p:column headerText="Fecha Solicitud">
-    <p:outputLabel value="#{adm.fechaSolicitud}" />
-    </p:column>
-    </p:dataTable>
-    </ui:define>
+<ui:composition template="layout.xhtml">
+	<ui:define name="title">Admin</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<p:dataTable id="ticket_data" value="#{adminBackingBean.model}"
+				var="adm" emptyMessage="No hay tickets pendientes" lazy="true"
+				rows="5" paginator="true"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink}
+                         {NextPageLink} {LastPageLink}"
+				selectionMode="single" selection="#{adminBackingBean.ticket}">
+				<p:ajax event="rowSelect"
+					 oncomplete="PF('modalAsignacion').show();" update=":formAsignacion"/>
+
+				<p:column headerText="ID">
+					<h:outputText value="#{adm.idTicket}" />
+				</p:column>
+				<p:column headerText="Solicitante">
+					<h:outputText value="#{adm.idUsuario.nombre}" />
+				</p:column>
+				<p:column headerText="Descripcion">
+					<h:outputText value="#{adm.descripcion}" />
+				</p:column>
+				<p:column headerText="Fecha Solicitud">
+					<h:outputText value="#{adm.fechaSolicitud}" />
+				</p:column>
+			</p:dataTable>
+				</h:form>
+		
+
+		<p:dialog header="Asignación" widgetVar="modalAsignacion" modal="true"
+			height="190">
+				<h:form id="formAsignacion" >
+				<p:panelGrid  columns="2" cellpadding="5" >
+					<p:outputLabel value="ID" />
+					<p:outputLabel value="#{adminbackingBean.ticket.idTicket}" />
+					<p:outputLabel value="Solicitante" />
+					<p:outputLabel value="#{adminbackingBean.ticket.idUsuario.nombre}" />
+					<p:outputLabel value="Fecha solicitud" />
+					<p:outputLabel value="#{adminbackingBean.ticket.fechaSolicitud}" />
+
+					<h:outputLabel for="list" value="Prioridad" />
+					<!--  <p:selectOneMenu id="list" value="#{adminBackingBean.ticket}">
+						<f:selectItem itemLabel="Alta" itemValue="1" />
+						<f:selectItem itemLabel="Media" itemValue="2" />
+						<f:selectItem itemLabel="Baja" itemValue="3" />
+					</p:selectOneMenu>
+-->
+					<p:outputLabel for="filter_dep" value="Filtrar tecnicos" />
+					<p:selectOneRadio id="filter_dep"
+						value="#{adminbackingBean.idDepartamento}" required="true">
+						<f:selectItem itemLabel="IT" itemValue="1" />
+						<f:selectItem itemLabel="Mantenimiento" itemValue="2" />
+					</p:selectOneRadio>
+				</p:panelGrid>
+	</h:form>
+				<p:commandButton value="Aceptar" onclick="" />
+				<p:commandButton value="Cancelar" icon="ui-icon-close"
+					onclick="PF('modalAsignacion').hide();" />
+		</p:dialog>
+	
+
+	</ui:define>
 </ui:composition>
 </html>
