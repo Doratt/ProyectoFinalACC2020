@@ -9,8 +9,10 @@ import java.util.logging.Logger;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +32,17 @@ public class AdminBackingBean implements Serializable{
 	private LoginSessionBean sessionBean;
 	private TicketController tc;
 	private Ticket ticket;
+	private Integer idDepartamento;
 	
 	@PostConstruct
 	private void init() {
-	inicializarModelo();	
-		
+	inicializarModelo();		
 	}
+	
+	/*public void select(SelectEvent ev) {
+		this.ticket=(Ticket)ev.getObject();
+		System.out.println(this.ticket.getIdTicket()+"---"+this.ticket.getIdUsuario().getNombre());
+	}*/
 	
 	public void inicializarModelo() {
 		try {
@@ -123,8 +130,6 @@ public class AdminBackingBean implements Serializable{
 		this.sessionBean = sessionBean;
 	}
 
-
-
 	public TicketController getTc() {
 		return tc;
 	}
@@ -142,6 +147,15 @@ public class AdminBackingBean implements Serializable{
 	public void setTicket(Ticket ticket) {
 		this.ticket = ticket;
 	}
+
+	public Integer getIdDepartamento() {
+		return idDepartamento;
+	}
+
+	public void setIdDepartamento(Integer idDepartamento) {
+		this.idDepartamento = idDepartamento;
+	}
+	
 	
 	
 	

@@ -18,7 +18,7 @@
 		<p:dataTable id="tickets_pendientes_table" var="ticket" value="#{dashboardBackingBean.ticketsPendientes}"
 			paginator="true" rows="10"
 			paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
-			sortBy="#{ticket.fechaSolicitud}">
+			sortBy="#{ticket.fechaSolicitud}" reflow="true">
 			<f:facet name="header">
             Tickets No Completados
             </f:facet>
@@ -29,7 +29,10 @@
 				<h:outputText value="#{ticket.descripcion}" />
 			</p:column>
 			<p:column headerText="Fecha de solicitud">
-				<h:outputText value="#{ticket.fechaSolicitud.toString()}"><f:convertDateTime pattern ="dd-mm-yyyy"/></h:outputText>
+				<h:outputText value="#{ticket.fechaSolicitud.toString()}"></h:outputText>
+			</p:column>
+			<p:column headerText="Estado">
+				<h:outputText value="#{ticket.idEstado.nombre}"></h:outputText>
 			</p:column>
 		</p:dataTable>
 
