@@ -6,6 +6,8 @@
  */
 package dsi235.controllers.implementaciones;
 
+import java.time.Instant;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,10 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 	}
 
 	@Override
+	public Ticket save(Ticket ticket) {
+		ticket.setFechaSolicitud(Date.from(Instant.now()));
+		return this.ticketRepository.save(ticket);
+	}
 	public Page<Ticket> findCompletadosByEncargado(Long idEncargado, int first, int pageSize) {
 		// TODO Auto-generated method stub
 		return null;
@@ -53,8 +59,8 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 
 	@Override
 	public List<Ticket> findNoCompletadosByUsuario(Long idUsuario, Short idEstado) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.ticketRepository.findByIdUsuario_IdUsuarioAndIdEstado_IdEstadoNot(idUsuario, idEstado);
 	}
 
 	@Override
