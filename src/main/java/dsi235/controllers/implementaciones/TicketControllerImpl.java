@@ -46,9 +46,8 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 	}
 
 	@Override
-	public List<Ticket> findNoCompletadosByEncargado(Long idEncargado, Short idEstado) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Ticket> findNoCompletadosByEncargado(Long idEncargado) {
+		return this.ticketRepository.findNoCompletadosByEncargado(idEncargado, Short.valueOf("5"));
 	}
 
 	@Override
@@ -58,9 +57,9 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 	}
 
 	@Override
-	public List<Ticket> findNoCompletadosByUsuario(Long idUsuario, Short idEstado) {
+	public List<Ticket> findNoCompletadosByUsuario(Long idUsuario) {
 		
-		return this.ticketRepository.findByIdUsuario_IdUsuarioAndIdEstado_IdEstadoNot(idUsuario, idEstado);
+		return this.ticketRepository.findByIdUsuario_IdUsuarioAndIdEstado_IdEstadoNot(idUsuario, Short.valueOf("5"));
 	}
 
 	@Override

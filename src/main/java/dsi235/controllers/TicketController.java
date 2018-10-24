@@ -12,11 +12,11 @@ public interface TicketController extends AbstractCrudController<Ticket, Long>{
 	public Page<Ticket> findCompletadosByEncargado(Long idEncargado, int fisrt, int pageSize);
 
 	//Ordenado por prioridad
-	public List<Ticket> findNoCompletadosByEncargado(Long idEncargado, Short idEstado);
+	public List<Ticket> findNoCompletadosByEncargado(Long idEncargado);
 	
 	public Page<Ticket> findCompletadosByUsuario(Long idUsuario, int first, int pageSize);
 	
-	public List<Ticket> findNoCompletadosByUsuario(Long idUsuario, Short idEstado);
+	public List<Ticket> findNoCompletadosByUsuario(Long idUsuario);
 	
 	public List<Ticket> findNoAsignados(Short idSucursal, int first, int pageSize);
 	

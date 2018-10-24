@@ -11,7 +11,8 @@ public class FilterConfig {
   public FilterRegistrationBean<LoginFilter> loginFilter() {
     FilterRegistrationBean<LoginFilter> registration = new FilterRegistrationBean<LoginFilter>();
     registration.setFilter(new LoginFilter());
-    registration.addUrlPatterns("/paginaprincipal.jsf", "/dashboard.jsf");
+    //TODO agregar todas las pantallas...
+    registration.addUrlPatterns("/dashboard.jsf");
     return registration;
   }
 }

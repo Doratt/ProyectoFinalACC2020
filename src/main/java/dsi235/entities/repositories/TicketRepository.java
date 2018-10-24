@@ -1,7 +1,6 @@
 package dsi235.entities.repositories;
 
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -19,7 +18,7 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	Page<Ticket> findCompletadosByEncargado(Long idUsuario, Short idEstado, Pageable pageable);
 
 	//No completado por encargado
-	@Query("select t from Ticket t")
+	@Query("select t from TicketEncargado te JOIN te.idTicket t WHERE te.idUsuario.idUsuario = ?1 AND t.idEstado.idEstado != ?2")   
 	List<Ticket> findNoCompletadosByEncargado(Long idUsuario, Short idEstado);
 	
 	
