@@ -1,9 +1,6 @@
 package dsi235.boundary.backingBeans;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.ManagedBean;
@@ -12,13 +9,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
-import org.primefaces.model.LazyDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.annotation.SessionScope;
 
 import dsi235.controllers.TicketController;
-import dsi235.controllers.implementaciones.TicketControllerImpl;
-import dsi235.entities.Estado;
 import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
 import dsi235.utilities.EstadosLoader;
@@ -43,7 +37,8 @@ public class DashboardBackingBean implements Serializable {
 	
 	 @PostConstruct
 	    public void init() {
-		 setTicketsPendientes(tc.findNoCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario(), Short.valueOf("5")));
+		 setTicketsPendientes(tc.findNoCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario()));
+
 	 }
 	
 	public void crearTicket() {

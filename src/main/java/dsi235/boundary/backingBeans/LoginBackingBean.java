@@ -18,7 +18,7 @@ public class LoginBackingBean implements Serializable {
 	private static final long serialVersionUID = 6524787123398319687L;
 	private String correo;
 	private String contrasena;
-	private final static String MAIN_URL = "paginaprincipal.jsf?faces-redirect=true";
+	private final static String MAIN_URL = "dashboard.jsf?faces-redirect=true";
 	// Autowired
 	private LoginSessionBean sessionBean;
 
