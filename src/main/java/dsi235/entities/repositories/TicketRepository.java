@@ -13,14 +13,17 @@ import dsi235.entities.Ticket;
 
 public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	// TODO
-	//para parametros = ?1 donde 1 es el primer parametro
+	
+	//completado por encargado para parametros = ?1 donde 1 es el primer parametro
 	@Query("select t from Ticket t WHERE t.idUsuario.idUsuario = ?1 AND t.idEstado.idEstado = ?2 ORDER BY t.fechaCompletado DESC")
 	Page<Ticket> findCompletadosByEncargado(Long idUsuario, Short idEstado, Pageable pageable);
 
+	//No completado por encargado
 	@Query("select t from Ticket t")
 	List<Ticket> findNoCompletadosByEncargado(Long idUsuario, Short idEstado);
 
-	// findCompletadosByIdUsuario agregar paginador
+	//completado por usuario
+	@Query("select t from Ticket t WHERE t.idUsuario.idUsuario = ?1 AND t.idEstado.idEstado = ?2 ORDER BY t.fechaCompletado DESC")
 	Page<Ticket> findByIdUsuario_IdUsuarioAndIdEstado_IdEstado(Long idUsuario, Short idEstado, Pageable pageable);
 
 	// no completado por usuario
@@ -29,5 +32,8 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	// no asignados
 	List<Ticket> findByIdEstado_IdEstadoInAndIdUsuario_IdSucursal_IdSucursal(Short idSucursal,
 			Short idEstado);
+	
+	//nuevo
+	Page<Ticket> findAll(Pageable pageable);
 
 }

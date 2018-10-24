@@ -7,8 +7,8 @@
      <!--el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver-->
         <locale-config>
             <default-locale>es</default-locale>
-            <supported-locale>es</supported-locale>
-            <supported-locale>en</supported-locale>
+<!--            <supported-locale>es</supported-locale>
+            <supported-locale>en</supported-locale>-->
         </locale-config>
         <resource-bundle>
             <base-name>/dsi235/boundary/idiomas/general</base-name>

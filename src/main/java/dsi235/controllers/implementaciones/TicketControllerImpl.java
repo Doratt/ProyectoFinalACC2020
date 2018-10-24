@@ -1,13 +1,18 @@
 /*
+
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package dsi235.controllers.implementaciones;
 
+import java.time.Instant;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Controller;
 
@@ -31,27 +36,31 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 	}
 
 	@Override
-	public List<Ticket> findCompletadosByEncargado(int idEncargado, int fisrt, int pageSize) {
+	public Ticket save(Ticket ticket) {
+		ticket.setFechaSolicitud(Date.from(Instant.now()));
+		return this.ticketRepository.save(ticket);
+	}
+	public Page<Ticket> findCompletadosByEncargado(Long idEncargado, int first, int pageSize) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Ticket> findNoCompletadosByEncargado(int idEncargado, int fisrt, int pageSize) {
+	public List<Ticket> findNoCompletadosByEncargado(Long idEncargado, Short idEstado) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Ticket> findCompletadosByUsuario(int idUsuario, int fisrt, int pageSize) {
+	public Page<Ticket> findCompletadosByUsuario(Long idUsuario, int first, int pageSize) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Ticket> findNoCompletadosByUsuario(Long idUsuario, Short idEstado) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.ticketRepository.findByIdUsuario_IdUsuarioAndIdEstado_IdEstadoNot(idUsuario, idEstado);
 	}
 
 	@Override
@@ -88,5 +97,12 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 	CrudRepository<Ticket, Long> getRepository() {
 		return this.ticketRepository;
 	}
+
+	@Override
+	public Page<Ticket> findAll(Pageable pageable) {
+		return this.ticketRepository.findAll(pageable);
+	}
+
+
     
 }

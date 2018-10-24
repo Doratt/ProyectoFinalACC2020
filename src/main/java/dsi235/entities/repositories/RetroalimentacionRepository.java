@@ -6,4 +6,6 @@ import dsi235.entities.Retroalimentacion;
 
 public interface RetroalimentacionRepository extends CrudRepository<Retroalimentacion, Long>{
 
+	
+	
 }

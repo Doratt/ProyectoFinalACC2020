@@ -2,20 +2,23 @@ package dsi235.controllers;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import dsi235.entities.Ticket;
 
 public interface TicketController extends AbstractCrudController<Ticket, Long>{
 	
-	public List<Ticket> findCompletadosByEncargado(int idEncargado, int fisrt, int pageSize);
+	public Page<Ticket> findCompletadosByEncargado(Long idEncargado, int fisrt, int pageSize);
 
 	//Ordenado por prioridad
-	public List<Ticket> findNoCompletadosByEncargado(int idEncargado, int fisrt, int pageSize);
+	public List<Ticket> findNoCompletadosByEncargado(Long idEncargado, Short idEstado);
 	
-	public List<Ticket> findCompletadosByUsuario(int idUsuario, int fisrt, int pageSize);
+	public Page<Ticket> findCompletadosByUsuario(Long idUsuario, int first, int pageSize);
 	
 	public List<Ticket> findNoCompletadosByUsuario(Long idUsuario, Short idEstado);
 	
-	public List<Ticket> findNoAsignados(Short idSucursal, int fisrt, int pageSize);
+	public List<Ticket> findNoAsignados(Short idSucursal, int first, int pageSize);
 	
 	public Ticket reabrirTicket(int idTicket);
 	
@@ -25,6 +28,7 @@ public interface TicketController extends AbstractCrudController<Ticket, Long>{
 	
 	public Ticket gestionarEstadoTicket(int idTicket, int idEstado);
 	
-	
+	public Page<Ticket> findAll(Pageable pageable);
+
 	
 }
