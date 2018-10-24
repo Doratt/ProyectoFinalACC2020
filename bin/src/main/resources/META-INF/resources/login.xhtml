@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Login</title>
+	<h:outputStylesheet name="css/login.css" />
+
+</h:head>
+
+<h:body>
+	<h2 class="titulo">Ticket System</h2>
+	<h:form id="login-form">
+
+		<div class="login-wrapper">
+			<p:messages></p:messages>
+			<p:outputLabel>Correo</p:outputLabel>
+			<p:inputText placeholder="example@example.com"
+				requiredMessage="Ingrese su correo"
+				validatorMessage="Ingrese un correo válido" id="txtNombre"
+				required="true" maxlength="100" value="#{loginBackingBean.correo}" />
+
+			<p:outputLabel>Contraseña</p:outputLabel>
+			<p:inputText id="txtContrasena" required="true" type="password"
+				requiredMessage="Ingrese su contraseña"
+				value="#{loginBackingBean.contrasena}" maxlength="100" />
+			<p:commandButton value="Login" type="submit" update="login-form"
+				action="#{loginBackingBean.login()}"></p:commandButton>
+		</div>
+
+	</h:form>
+
+</h:body>
+</html>

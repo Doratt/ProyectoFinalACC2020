@@ -16,7 +16,6 @@ public class DefaultView implements WebMvcConfigurer{
 
     //addViewControllers(registry);
   }
-	
-	
+
 	
 }
