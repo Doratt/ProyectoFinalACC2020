@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.PrimeFaces;
 import org.primefaces.model.LazyDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.annotation.SessionScope;
@@ -22,9 +23,9 @@ import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
 import dsi235.utilities.EstadosLoader;
 
-@ManagedBean(value="ticketBackingBean")
+@ManagedBean(value="dashboardBackingBean")
 @SessionScope
-public class TicketBackingBean implements Serializable {
+public class DashboardBackingBean implements Serializable {
 
 	/**
 	 * 
@@ -48,14 +49,19 @@ public class TicketBackingBean implements Serializable {
 	public void crearTicket() {
 		setTicket(new Ticket());
 		ticket.setIdUsuario(sessionBean.getUsuarioLogueado());
-		ticket.setDescripcion(getDescripcion());
-		ticket.setFechaSolicitud(Date.from(Instant.now()));
-		ticket.setIdEstado(el.getEstados().get(0));
-		try {
-			tc.save(getTicket());
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.FACES_MESSAGES, "Su ticket se creo con éxito"));
-		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Parece que hubo un problema con la creación de tu ticket"));
+		if(getDescripcion().length()<= 3000) {
+			ticket.setDescripcion(getDescripcion());
+			ticket.setIdEstado(el.getEstados().get(0));
+			descripcion= null;
+			try {
+				tc.save(getTicket());
+				init();
+				
+				PrimeFaces current = PrimeFaces.current();
+				current.executeScript("PF('createTicket').hide()");
+			} catch (Exception e) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Parece que hubo un problema con la creación de tu ticket"));
+			}
 		}
 	}
 
@@ -63,7 +69,7 @@ public class TicketBackingBean implements Serializable {
 	public Ticket getTicket() {
 		return ticket;
 	}
-
+	
 
 	public void setTicket(Ticket ticket) {
 		this.ticket = ticket;
@@ -116,7 +122,6 @@ public class TicketBackingBean implements Serializable {
 	public void setTicketsPendientes(List<Ticket> ticketsPendientes) {
 		this.ticketsPendientes = ticketsPendientes;
 	}
-
 
 
 	

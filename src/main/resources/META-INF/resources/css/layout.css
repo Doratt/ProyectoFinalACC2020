@@ -23,6 +23,7 @@ html,body{
 	height:100%;
 	background: #ddd;
 }
+
 @media (max-width: 960px){
 	.west{
 	display: none;
