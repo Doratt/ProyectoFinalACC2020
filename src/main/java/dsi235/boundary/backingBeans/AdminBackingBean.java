@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -37,12 +38,13 @@ public class AdminBackingBean implements Serializable{
 	private LoginSessionBean sessionBean;
 	private TicketController tc;
 	private Ticket ticket;
-	private Integer idDepartamento;
+	private String idDepartamento;
 	private LoginSessionBean loginObj;
 	private Usuario usuarioLogueado;
 	private EstadosLoader el;
 	private Estado estado;
 	private List<Usuario> users;
+	private Usuario usuario;
 	private UsuarioController uc;
 
 	
@@ -51,13 +53,20 @@ public class AdminBackingBean implements Serializable{
 	this.usuarioLogueado=loginObj.getUsuarioLogueado();
 	this.estado=el.get(ESTADO.creado.value);
 	inicializarModelo();		
+	this.idDepartamento="1";
 	}
 	
 	public void select(SelectEvent ev) {
-		users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(),idDepartamento);
+		this.users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(), Integer.valueOf(idDepartamento));
+		System.out.println(users);
+		RequestContext.getCurrentInstance().update(":table:encargados");
+;
 	}
 	
-	
+	public String saludar() {
+		System.out.println("Saludo, cambio "+this.idDepartamento);
+		return this.idDepartamento;
+	}
 	
 	
 	public void inicializarModelo() {
@@ -169,11 +178,11 @@ public class AdminBackingBean implements Serializable{
 		this.ticket = ticket;
 	}
 
-	public Integer getIdDepartamento() {
+	public String getIdDepartamento() {
 		return idDepartamento;
 	}
 
-	public void setIdDepartamento(Integer idDepartamento) {
+	public void setIdDepartamento(String idDepartamento) {
 		this.idDepartamento = idDepartamento;
 	}
 
@@ -210,6 +219,14 @@ public class AdminBackingBean implements Serializable{
 	@Autowired
 	public void setUc(UsuarioController uc) {
 		this.uc = uc;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 	

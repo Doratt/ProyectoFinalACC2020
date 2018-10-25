@@ -10,14 +10,15 @@
 	<ui:define name="title">Admin</ui:define>
 	<ui:define name="content">
 		<h:form id="form">
-			<p:dataTable id="ticket_data" value="#{adminBackingBean.model}" paginatorPosition="bottom"
-				var="adm" emptyMessage="No hay tickets pendientes" lazy="true"
-				rows="6" paginator="true" reflow="true"
+			<p:dataTable id="ticket_data" value="#{adminBackingBean.model}"
+				paginatorPosition="bottom" var="adm"
+				emptyMessage="No hay tickets pendientes" lazy="true" rows="6"
+				paginator="true" reflow="true"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink}
                          {NextPageLink} {LastPageLink}"
 				selectionMode="single" selection="#{adminBackingBean.ticket}">
-				<p:ajax event="rowSelect" listener="#{adminBackingBean.select}"   oncomplete="PF('ticketInfo').show();"
-					update=":frmInfoTicket" />
+				<p:ajax event="rowSelect" listener="#{adminBackingBean.select}"
+					oncomplete="PF('ticketInfo').show();" update=":table:encargados" />
 
 				<p:column headerText="ID">
 					<h:outputText value="#{adm.idTicket}" />
@@ -46,26 +47,27 @@
 
 						</p:column>
 						<p:column colspan="2">
-							<p:outputLabel 
-								value="#{adminBackingBean.ticket.idTicket}"></p:outputLabel>
+							<p:outputLabel value="#{adminBackingBean.ticket.idTicket}"></p:outputLabel>
 						</p:column>
 
 
 						<p:column>
 							<h:outputLabel for="list" value="Prioridad" />
-					  <p:selectOneMenu id="list" value="#{adminBackingBean.ticket}">
-						<f:selectItem itemLabel="Alta" itemValue="1" />
-						<f:selectItem itemLabel="Media" itemValue="2" />
-						<f:selectItem itemLabel="Baja" itemValue="3" />
-					</p:selectOneMenu></p:column>
+							<p:selectOneMenu id="list" value="#{adminBackingBean.ticket}">
+								<f:selectItem itemLabel="Alta" itemValue="1" />
+								<f:selectItem itemLabel="Media" itemValue="2" />
+								<f:selectItem itemLabel="Baja" itemValue="3" />
+							</p:selectOneMenu>
+						</p:column>
 					</p:row>
 					<p:row>
+
 
 						<p:column>
 							<h:outputLabel>Solicitante</h:outputLabel>
 						</p:column>
 
-						<p:column >
+						<p:column>
 							<p:outputLabel
 								value="#{adminBackingBean.ticket.idUsuario.nombre}"></p:outputLabel>
 						</p:column>
@@ -78,19 +80,30 @@
 						</p:column>
 						<p:column>
 
-							<p:outputLabel
-								value="#{adminBackingBean.ticket.fechaSolicitud}"></p:outputLabel>
+							<p:outputLabel value="#{adminBackingBean.ticket.fechaSolicitud}"></p:outputLabel>
 
 						</p:column>
 						<p:column></p:column>
 					</p:row>
 				</h:panelGrid>
-
-
-
-
 				<p:commandButton type="submit" value="Crear Ticket"
 					actionListener="#{dashboardBackingBean.crearTicket()}"></p:commandButton>
+			</h:form>
+			<h:form id="table">
+				<p:dataTable id="encargados" var="enc"
+					value="#{admindBackingBean.users}" reflow="true"
+					rowKey="#{enc.idUsuario}">
+					<f:facet name="header">
+            		Empleados
+           			 </f:facet>
+					<p:column headerText="ID Empleado">
+						<h:outputText value="#{enc.idUsuario}" />
+					</p:column>
+					<p:column headerText="Nombre">
+						<h:outputText value="#{enc.nombre}" />
+					</p:column>
+
+				</p:dataTable>
 			</h:form>
 
 		</p:dialog>
