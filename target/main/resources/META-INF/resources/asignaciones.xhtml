@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="layout.xhtml">
+    <ui:define name="title">Asignaciones Pendientes (Técnico)</ui:define>
+    <ui:define name="content">
+    	<h:form id="formAsignaciones">
+    	<p:dataTable var="ticket" value="#{asignacionesBackingBean.tickets}"
+			paginator="true" rows="10" reflow="true" emptyMessage="No hay asignaciones pendientes"
+			paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
+			sortBy="#{ticket.fechaSolicitud}">
+			<f:facet name="header">
+            Asignaciones Pendientes
+            </f:facet>
+			<p:column headerText="Solicitante">
+				<h:outputText value="#{ticket.idUsuario.nombre}" />
+			</p:column>
+			<p:column headerText="Descripcion">
+				<h:outputText value="#{ticket.descripcion}" />
+			</p:column>
+			<p:column headerText="Fecha de solicitud">
+				<h:outputText value="#{ticket.fechaSolicitud.toString()}"><f:convertDateTime pattern ="dd-mm-yyyy"/></h:outputText>
+			</p:column>
+			<p:column headerText="Estado">
+				<h:outputText value="#{ticket.idEstado.nombre}" />
+			</p:column>
+		</p:dataTable>
+		</h:form>
+    </ui:define>
+</ui:composition>
+</html>
