@@ -38,7 +38,7 @@ public class AdminBackingBean implements Serializable{
 	private LoginSessionBean sessionBean;
 	private TicketController tc;
 	private Ticket ticket;
-	private String idDepartamento;
+	private Integer idDepartamento;
 	private LoginSessionBean loginObj;
 	private Usuario usuarioLogueado;
 	private EstadosLoader el;
@@ -53,19 +53,15 @@ public class AdminBackingBean implements Serializable{
 	this.usuarioLogueado=loginObj.getUsuarioLogueado();
 	this.estado=el.get(ESTADO.creado.value);
 	inicializarModelo();		
-	this.idDepartamento="1";
+	this.idDepartamento=2;
 	}
 	
 	public void select(SelectEvent ev) {
-		this.users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(), Integer.valueOf(idDepartamento));
-		System.out.println(users);
-		RequestContext.getCurrentInstance().update(":table:encargados");
-;
+		this.users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(), idDepartamento);
 	}
 	
-	public String saludar() {
-		System.out.println("Saludo, cambio "+this.idDepartamento);
-		return this.idDepartamento;
+	public void actualizarTabla() {
+		this.users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(), idDepartamento);
 	}
 	
 	
@@ -178,11 +174,11 @@ public class AdminBackingBean implements Serializable{
 		this.ticket = ticket;
 	}
 
-	public String getIdDepartamento() {
+	public Integer getIdDepartamento() {
 		return idDepartamento;
 	}
 
-	public void setIdDepartamento(String idDepartamento) {
+	public void setIdDepartamento(Integer idDepartamento) {
 		this.idDepartamento = idDepartamento;
 	}
 

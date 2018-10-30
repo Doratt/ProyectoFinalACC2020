@@ -30,7 +30,9 @@
 					<h:outputText value="#{adm.descripcion}" />
 				</p:column>
 				<p:column headerText="Fecha Solicitud">
-					<h:outputText value="#{adm.fechaSolicitud}" />
+					<h:outputText value="#{adm.fechaSolicitud}">
+					<f:convertDateTime pattern ="dd-mm-yyyy"/>
+					</h:outputText>
 				</p:column>
 			</p:dataTable>
 		</h:form>
@@ -90,8 +92,16 @@
 					actionListener="#{dashboardBackingBean.crearTicket()}"></p:commandButton>
 			</h:form>
 			<h:form id="table">
+			<p:outputLabel for="filter_dep" value="Filtrar tecnicos" />
+					<p:selectOneRadio id="filter_dep"
+						value="#{adminBackingBean.idDepartamento}" required="true"
+						>
+						<f:selectItem itemLabel="IT" itemValue="1" />
+						<f:selectItem itemLabel="Mantenimiento" itemValue="2" />
+						<p:ajax event="change" listener="#{adminBackingBean.actualizarTabla()}" update=":table"></p:ajax>
+					</p:selectOneRadio>
 				<p:dataTable id="encargados" var="enc"
-					value="#{admindBackingBean.users}" reflow="true"
+					value="#{adminBackingBean.users}" reflow="true"
 					rowKey="#{enc.idUsuario}">
 					<f:facet name="header">
             		Empleados
