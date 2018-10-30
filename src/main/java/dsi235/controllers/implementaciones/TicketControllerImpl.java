@@ -74,11 +74,11 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 		return null;
 	}
 
-	@Override
+	/*@Override
 	public Ticket asignarTicket(int idTicket, int... idEncargados) {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 	@Override
 	public Ticket marcarMalAsignado(int idTicket) {
