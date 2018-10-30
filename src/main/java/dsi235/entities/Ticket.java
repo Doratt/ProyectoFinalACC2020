@@ -5,7 +5,6 @@
  */
 package dsi235.entities;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -25,6 +24,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -41,7 +41,25 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Ticket.findByDescripcion", query = "SELECT t FROM Ticket t WHERE t.descripcion = :descripcion")
     , @NamedQuery(name = "Ticket.findByFechaSolicitud", query = "SELECT t FROM Ticket t WHERE t.fechaSolicitud = :fechaSolicitud")
     , @NamedQuery(name = "Ticket.findByFechaCompletado", query = "SELECT t FROM Ticket t WHERE t.fechaCompletado = :fechaCompletado")})
-public class Ticket implements Serializable {
+public class Ticket extends BaseEntity {
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+    @Column(name = "fecha_modificacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaModificacion;
+    @Basic(optional = false)
+    @NotNull
+    private boolean activo;
+    @JoinColumn(name = "id_usuario_creador", referencedColumnName = "id_usuario")
+    @ManyToOne(optional = false)
+    private Usuario idUsuarioCreador;
+    @JoinColumn(name = "id_usuario_modificador", referencedColumnName = "id_usuario")
+    @ManyToOne
+    private Usuario idUsuarioModificador;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -193,6 +211,46 @@ public class Ticket implements Serializable {
     @Override
     public String toString() {
         return "ticketsystem.entities.Ticket[ idTicket=" + idTicket + " ]";
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    public boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    public Usuario getIdUsuarioCreador() {
+        return idUsuarioCreador;
+    }
+
+    public void setIdUsuarioCreador(Usuario idUsuarioCreador) {
+        this.idUsuarioCreador = idUsuarioCreador;
+    }
+
+    public Usuario getIdUsuarioModificador() {
+        return idUsuarioModificador;
+    }
+
+    public void setIdUsuarioModificador(Usuario idUsuarioModificador) {
+        this.idUsuarioModificador = idUsuarioModificador;
     }
     
 }

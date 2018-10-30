@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.8.1" last-position="0,0" last-zoom="0.8"
+	 default-schema="public" default-owner="postgres">
+<database name="new_database">
+</database>
+
+<schema name="public" protected="true" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="ticket">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="593.75" y="92"/>
+	<column name="id_ticket" not-null="true">
+		<type name="bigserial"/>
+	</column>
+	<column name="id_usuario_creador" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="descripcion" not-null="true">
+		<type name="varchar" length="3000"/>
+	</column>
+	<column name="fecha_creacion" not-null="true">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="fecha_completado">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="id_prioridad">
+		<type name="smallint"/>
+	</column>
+	<column name="id_estado" not-null="true">
+		<type name="smallint"/>
+	</column>
+	<column name="id_usuario_modificador">
+		<type name="bigint"/>
+	</column>
+	<column name="fecha_modificacion">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="activo" not-null="true" default-value="true">
+		<type name="boolean"/>
+	</column>
+	<constraint name="id_ticket" type="pk-constr" table="public.ticket">
+		<columns names="id_ticket" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="estado">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="621.5" y="352.75"/>
+	<column name="id_estado" not-null="true">
+		<type name="smallserial"/>
+	</column>
+	<column name="nombre" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="descripcion" not-null="true">
+		<type name="varchar" length="300"/>
+	</column>
+	<column name="id_usuario_creador" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="fecha_creacion" not-null="true">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="id_usuario_modificador">
+		<type name="bigint"/>
+	</column>
+	<column name="fecha_modificacion">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="activo" not-null="true" default-value="true">
+		<type name="boolean"/>
+	</column>
+	<constraint name="id_estado" type="pk-constr" table="public.estado">
+		<columns names="id_estado" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="prioridad">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="0" y="204.75"/>
+	<column name="id_prioridad" not-null="true">
+		<type name="smallserial"/>
+	</column>
+	<column name="nombre" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="descripcion" not-null="true">
+		<type name="varchar" length="300"/>
+	</column>
+	<column name="id_usuario_creador" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="fecha_creacion" not-null="true">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="fecha_modificacion">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="id_usuario_modificador">
+		<type name="bigint"/>
+	</column>
+	<column name="activo" not-null="true" default-value="true">
+		<type name="boolean"/>
+	</column>
+	<constraint name="id_prioridad" type="pk-constr" table="public.prioridad">
+		<columns names="id_prioridad" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="comentario">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1175.5" y="388.75"/>
+	<column name="id_comentario" not-null="true">
+		<type name="bigserial"/>
+	</column>
+	<column name="id_ticket" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="id_usuario_creador" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="fecha_creacion" not-null="true">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="contenido" not-null="true">
+		<type name="varchar" length="2000"/>
+	</column>
+	<column name="id_usuario_modificador">
+		<type name="bigint"/>
+	</column>
+	<column name="fecha_modificacion">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="activo" not-null="true" default-value="true">
+		<type name="boolean"/>
+	</column>
+	<constraint name="id_comentario" type="pk-constr" table="public.comentario">
+		<columns names="id_comentario" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="ticket_encargado">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="0" y="407.75"/>
+	<column name="id_ticket_encargado" not-null="true">
+		<type name="bigserial"/>
+	</column>
+	<column name="id_ticket" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="id_usuario" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="id_usuario_creador" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="fecha_creacion" not-null="true">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="id_usuario_modificador">
+		<type name="bigint" with-timezone="true"/>
+	</column>
+	<column name="fecha_modificacion">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="activo" not-null="true" default-value="true">
+		<type name="boolean"/>
+	</column>
+	<constraint name="id_ticket_encargado" type="pk-constr" table="public.ticket_encargado">
+		<columns names="id_ticket_encargado" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="rol">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1327.25" y="868.75"/>
+	<column name="id_rol" not-null="true">
+		<type name="smallserial"/>
+	</column>
+	<column name="nombre" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="descripcion" not-null="true">
+		<type name="varchar" length="300"/>
+	</column>
+	<column name="id_usuario_creador" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="fecha_creacion" not-null="true">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="id_usuario_modificador">
+		<type name="bigint"/>
+	</column>
+	<column name="fecha_modificacion" not-null="true">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="activo" not-null="true" default-value="true">
+		<type name="boolean"/>
+	</column>
+	<constraint name="id_rol" type="pk-constr" table="public.rol">
+		<columns names="id_rol" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="usuario_rol">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="849" y="842"/>
+	<column name="id_usuario_rol" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="id_usuario" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="id_rol" not-null="true">
+		<type name="smallint"/>
+	</column>
+	<column name="id_usuario_creador" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="fecha_creacion" not-null="true">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="id_usuario_modificador">
+		<type name="bigint"/>
+	</column>
+	<column name="fecha_modificacion">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="activo" not-null="true" default-value="true">
+		<type name="boolean"/>
+	</column>
+	<constraint name="id_usuario_rol" type="pk-constr" table="public.usuario_rol">
+		<columns names="id_usuario_rol" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="retroalimentacion">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="0" y="0"/>
+	<column name="id_retroalimentacion" not-null="true">
+		<type name="bigserial"/>
+	</column>
+	<column name="calificacion" not-null="true">
+		<type name="smallint"/>
+	</column>
+	<column name="comentario" default-value="NULL">
+		<type name="varchar" length="2000"/>
+	</column>
+	<column name="id_usuario_creador" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="fecha_creacion" not-null="true">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="fecha_modificacion">
+		<type name="timestamp" with-timezone="true"/>
+	</column>
+	<column name="id_usuario_modificador">
+		<type name="bigint"/>
+	</column>
+	<column name="activo" not-null="true" default-value="true">
+		<type name="boolean"/>
+	</column>
+	<constraint name="id_retroalimentacion" type="pk-constr" table="public.retroalimentacion">
+		<columns names="id_retroalimentacion" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_ticket" index="3"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="retroalimentacion_uq" index="2"/>
+		<object name="ticket_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="retroalimentacion_has_one_ticket" type="rel11"
+	 src-col-pattern="{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#48f604"
+	 src-table="public.ticket"
+	 dst-table="public.retroalimentacion"
+	 src-required="true" dst-required="false"
+	upd-action="CASCADE"
+	del-action="CASCADE">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<table name="usuario">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="532" y="581"/>
+	<column name="id_usuario" not-null="true">
+		<type name="bigserial"/>
+	</column>
+	<column name="nombre" not-null="true">
+		<type name="varchar" length="100"/>
+	</column>
+	<column name="id_departamento" not-null="true">
+		<type name="integer"/>
+	</column>
+	<column name="id_cargo" not-null="true">
+		<type name="integer"/>
+	</column>
+	<column name="correo" not-null="true">
+		<type name="varchar" length="100"/>
+	</column>
+	<column name="contrasena" not-null="true">
+		<type name="varchar" length="100"/>
+	</column>
+	<column name="id_sucursal" not-null="true">
+		<type name="smallint"/>
+	</column>
+	<column name="activo" not-null="true">
+		<type name="boolean"/>
+	</column>
+	<constraint name="id_usuario" type="pk-constr" table="public.usuario">
+		<columns names="id_usuario" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="departamento">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="52" y="616"/>
+	<column name="id_departamento" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="nombre" not-null="true">
+		<type name="varchar" length="200"/>
+	</column>
+	<column name="descripcion" not-null="true">
+		<type name="varchar" length="500"/>
+	</column>
+	<column name="activo" not-null="true">
+		<type name="boolean"/>
+	</column>
+	<constraint name="id_departamento" type="pk-constr" table="public.departamento">
+		<columns names="id_departamento" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="cargo">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="96" y="741"/>
+	<column name="id_cargo" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="nombre" not-null="true">
+		<type name="varchar" length="200"/>
+	</column>
+	<column name="descripcion" not-null="true">
+		<type name="varchar" length="500"/>
+	</column>
+	<column name="activo" not-null="true">
+		<type name="boolean" length="5"/>
+	</column>
+	<constraint name="id_cargo" type="pk-constr" table="public.cargo">
+		<columns names="id_cargo" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="profesion">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1032" y="699.5"/>
+	<column name="id_profesion" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="nombre" not-null="true">
+		<type name="varchar" length="200"/>
+	</column>
+	<column name="descripcion" not-null="true">
+		<type name="varchar" length="500"/>
+	</column>
+	<column name="activo" not-null="true">
+		<type name="boolean"/>
+	</column>
+	<constraint name="id_profesion" type="pk-constr" table="public.profesion">
+		<columns names="id_profesion" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="sucursal">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="538" y="814"/>
+	<column name="id_sucursal" not-null="true">
+		<type name="smallserial"/>
+	</column>
+	<column name="nombre" not-null="true">
+		<type name="varchar" length="200"/>
+	</column>
+	<column name="direccion" not-null="true">
+		<type name="varchar" length="300"/>
+	</column>
+	<constraint name="id_sucursal" type="pk-constr" table="public.sucursal">
+		<columns names="id_sucursal" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="usuario_profesion">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="987" y="579"/>
+	<column name="id_usuario_profesion" not-null="true">
+		<type name="bigserial"/>
+	</column>
+	<column name="id_usuario" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="id_profesion" not-null="true">
+		<type name="integer"/>
+	</column>
+	<constraint name="id_usuario_profesion" type="pk-constr" table="public.usuario_profesion">
+		<columns names="id_usuario_profesion" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<constraint name="id_estado" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.estado" table="public.ticket">
+	<columns names="id_estado" ref-type="src-columns"/>
+	<columns names="id_estado" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_prioridad" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.prioridad" table="public.ticket">
+	<columns names="id_prioridad" ref-type="src-columns"/>
+	<columns names="id_prioridad" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_creador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.ticket">
+	<columns names="id_usuario_creador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_modificador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.ticket">
+	<columns names="id_usuario_modificador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_creador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.estado">
+	<columns names="id_usuario_creador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_modificador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.estado">
+	<columns names="id_usuario_modificador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_creador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.prioridad">
+	<columns names="id_usuario_creador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_modificador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.prioridad">
+	<columns names="id_usuario_modificador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_ticket" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.ticket" table="public.comentario">
+	<columns names="id_ticket" ref-type="src-columns"/>
+	<columns names="id_ticket" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_creador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.comentario">
+	<columns names="id_usuario_creador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_modificador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.comentario">
+	<columns names="id_usuario_modificador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_ticket" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.ticket" table="public.ticket_encargado">
+	<columns names="id_ticket" ref-type="src-columns"/>
+	<columns names="id_ticket" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.ticket_encargado">
+	<columns names="id_usuario" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_creador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.ticket_encargado">
+	<columns names="id_usuario_creador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_modificador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.ticket_encargado">
+	<columns names="id_usuario_modificador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_creador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.rol">
+	<columns names="id_usuario_creador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_modificador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.rol">
+	<columns names="id_usuario_modificador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_rol" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.rol" table="public.usuario_rol">
+	<columns names="id_rol" ref-type="src-columns"/>
+	<columns names="id_rol" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.usuario_rol">
+	<columns names="id_usuario" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_creador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.usuario_rol">
+	<columns names="id_usuario_creador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_modificador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.usuario_rol">
+	<columns names="id_usuario_modificador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_creador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.retroalimentacion">
+	<columns names="id_usuario_creador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario_modificador" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.retroalimentacion">
+	<columns names="id_usuario_modificador" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_cargo" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.cargo" table="public.usuario">
+	<columns names="id_cargo" ref-type="src-columns"/>
+	<columns names="id_cargo" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_sucursal" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.sucursal" table="public.usuario">
+	<columns names="id_sucursal" ref-type="src-columns"/>
+	<columns names="id_sucursal" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_departamento" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.departamento" table="public.usuario">
+	<columns names="id_departamento" ref-type="src-columns"/>
+	<columns names="id_departamento" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_usuario" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.usuario" table="public.usuario_profesion">
+	<columns names="id_usuario" ref-type="src-columns"/>
+	<columns names="id_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_profesion" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.profesion" table="public.usuario_profesion">
+	<columns names="id_profesion" ref-type="src-columns"/>
+	<columns names="id_profesion" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_ticket_estado" type="relfk"
+	 src-table="public.ticket"
+	 dst-table="public.estado"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_ticket_prioridad" type="relfk"
+	 src-table="public.ticket"
+	 dst-table="public.prioridad"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_comentario_ticket" type="relfk"
+	 src-table="public.comentario"
+	 dst-table="public.ticket"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_ticket_encargado_ticket" type="relfk"
+	 src-table="public.ticket_encargado"
+	 dst-table="public.ticket"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_usuario_rol_tipo_rol" type="relfk"
+	 src-table="public.usuario_rol"
+	 dst-table="public.rol"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_usuario_cargo" type="relfk"
+	 src-table="public.usuario"
+	 dst-table="public.cargo"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_usuario_sucursal" type="relfk"
+	 src-table="public.usuario"
+	 dst-table="public.sucursal"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_usuario_profesion_usuario" type="relfk"
+	 src-table="public.usuario_profesion"
+	 dst-table="public.usuario"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_usuario_profesion_profesion" type="relfk"
+	 src-table="public.usuario_profesion"
+	 dst-table="public.profesion"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_usuario_departamento" type="relfk"
+	 src-table="public.usuario"
+	 dst-table="public.departamento"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_usuario_rol_usuario" type="relfk"
+	 src-table="public.usuario_rol"
+	 dst-table="public.usuario"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<relationship name="rel_ticket_encargado_usuario" type="relfk"
+	 src-table="public.ticket_encargado"
+	 dst-table="public.usuario"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_ticket_usuario" type="relfk"
+	 src-table="public.ticket"
+	 dst-table="public.usuario"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_comentario_usuario" type="relfk"
+	 src-table="public.comentario"
+	 dst-table="public.usuario"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_retroalimentacion_usuario" type="relfk"
+	 src-table="public.retroalimentacion"
+	 dst-table="public.usuario"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_prioridad_usuario" type="relfk"
+	 src-table="public.prioridad"
+	 dst-table="public.usuario"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_estado_usuario" type="relfk"
+	 src-table="public.estado"
+	 dst-table="public.usuario"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_rol_usuario" type="relfk"
+	 src-table="public.rol"
+	 dst-table="public.usuario"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>

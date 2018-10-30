@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -13,7 +14,7 @@ import dsi235.controllers.TicketController;
 import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
 
-@ManagedBean(value="historialUsuarioBackingBeans")
+@ManagedBean(value="historialUsuarioBackingBean")
 @SessionScope
 public class historialUsuarioBackingBean implements Serializable{
 	
@@ -29,7 +30,9 @@ public class historialUsuarioBackingBean implements Serializable{
 	
 	@PostConstruct
     public void init() {
-		historialTicketUsuario= tc.findCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario(), 1, 5);
+		System.out.println(sessionBean.getUsuarioLogueado().getIdUsuario());
+		historialTicketUsuario= this.tc.findCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario(), 0, 5);
+		System.out.println(historialTicketUsuario);
 		historialTicketTecnico= tc.findCompletadosByEncargado(sessionBean.getUsuarioLogueado().getIdUsuario(), 1, 5);
 	}
 	
@@ -61,23 +64,21 @@ public class historialUsuarioBackingBean implements Serializable{
 		return tc;
 	}
 
+	@Autowired
 	public void setTc(TicketController tc) {
 		this.tc = tc;
 	}
 
-	public LoginSessionBean getSessionBean() {
-		return sessionBean;
-	}
-
+	@Autowired
 	public void setSessionBean(LoginSessionBean sessionBean) {
 		this.sessionBean = sessionBean;
 	}
 
-	public Page<Ticket> getHistorialTicket() {
+	public Page<Ticket> getHistorialTicketUsuario() {
 		return historialTicketUsuario;
 	}
 
-	public void setHistorialTicket(Page<Ticket> historialTicket) {
+	public void setHistorialTicketUsuario(Page<Ticket> historialTicket) {
 		this.historialTicketUsuario = historialTicket;
 	}
 
