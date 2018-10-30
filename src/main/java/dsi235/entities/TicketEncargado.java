@@ -5,7 +5,6 @@
  */
 package dsi235.entities;
 
-import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "TicketEncargado.findAll", query = "SELECT t FROM TicketEncargado t")
     , @NamedQuery(name = "TicketEncargado.findByIdTicketEncargado", query = "SELECT t FROM TicketEncargado t WHERE t.idTicketEncargado = :idTicketEncargado")})
-public class TicketEncargado implements Serializable {
+public class TicketEncargado extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
     @Id
