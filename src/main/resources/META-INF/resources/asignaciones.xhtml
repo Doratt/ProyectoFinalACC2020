@@ -12,8 +12,8 @@
     	<h:form id="formAsignaciones">
     	<p:dataTable var="ticket" value="#{asignacionesBackingBean.tickets}"
 			paginator="true" rows="10" reflow="true" emptyMessage="No hay asignaciones pendientes"
-			paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
-			sortBy="#{ticket.fechaSolicitud}">
+			paginatorTemplate="{PreviousPageLink} {NextPageLink}"
+			sortBy="#{ticket.fechaSolicitud}" paginatorPosition="bottom">
 			<f:facet name="header">
             Asignaciones Pendientes
             </f:facet>
@@ -24,7 +24,7 @@
 				<h:outputText value="#{ticket.descripcion}" />
 			</p:column>
 			<p:column headerText="Fecha de solicitud">
-				<h:outputText value="#{ticket.fechaSolicitud.toString()}"><f:convertDateTime pattern ="dd-mm-yyyy"/></h:outputText>
+				<h:outputText value="#{ticket.fechaSolicitud}"><f:convertDateTime pattern ="dd-mm-yyyy"/></h:outputText>
 			</p:column>
 			<p:column headerText="Estado">
 				<h:outputText value="#{ticket.idEstado.nombre}" />
