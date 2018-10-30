@@ -5,7 +5,6 @@
  */
 package dsi235.entities;
 
-import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Retroalimentacion.findByIdRetroalimentacion", query = "SELECT r FROM Retroalimentacion r WHERE r.idRetroalimentacion = :idRetroalimentacion")
     , @NamedQuery(name = "Retroalimentacion.findByCalificacion", query = "SELECT r FROM Retroalimentacion r WHERE r.calificacion = :calificacion")
     , @NamedQuery(name = "Retroalimentacion.findByComentario", query = "SELECT r FROM Retroalimentacion r WHERE r.comentario = :comentario")})
-public class Retroalimentacion implements Serializable {
+public class Retroalimentacion extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
     @Id

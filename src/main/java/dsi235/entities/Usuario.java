@@ -40,6 +40,15 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByActivo", query = "SELECT u FROM Usuario u WHERE u.activo = :activo")})
 public class Usuario implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuarioCreador")
+    private List<Estado> estadoList;
+    @OneToMany(mappedBy = "idUsuarioModificador")
+    private List<Estado> estadoList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuarioCreador")
+    private List<Prioridad> prioridadList;
+    @OneToMany(mappedBy = "idUsuarioModificador")
+    private List<Prioridad> prioridadList1;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -226,6 +235,42 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "ticketsystem.entities.Usuario[ idUsuario=" + idUsuario + " ]";
+    }
+
+    @XmlTransient
+    public List<Estado> getEstadoList() {
+        return estadoList;
+    }
+
+    public void setEstadoList(List<Estado> estadoList) {
+        this.estadoList = estadoList;
+    }
+
+    @XmlTransient
+    public List<Estado> getEstadoList1() {
+        return estadoList1;
+    }
+
+    public void setEstadoList1(List<Estado> estadoList1) {
+        this.estadoList1 = estadoList1;
+    }
+
+    @XmlTransient
+    public List<Prioridad> getPrioridadList() {
+        return prioridadList;
+    }
+
+    public void setPrioridadList(List<Prioridad> prioridadList) {
+        this.prioridadList = prioridadList;
+    }
+
+    @XmlTransient
+    public List<Prioridad> getPrioridadList1() {
+        return prioridadList1;
+    }
+
+    public void setPrioridadList1(List<Prioridad> prioridadList1) {
+        this.prioridadList1 = prioridadList1;
     }
     
 }
