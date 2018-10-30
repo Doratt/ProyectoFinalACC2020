@@ -29,6 +29,7 @@ import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
 import dsi235.utilities.ESTADO;
 import dsi235.utilities.EstadosLoader;
+import dsi235.utilities.PageParser;
 
 @ManagedBean(value = "adminBackingBean")
 @ViewScoped
@@ -111,15 +112,15 @@ public class AdminBackingBean implements Serializable{
 	        return null;
 	    }
 
+	   
 	public List<Ticket> cargarDatos(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         List<Ticket> salida = null;
         Page<Ticket> page=null;
         try {
             if (this.tc != null) {
-            	page=this.tc.findNoasignadosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(),this.estado.getIdEstado(),PageRequest.of(first, pageSize));
+            	System.out.println(first);
+            	page=this.tc.findNoasignadosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(),this.estado.getIdEstado(),PageRequest.of(PageParser.parsePage(first, pageSize), pageSize));
                 salida = page.getContent();
-                System.out.println(PageRequest.of(first, pageSize));
-                System.out.println(salida);
                 if (this.model != null) {
                     System.out.println(page.getTotalElements());
                 	this.model.setRowCount((Integer.valueOf(String.valueOf(page.getTotalElements()))));
