@@ -7,6 +7,9 @@ package dsi235.controllers;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import dsi235.entities.Usuario;
 
 /**
@@ -18,6 +21,8 @@ public interface UsuarioController {
     public Usuario autenticar(String correo, String contrasena);
     
     // idDepto IT o Mantenimiento
-    public List<Usuario> findTecnicosBySucursal(Short idSucursal, Integer idDepartamento);
+    public List<Usuario> findTecnicosBySucursal(Short idSucursal, Integer idDepartamento,boolean activo);
+
+    public Page<Usuario> findTecnicosBySucursal(Short idSucursal, Integer idDepartamento,boolean activo,Pageable pg);
     
 }

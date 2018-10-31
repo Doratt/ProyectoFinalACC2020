@@ -3,6 +3,8 @@ package dsi235.controllers.implementaciones;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Controller;
 
@@ -27,13 +29,18 @@ public class UsuarioControllerImpl extends AbstractCrudControllerImpl<Usuario, L
 	}
 
 	@Override
-	public List<Usuario> findTecnicosBySucursal(Short idSucursal, Integer idDepartamento) {
-		return this.usuarioRepository.findByIdSucursal_IdSucursalAndIdDepartamento_IdDepartamento(idSucursal, idDepartamento);
+	public Page<Usuario> findTecnicosBySucursal(Short idSucursal, Integer idDepartamento,boolean activo,Pageable pg) {
+		return this.usuarioRepository.findByIdSucursal_IdSucursalAndIdDepartamento_IdDepartamentoAndActivo(idSucursal, idDepartamento,activo,pg);
 	}
 
 	@Override
 	CrudRepository<Usuario, Long> getRepository() {
 		return this.usuarioRepository;
+	}
+
+	@Override
+	public List<Usuario> findTecnicosBySucursal(Short idSucursal, Integer idDepartamento,boolean activo) {
+		return this.usuarioRepository.findByIdSucursal_IdSucursalAndIdDepartamento_IdDepartamentoAndActivo(idSucursal, idDepartamento, activo);
 	}
 
 }

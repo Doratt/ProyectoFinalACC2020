@@ -56,11 +56,11 @@ public class AdminBackingBean implements Serializable{
 	}
 	
 	public void select(SelectEvent ev) {
-		this.users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(), idDepartamento);
+		this.users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(), idDepartamento,true);
 	}
 	
 	public void actualizarTabla() {
-		this.users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(), idDepartamento);
+		this.users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(), idDepartamento,true);
 	}
 	
 public void asignacion() {
