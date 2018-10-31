@@ -1,17 +1,27 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2018 JoinFaces.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package dsi235.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,12 +35,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author dm
+ * @author doratt
  */
 @Entity
 @Table(name = "ticket", catalog = "ticketsystem", schema = "public")
@@ -39,27 +50,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Ticket.findAll", query = "SELECT t FROM Ticket t")
     , @NamedQuery(name = "Ticket.findByIdTicket", query = "SELECT t FROM Ticket t WHERE t.idTicket = :idTicket")
     , @NamedQuery(name = "Ticket.findByDescripcion", query = "SELECT t FROM Ticket t WHERE t.descripcion = :descripcion")
-    , @NamedQuery(name = "Ticket.findByFechaSolicitud", query = "SELECT t FROM Ticket t WHERE t.fechaSolicitud = :fechaSolicitud")
-    , @NamedQuery(name = "Ticket.findByFechaCompletado", query = "SELECT t FROM Ticket t WHERE t.fechaCompletado = :fechaCompletado")})
-public class Ticket extends BaseEntity {
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_creacion")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCreacion;
-    @Column(name = "fecha_modificacion")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaModificacion;
-    @Basic(optional = false)
-    @NotNull
-    private boolean activo;
-    @JoinColumn(name = "id_usuario_creador", referencedColumnName = "id_usuario")
-    @ManyToOne(optional = false)
-    private Usuario idUsuarioCreador;
-    @JoinColumn(name = "id_usuario_modificador", referencedColumnName = "id_usuario")
-    @ManyToOne
-    private Usuario idUsuarioModificador;
+    , @NamedQuery(name = "Ticket.findByFechaCreacion", query = "SELECT t FROM Ticket t WHERE t.fechaCreacion = :fechaCreacion")
+    , @NamedQuery(name = "Ticket.findByFechaCompletado", query = "SELECT t FROM Ticket t WHERE t.fechaCompletado = :fechaCompletado")
+    , @NamedQuery(name = "Ticket.findByFechaModificacion", query = "SELECT t FROM Ticket t WHERE t.fechaModificacion = :fechaModificacion")
+    , @NamedQuery(name = "Ticket.findByActivo", query = "SELECT t FROM Ticket t WHERE t.activo = :activo")})
+public class Ticket implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -68,29 +63,42 @@ public class Ticket extends BaseEntity {
     @Column(name = "id_ticket")
     private Long idTicket;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 3000)
     @Column(name = "descripcion")
     private String descripcion;
     @Basic(optional = false)
-    @Column(name = "fecha_solicitud")
+    @NotNull
+    @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaSolicitud;
+    private Date fechaCreacion;
     @Column(name = "fecha_completado")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCompletado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTicket", fetch = FetchType.LAZY)
+    @Column(name = "fecha_modificacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaModificacion;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "activo")
+    private boolean activo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTicket")
     private List<TicketEncargado> ticketEncargadoList;
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Estado idEstado;
     @JoinColumn(name = "id_prioridad", referencedColumnName = "id_prioridad")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Prioridad idPrioridad;
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Usuario idUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTicket", fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario_creador", referencedColumnName = "id_usuario")
+    @ManyToOne(optional = false)
+    private Usuario idUsuarioCreador;
+    @JoinColumn(name = "id_usuario_modificador", referencedColumnName = "id_usuario")
+    @ManyToOne
+    private Usuario idUsuarioModificador;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTicket")
     private List<Comentario> comentarioList;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idTicket", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idTicket")
     private Retroalimentacion retroalimentacion;
 
     public Ticket() {
@@ -100,10 +108,11 @@ public class Ticket extends BaseEntity {
         this.idTicket = idTicket;
     }
 
-    public Ticket(Long idTicket, String descripcion, Date fechaSolicitud) {
+    public Ticket(Long idTicket, String descripcion, Date fechaCreacion, boolean activo) {
         this.idTicket = idTicket;
         this.descripcion = descripcion;
-        this.fechaSolicitud = fechaSolicitud;
+        this.fechaCreacion = fechaCreacion;
+        this.activo = activo;
     }
 
     public Long getIdTicket() {
@@ -122,12 +131,12 @@ public class Ticket extends BaseEntity {
         this.descripcion = descripcion;
     }
 
-    public Date getFechaSolicitud() {
-        return fechaSolicitud;
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setFechaSolicitud(Date fechaSolicitud) {
-        this.fechaSolicitud = fechaSolicitud;
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     public Date getFechaCompletado() {
@@ -136,6 +145,22 @@ public class Ticket extends BaseEntity {
 
     public void setFechaCompletado(Date fechaCompletado) {
         this.fechaCompletado = fechaCompletado;
+    }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    public boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     @XmlTransient
@@ -163,12 +188,20 @@ public class Ticket extends BaseEntity {
         this.idPrioridad = idPrioridad;
     }
 
-    public Usuario getIdUsuario() {
-        return idUsuario;
+    public Usuario getIdUsuarioCreador() {
+        return idUsuarioCreador;
     }
 
-    public void setIdUsuario(Usuario idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdUsuarioCreador(Usuario idUsuarioCreador) {
+        this.idUsuarioCreador = idUsuarioCreador;
+    }
+
+    public Usuario getIdUsuarioModificador() {
+        return idUsuarioModificador;
+    }
+
+    public void setIdUsuarioModificador(Usuario idUsuarioModificador) {
+        this.idUsuarioModificador = idUsuarioModificador;
     }
 
     @XmlTransient
@@ -210,47 +243,7 @@ public class Ticket extends BaseEntity {
 
     @Override
     public String toString() {
-        return "ticketsystem.entities.Ticket[ idTicket=" + idTicket + " ]";
-    }
-
-    public Date getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-    public Date getFechaModificacion() {
-        return fechaModificacion;
-    }
-
-    public void setFechaModificacion(Date fechaModificacion) {
-        this.fechaModificacion = fechaModificacion;
-    }
-
-    public boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-
-    public Usuario getIdUsuarioCreador() {
-        return idUsuarioCreador;
-    }
-
-    public void setIdUsuarioCreador(Usuario idUsuarioCreador) {
-        this.idUsuarioCreador = idUsuarioCreador;
-    }
-
-    public Usuario getIdUsuarioModificador() {
-        return idUsuarioModificador;
-    }
-
-    public void setIdUsuarioModificador(Usuario idUsuarioModificador) {
-        this.idUsuarioModificador = idUsuarioModificador;
+        return "dsi235.entities.Ticket[ idTicket=" + idTicket + " ]";
     }
     
 }

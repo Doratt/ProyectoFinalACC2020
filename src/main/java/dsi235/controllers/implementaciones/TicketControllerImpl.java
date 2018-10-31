@@ -38,10 +38,11 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 
 	@Override
 	public Ticket save(Ticket ticket) {
-		ticket.setFechaSolicitud(Date.from(Instant.now()));
+		ticket.setFechaCreacion(Date.from(Instant.now()));
 		return this.ticketRepository.save(ticket);
 	}
-	public Page<Ticket> findCompletadosByEncargado(Long idEncargado, int first, int pageSize) {
+	@Override
+	public Page<Ticket> findCompletadosByEncargado(Long idEncargado, Pageable pg) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -52,14 +53,14 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 	}
 
 	@Override
-	public Page<Ticket> findCompletadosByUsuario(Long idUsuario, int first, int pageSize) {
-	return this.ticketRepository.findByIdUsuario_IdUsuarioAndIdEstado_IdEstado(idUsuario, Short.valueOf("5"), PageRequest.of(first, pageSize));
+	public Page<Ticket> findCompletadosByUsuario(Long idUsuario, Pageable pg) {
+	return this.ticketRepository.findByIdUsuario_IdUsuarioAndIdEstado_IdEstado(idUsuario, Short.valueOf("5"), pg);
 	}
 
 	@Override
 	public List<Ticket> findNoCompletadosByUsuario(Long idUsuario) {
 		
-		return this.ticketRepository.findByIdUsuario_IdUsuarioAndIdEstado_IdEstadoNot(idUsuario, Short.valueOf("5"));
+		return this.ticketRepository.findByIdUsuarioCreador_IdUsuarioAndIdEstado_IdEstadoNot(idUsuario, Short.valueOf("5"));
 	}
 
 	@Override
@@ -99,7 +100,7 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 
 	@Override
 	public Page<Ticket> findNoasignadosBySucursal(Short idSucursal, Short idEstado, Pageable pg) {
-		return this.ticketRepository.findByIdEstado_IdEstadoInAndIdUsuario_IdSucursal_IdSucursal(idSucursal, idEstado, pg);
+		return this.ticketRepository.findByIdEstado_IdEstadoInAndIdUsuarioCreador_IdSucursal_IdSucursal(idSucursal, idEstado, pg);
 	}
 
 	
