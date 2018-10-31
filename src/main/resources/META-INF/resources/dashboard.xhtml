@@ -10,55 +10,83 @@
 	<title>Dashboard</title>
 </h:head>
 <ui:composition template="layout.xhtml">
-    <ui:define name="title">Dashboard</ui:define>
-    <ui:define name="content">
+	<ui:define name="title">Dashboard</ui:define>
+	<ui:define name="content">
 
-	<h:form id="frmTicketsPendientes">
+		<h:form id="frmTicketsPendientes">
 
-		<p:dataTable id="tickets_pendientes_table" var="ticket" value="#{dashboardBackingBean.ticketsPendientes}"
-			paginator="true" rows="10" 
-			paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
-			sortBy="#{ticket.fechaCreacion}" reflow="true" paginatorPosition="bottom">
-			<f:facet name="header">
-            Tickets No Completados
-            </f:facet>
-			<p:column headerText="Solicitante">
-				<h:outputText value="#{ticket.idUsuarioCreador.nombre}" />
-			</p:column>
-			<p:column headerText="Descripcion">
-				<h:outputText value="#{ticket.descripcion}" />
-			</p:column>
-			<p:column headerText="Fecha de solicitud">
-				<h:outputText value="#{ticket.fechaCreacion}">
-				<f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
-			</p:column>
-			<p:column headerText="Estado">
-				<h:outputText value="#{ticket.idEstado.nombre}"></h:outputText>
-			</p:column>
-		</p:dataTable>
+			<p:dataTable id="tickets_pendientes_table" var="ticket" selectionMode="single"
+				value="#{dashboardBackingBean.ticketsPendientes}" paginator="true"
+				rows="10" selection="#{dashboardBackingBean.ticketSeleccionado}" rowKey="#{ticket.idTicket}"
+				paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
+				sortBy="#{ticket.fechaCreacion}" reflow="true"
+				paginatorPosition="bottom">
+				<f:facet name="header">
+            	Tickets No Completados
+            	</f:facet>
+				<p:ajax event="rowSelect" oncomplete="PF('infoTicket').show();"
+					update=":frmInfoTicket" />
+				<p:column headerText="Solicitante">
+					<h:outputText value="#{ticket.idUsuarioCreador.nombre}" />
+				</p:column>
+				<p:column headerText="Descripcion">
+					<h:outputText value="#{ticket.descripcion}" />
+				</p:column>
+				<p:column headerText="Fecha de solicitud">
+					<h:outputText value="#{ticket.fechaCreacion}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Estado">
+					<h:outputText value="#{ticket.idEstado.nombre}"></h:outputText>
+				</p:column>
+			</p:dataTable>
 
-	</h:form>
+		</h:form>
 
-<h:form>
-<p:commandButton value="Crear Ticket" update=":frmCrearTicket" onclick="PF('createTicket').show()"></p:commandButton>
-</h:form>
+		<h:form>
+			<p:commandButton value="Crear Ticket" update=":frmCrearTicket"
+				onclick="PF('createTicket').show()"></p:commandButton>
+		</h:form>
 
-<p:dialog header="Crear nuevo ticket" widgetVar="createTicket" modal="true" showEffect="fade" hideEffect="fade" resizable="false"
-		  width="80%" height="80%">
 
-<h:form id="frmCrearTicket">
-<div><p:outputLabel value="Descripción del problema"></p:outputLabel></div>
-<p:messages id="messages" for="txtDescripcion"></p:messages>
-<div><p:inputTextarea rows="12" style="width:100%; margin:20px 0;" id="txtDescripcion" value="#{dashboardBackingBean.descripcion}"
- 					  requiredMessage="Ingrese una descripción" required="true" maxlength="3000">
- 					  <f:validateLength minimum="25">
- 					  </f:validateLength>
- 					  </p:inputTextarea></div>
-<p:commandButton type="submit" value="Crear Ticket" actionListener="#{dashboardBackingBean.crearTicket()}" update=":frmTicketsPendientes :frmCrearTicket:messages"></p:commandButton>
-</h:form>
 
-</p:dialog>
 
-  </ui:define>
+		<h:form id="frmInfoTicket">
+			<p:dialog
+				header='#{"Ticket: ".concat(dashboardBackingBean.ticketSeleccionado.idTicket)}'
+				widgetVar="infoTicket" modal="true" showEffect="fade"
+				hideEffect="fade" resizable="false" width="90%" height="90%">
+
+
+				<p:outputLabel value="yasss"></p:outputLabel>
+
+			</p:dialog>
+		</h:form>
+
+		<p:dialog header="Crear nuevo ticket" widgetVar="createTicket"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="false"
+			width="80%" height="80%">
+
+			<h:form id="frmCrearTicket">
+				<div>
+					<p:outputLabel value="Descripción del problema"></p:outputLabel>
+				</div>
+				<p:messages for="txtDescripcion" autoUpdate="true"></p:messages>
+				<div>
+					<p:inputTextarea rows="12" style="width:100%; margin:20px 0;"
+						id="txtDescripcion" value="#{dashboardBackingBean.descripcion}"
+						requiredMessage="Ingrese una descripción" required="true"
+						maxlength="3000"></p:inputTextarea>
+				</div>
+				<p:commandButton type="submit" value="Crear Ticket"
+					actionListener="#{dashboardBackingBean.crearTicket()}"
+					update="frmTicketsPendientes"></p:commandButton>
+			</h:form>
+
+		</p:dialog>
+
+	</ui:define>
+>>>>>>> 93b47d198499d0c9046175805fb0ac20e04ff564
 </ui:composition>
 </html>
