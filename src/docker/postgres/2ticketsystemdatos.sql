@@ -5,7 +5,7 @@
 -- Dumped from database version 9.4.19
 -- Dumped by pg_dump version 9.5.14
 
--- Started on 2018-10-16 01:38:41 CST
+-- Started on 2018-10-30 18:56:26 CST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -14,9 +14,10 @@ SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+-- SET row_security = off;
 
 --
--- TOC entry 2157 (class 0 OID 16487)
+-- TOC entry 2179 (class 0 OID 16495)
 -- Dependencies: 194
 -- Data for Name: cargo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -29,7 +30,7 @@ INSERT INTO public.cargo VALUES (5, 'Seguridad', 'Seguridad', true);
 
 
 --
--- TOC entry 2169 (class 0 OID 0)
+-- TOC entry 2191 (class 0 OID 0)
 -- Dependencies: 193
 -- Name: cargo_id_cargo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -38,7 +39,7 @@ SELECT pg_catalog.setval('public.cargo_id_cargo_seq', 1, false);
 
 
 --
--- TOC entry 2155 (class 0 OID 16476)
+-- TOC entry 2177 (class 0 OID 16484)
 -- Dependencies: 192
 -- Data for Name: departamento; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -51,56 +52,58 @@ INSERT INTO public.departamento VALUES (5, 'Atención al Cliente', 'Operadores d
 
 
 --
--- TOC entry 2139 (class 0 OID 16398)
--- Dependencies: 176
--- Data for Name: estado; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-INSERT INTO public.estado VALUES (1, 'Creado', 'Ticket ha sido creado');
-INSERT INTO public.estado VALUES (2, 'Asignado', 'El ticket ha sido asignado a uno o más técnicos');
-INSERT INTO public.estado VALUES (3, 'En pausa', 'El técnico encargado ha marcado el ticket como pausado');
-INSERT INTO public.estado VALUES (4, 'Reabierto', 'El usuario solicitante o el técnico asignado ha reabierto un ticket que había sido marcado como completado');
-INSERT INTO public.estado VALUES (5, 'Completado', 'El técnico ha marcado el ticket como completado');
-
-
---
--- TOC entry 2141 (class 0 OID 16406)
--- Dependencies: 178
--- Data for Name: prioridad; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-INSERT INTO public.prioridad VALUES (1, 'Baja', 'Prioridad baja');
-INSERT INTO public.prioridad VALUES (2, 'Media', 'Prioridad media');
-INSERT INTO public.prioridad VALUES (3, 'Alta', 'Prioridad Alta');
-
-
---
--- TOC entry 2161 (class 0 OID 16509)
+-- TOC entry 2183 (class 0 OID 16517)
 -- Dependencies: 198
 -- Data for Name: sucursal; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.sucursal VALUES (1, 'El Salvador', 'Boulevard Los Proceres #1016');
-INSERT INTO public.sucursal VALUES (2, 'Canadá', '1250 Brown Road');
+INSERT INTO public.sucursal VALUES (1, 'Santa Ana', 'Av La Revolucion 222, San Salvador');
+INSERT INTO public.sucursal VALUES (2, 'Canadá', '180 Boulevard Gagnon');
 
 
 --
--- TOC entry 2153 (class 0 OID 16468)
+-- TOC entry 2175 (class 0 OID 16476)
 -- Dependencies: 190
 -- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.usuario VALUES (1, 'Luis Doratt', 1, 2, 'luisdoratt@hotmail.com', '1234', 1, true);
-INSERT INTO public.usuario VALUES (2, 'Irvin Ayala', 2, 1, 'irvin_ayala1995@hotmail.com', '1995', 1, true);
-INSERT INTO public.usuario VALUES (3, 'Andrea Cuellar', 1, 2, 'cuellarandrea10@gmail.com', 'tom', 1, true);
-INSERT INTO public.usuario VALUES (4, 'Daniel Molina', 1, 2, 'daniel97molin@gmail.com', 'dmdm', 1, true);
-INSERT INTO public.usuario VALUES (5, 'Steven Zaldivar', 2, 2, 'herrerachristian1897@gmail.com', '12345', 1, true);
-INSERT INTO public.usuario VALUES (6, 'Juan Pérez', 5, 3, 'kevinramirez9797@gmail.cm', '1234', 1, true);
-INSERT INTO public.usuario VALUES (7, 'Carlos Martínez', 3, 3, 'ticketsystem@gmail.com', '1234', 1, true);
+INSERT INTO public.usuario VALUES (1, 'Luis Doratt', 1, 1, 'd@d.com', '1234', 1, true);
+INSERT INTO public.usuario VALUES (2, 'Irvin Steven', 2, 2, 'i@i.com', '1234', 1, true);
+INSERT INTO public.usuario VALUES (3, 'Daniel Molina', 1, 2, 'm@m.com', '1234', 1, true);
+INSERT INTO public.usuario VALUES (6, 'Juan Pérez', 3, 3, 'j@j.com', '1234', 1, true);
+INSERT INTO public.usuario VALUES (7, 'Pablo Méndez', 5, 3, 'p@p.com', '1234', 1, true);
+INSERT INTO public.usuario VALUES (8, 'Teresa Bermudez', 4, 4, 't@t.com', '1234', 1, true);
+INSERT INTO public.usuario VALUES (4, 'Steven Zaldivar', 2, 1, 's@s.com', '1234', 2, true);
+INSERT INTO public.usuario VALUES (9, 'Wilson Sánchez', 5, 3, 'w@w.com', '1234', 2, true);
+INSERT INTO public.usuario VALUES (10, 'Rebeca Salinas', 5, 3, 'r@r.com', '1234', 2, true);
+INSERT INTO public.usuario VALUES (11, 'Carlos Escobar', 5, 3, 'c@c.com', '1234', 2, true);
+INSERT INTO public.usuario VALUES (5, 'Andrea Cuellar', 1, 2, 'a@a.com', '1234', 2, true);
+INSERT INTO public.usuario VALUES (12, 'Ernesto Menjivar', 1, 2, 'e@e.com', '1234', 1, true);
+INSERT INTO public.usuario VALUES (13, 'Ulises Ventura', 1, 2, 'u@u.com', '1234', 1, true);
+INSERT INTO public.usuario VALUES (14, 'Brenda Herrera', 2, 2, 'b@b.com', '1234', 1, true);
+INSERT INTO public.usuario VALUES (15, 'Omar Guerra', 2, 2, 'o@o.com', '1234', 1, true);
+INSERT INTO public.usuario VALUES (16, 'Nelson Torres', 1, 2, 'n@n.com', '1234', 2, true);
+INSERT INTO public.usuario VALUES (17, 'Gabriela Umaña', 2, 2, 'g@g.com', '1234', 2, true);
 
 
 --
--- TOC entry 2137 (class 0 OID 16387)
+-- TOC entry 2161 (class 0 OID 16399)
+-- Dependencies: 176
+-- Data for Name: estado; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2163 (class 0 OID 16408)
+-- Dependencies: 178
+-- Data for Name: prioridad; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2159 (class 0 OID 16387)
 -- Dependencies: 174
 -- Data for Name: ticket; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -108,7 +111,7 @@ INSERT INTO public.usuario VALUES (7, 'Carlos Martínez', 3, 3, 'ticketsystem@gm
 
 
 --
--- TOC entry 2143 (class 0 OID 16414)
+-- TOC entry 2165 (class 0 OID 16417)
 -- Dependencies: 180
 -- Data for Name: comentario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -116,7 +119,7 @@ INSERT INTO public.usuario VALUES (7, 'Carlos Martínez', 3, 3, 'ticketsystem@gm
 
 
 --
--- TOC entry 2170 (class 0 OID 0)
+-- TOC entry 2192 (class 0 OID 0)
 -- Dependencies: 179
 -- Name: comentario_id_comentario_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -125,7 +128,7 @@ SELECT pg_catalog.setval('public.comentario_id_comentario_seq', 1, false);
 
 
 --
--- TOC entry 2171 (class 0 OID 0)
+-- TOC entry 2193 (class 0 OID 0)
 -- Dependencies: 191
 -- Name: departamento_id_departamento_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -134,16 +137,16 @@ SELECT pg_catalog.setval('public.departamento_id_departamento_seq', 1, false);
 
 
 --
--- TOC entry 2172 (class 0 OID 0)
+-- TOC entry 2194 (class 0 OID 0)
 -- Dependencies: 175
 -- Name: estado_id_estado_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.estado_id_estado_seq', 1, true);
+SELECT pg_catalog.setval('public.estado_id_estado_seq', 1, false);
 
 
 --
--- TOC entry 2173 (class 0 OID 0)
+-- TOC entry 2195 (class 0 OID 0)
 -- Dependencies: 177
 -- Name: prioridad_id_prioridad_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -152,23 +155,20 @@ SELECT pg_catalog.setval('public.prioridad_id_prioridad_seq', 1, false);
 
 
 --
--- TOC entry 2159 (class 0 OID 16498)
+-- TOC entry 2181 (class 0 OID 16506)
 -- Dependencies: 196
 -- Data for Name: profesion; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.profesion VALUES (1, 'Técnico en computación', 'Técnico en computación', true);
+INSERT INTO public.profesion VALUES (1, 'Ingeniero en Sistemas', 'Ing sistemas', true);
 INSERT INTO public.profesion VALUES (2, 'Electricista', 'Electricista', true);
-INSERT INTO public.profesion VALUES (3, 'Licenciado en Administración de Empresas', 'Administración de empresas', true);
-INSERT INTO public.profesion VALUES (4, 'Ingeniero en Sistemas', 'Ingeniero de Sistemas Informáticos', true);
-INSERT INTO public.profesion VALUES (5, 'Ingeniero Industrial', 'Ing Industrial', true);
-INSERT INTO public.profesion VALUES (6, 'Ingeniero en Telecomunicaciones', 'Redes y telecomunicaciones', true);
-INSERT INTO public.profesion VALUES (7, 'Ingeniero en mecatrónica', 'Mecatrónica', true);
-INSERT INTO public.profesion VALUES (8, 'Licenciado en idiomas', 'Lic en idiomas', true);
+INSERT INTO public.profesion VALUES (3, 'DBA', 'Database Admin', true);
+INSERT INTO public.profesion VALUES (4, 'Plomero', 'Plomero', true);
+INSERT INTO public.profesion VALUES (5, 'Operador', 'Operador de Call center', true);
 
 
 --
--- TOC entry 2174 (class 0 OID 0)
+-- TOC entry 2196 (class 0 OID 0)
 -- Dependencies: 195
 -- Name: profesion_id_profesion_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -177,7 +177,7 @@ SELECT pg_catalog.setval('public.profesion_id_profesion_seq', 1, false);
 
 
 --
--- TOC entry 2151 (class 0 OID 16449)
+-- TOC entry 2173 (class 0 OID 16456)
 -- Dependencies: 188
 -- Data for Name: retroalimentacion; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -185,7 +185,7 @@ SELECT pg_catalog.setval('public.profesion_id_profesion_seq', 1, false);
 
 
 --
--- TOC entry 2175 (class 0 OID 0)
+-- TOC entry 2197 (class 0 OID 0)
 -- Dependencies: 187
 -- Name: retroalimentacion_id_retroalimentacion_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -194,36 +194,36 @@ SELECT pg_catalog.setval('public.retroalimentacion_id_retroalimentacion_seq', 1,
 
 
 --
--- TOC entry 2147 (class 0 OID 16433)
+-- TOC entry 2169 (class 0 OID 16438)
 -- Dependencies: 184
 -- Data for Name: rol; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.rol VALUES (1, 'Técnico', 'Se le asignarán tickets');
-INSERT INTO public.rol VALUES (2, 'Administrador', 'Podrá asignar tickets');
-INSERT INTO public.rol VALUES (3, 'Gerente', 'Podrá ver las estadísticas del ticket system');
+INSERT INTO public.rol VALUES (1, 'Técnico', 'Se le asignarán ticket que deberá realizar', 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
+INSERT INTO public.rol VALUES (2, 'Administrador', 'Podrá asignar tickets', 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
+INSERT INTO public.rol VALUES (3, 'Gerente', 'Podrá ver las estadísticas del sistema', 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
 
 
 --
--- TOC entry 2176 (class 0 OID 0)
+-- TOC entry 2198 (class 0 OID 0)
 -- Dependencies: 183
 -- Name: rol_id_rol_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.rol_id_rol_seq', 1, true);
+SELECT pg_catalog.setval('public.rol_id_rol_seq', 1, false);
 
 
 --
--- TOC entry 2177 (class 0 OID 0)
+-- TOC entry 2199 (class 0 OID 0)
 -- Dependencies: 197
 -- Name: sucursal_id_sucursal_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.sucursal_id_sucursal_seq', 1, true);
+SELECT pg_catalog.setval('public.sucursal_id_sucursal_seq', 1, false);
 
 
 --
--- TOC entry 2145 (class 0 OID 16425)
+-- TOC entry 2167 (class 0 OID 16429)
 -- Dependencies: 182
 -- Data for Name: ticket_encargado; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -231,7 +231,7 @@ SELECT pg_catalog.setval('public.sucursal_id_sucursal_seq', 1, true);
 
 
 --
--- TOC entry 2178 (class 0 OID 0)
+-- TOC entry 2200 (class 0 OID 0)
 -- Dependencies: 181
 -- Name: ticket_encargado_id_ticket_encargado_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -240,7 +240,7 @@ SELECT pg_catalog.setval('public.ticket_encargado_id_ticket_encargado_seq', 1, f
 
 
 --
--- TOC entry 2179 (class 0 OID 0)
+-- TOC entry 2201 (class 0 OID 0)
 -- Dependencies: 173
 -- Name: ticket_id_ticket_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -249,7 +249,7 @@ SELECT pg_catalog.setval('public.ticket_id_ticket_seq', 1, false);
 
 
 --
--- TOC entry 2180 (class 0 OID 0)
+-- TOC entry 2202 (class 0 OID 0)
 -- Dependencies: 189
 -- Name: usuario_id_usuario_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -258,24 +258,32 @@ SELECT pg_catalog.setval('public.usuario_id_usuario_seq', 1, false);
 
 
 --
--- TOC entry 2163 (class 0 OID 16520)
+-- TOC entry 2185 (class 0 OID 16528)
 -- Dependencies: 200
 -- Data for Name: usuario_profesion; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 INSERT INTO public.usuario_profesion VALUES (1, 1, 1);
-INSERT INTO public.usuario_profesion VALUES (3, 3, 7);
-INSERT INTO public.usuario_profesion VALUES (2, 2, 4);
-INSERT INTO public.usuario_profesion VALUES (4, 4, 6);
-INSERT INTO public.usuario_profesion VALUES (5, 5, 4);
-INSERT INTO public.usuario_profesion VALUES (6, 5, 2);
-INSERT INTO public.usuario_profesion VALUES (7, 1, 2);
-INSERT INTO public.usuario_profesion VALUES (8, 6, 8);
-INSERT INTO public.usuario_profesion VALUES (9, 7, 8);
+INSERT INTO public.usuario_profesion VALUES (2, 2, 2);
+INSERT INTO public.usuario_profesion VALUES (3, 3, 3);
+INSERT INTO public.usuario_profesion VALUES (4, 4, 1);
+INSERT INTO public.usuario_profesion VALUES (5, 5, 1);
+INSERT INTO public.usuario_profesion VALUES (6, 6, 5);
+INSERT INTO public.usuario_profesion VALUES (7, 7, 5);
+INSERT INTO public.usuario_profesion VALUES (8, 8, 5);
+INSERT INTO public.usuario_profesion VALUES (9, 9, 5);
+INSERT INTO public.usuario_profesion VALUES (10, 10, 5);
+INSERT INTO public.usuario_profesion VALUES (11, 11, 5);
+INSERT INTO public.usuario_profesion VALUES (12, 12, 1);
+INSERT INTO public.usuario_profesion VALUES (13, 13, 3);
+INSERT INTO public.usuario_profesion VALUES (14, 14, 2);
+INSERT INTO public.usuario_profesion VALUES (15, 15, 4);
+INSERT INTO public.usuario_profesion VALUES (16, 16, 1);
+INSERT INTO public.usuario_profesion VALUES (17, 17, 4);
 
 
 --
--- TOC entry 2181 (class 0 OID 0)
+-- TOC entry 2203 (class 0 OID 0)
 -- Dependencies: 199
 -- Name: usuario_profesion_id_usuario_profesion_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -284,34 +292,37 @@ SELECT pg_catalog.setval('public.usuario_profesion_id_usuario_profesion_seq', 1,
 
 
 --
--- TOC entry 2149 (class 0 OID 16441)
+-- TOC entry 2171 (class 0 OID 16447)
 -- Dependencies: 186
 -- Data for Name: usuario_rol; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.usuario_rol VALUES (1, 1, 1);
-INSERT INTO public.usuario_rol VALUES (2, 2, 1);
-INSERT INTO public.usuario_rol VALUES (3, 2, 2);
-INSERT INTO public.usuario_rol VALUES (4, 2, 3);
-INSERT INTO public.usuario_rol VALUES (5, 3, 1);
-INSERT INTO public.usuario_rol VALUES (6, 3, 2);
-INSERT INTO public.usuario_rol VALUES (7, 4, 1);
-INSERT INTO public.usuario_rol VALUES (8, 4, 2);
-INSERT INTO public.usuario_rol VALUES (9, 5, 1);
-INSERT INTO public.usuario_rol VALUES (10, 5, 2);
-INSERT INTO public.usuario_rol VALUES (11, 5, 3);
+INSERT INTO public.usuario_rol VALUES (1, 1, 1, 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
+INSERT INTO public.usuario_rol VALUES (2, 1, 2, 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
+INSERT INTO public.usuario_rol VALUES (3, 1, 3, 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
+INSERT INTO public.usuario_rol VALUES (4, 2, 1, 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
+INSERT INTO public.usuario_rol VALUES (5, 3, 1, 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
+INSERT INTO public.usuario_rol VALUES (6, 4, 2, 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
+INSERT INTO public.usuario_rol VALUES (7, 4, 3, 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
+INSERT INTO public.usuario_rol VALUES (8, 5, 1, 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
+INSERT INTO public.usuario_rol VALUES (9, 12, 1, 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
+INSERT INTO public.usuario_rol VALUES (10, 13, 1, 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
+INSERT INTO public.usuario_rol VALUES (11, 14, 1, 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
+INSERT INTO public.usuario_rol VALUES (12, 15, 1, 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
+INSERT INTO public.usuario_rol VALUES (13, 16, 1, 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
+INSERT INTO public.usuario_rol VALUES (14, 17, 1, 1, '2018-10-10 08:23:54+00', NULL, NULL, true);
 
 
 --
--- TOC entry 2182 (class 0 OID 0)
+-- TOC entry 2204 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: usuario_rol_id_usuario_rol_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.usuario_rol_id_usuario_rol_seq', 2, true);
+SELECT pg_catalog.setval('public.usuario_rol_id_usuario_rol_seq', 1, false);
 
 
--- Completed on 2018-10-16 01:38:41 CST
+-- Completed on 2018-10-30 18:56:26 CST
 
 --
 -- PostgreSQL database dump complete

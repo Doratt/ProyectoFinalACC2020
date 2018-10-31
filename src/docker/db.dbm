@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.8.1" last-position="0,0" last-zoom="0.8"
+<dbmodel pgmodeler-ver="0.8.1" last-position="0,287" last-zoom="0.8"
 	 default-schema="public" default-owner="postgres">
 <database name="new_database">
 </database>
@@ -204,7 +204,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="id_usuario_modificador">
 		<type name="bigint"/>
 	</column>
-	<column name="fecha_modificacion" not-null="true">
+	<column name="fecha_modificacion">
 		<type name="timestamp" with-timezone="true"/>
 	</column>
 	<column name="activo" not-null="true" default-value="true">
