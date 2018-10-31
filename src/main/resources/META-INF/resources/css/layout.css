@@ -16,11 +16,20 @@ html, body {
 }
 
 .ui-button, button.ui-button.ui-state-default, .ui-button.ui-state-default{
-	
+			border-color:green;
+		
 		background-color: #A3CB80 !important;
 	
 }
 
+.grid_layout{
+	margin-left: 2em;
+	
+}
+
+.label_bold{
+	font-weight: bold !important;
+}
 .west, .center {
 	padding: 5px;
 }
@@ -37,6 +46,10 @@ html, body {
 	box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
 	min-height: 100%;
 	height: auto;
+}
+.sin_borde{
+	border: none;
+	
 }
 
 .usuario {
