@@ -28,6 +28,7 @@ public class DashboardBackingBean implements Serializable {
 	private static final long serialVersionUID = 2432906255201655180L;
 
 	private Ticket ticket;
+	private Ticket ticketSeleccionado;
 	private String descripcion;
 	private Usuario usuarioLogeado;
 	private TicketController tc;
@@ -121,6 +122,14 @@ public class DashboardBackingBean implements Serializable {
 
 	public void setTicketsPendientes(List<Ticket> ticketsPendientes) {
 		this.ticketsPendientes = ticketsPendientes;
+	}
+
+	public Ticket getTicketSeleccionado() {
+		return ticketSeleccionado;
+	}
+
+	public void setTicketSeleccionado(Ticket ticketSeleccionado) {
+		this.ticketSeleccionado = ticketSeleccionado;
 	}
 
 
