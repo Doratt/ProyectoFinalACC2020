@@ -19,12 +19,12 @@
 			<p:dataTable id="historial_tecnico_table" var="ticket"
 				value="#{historialTecnicoBackingBean.historialTicketTecnico}"
 				paginator="true" rows="5" reflow="true"
-				paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}">
+				paginatorTemplate="{PreviousPageLink} {NextPageLink}">
 				<f:facet name="header">
             Historial de tickets completados por técnico
             </f:facet>
 				<p:column headerText="Numero de Ticket">
-					<h:outputText value="#{ticket.id}" />
+					<h:outputText value="#{ticket.idCreador.idUsuario}" />
 				</p:column>
 				<p:column headerText="Descripcion">
 					<h:outputText value="#{ticket.descripcion}" />

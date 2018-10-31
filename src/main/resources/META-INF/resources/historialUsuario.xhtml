@@ -31,27 +31,12 @@
 				</p:column>
 				<p:column headerText="Fecha de solicitud">
 					<h:outputText value="#{ticket.fechaSolicitud}">
-						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 					</h:outputText>
 				</p:column>
 			</p:dataTable>
 
 		</h:form>
-
-
-		<p:dialog header="Ticket Numero..." modal="true" showEffect="fade"
-			hideEffect="fade" resizable="false" width="80%" height="90%">
-			<div class="izquierda">
-				<p:outputLabel value="Estado: " />
-				<p:commandButton value="Cancelar Ticket"></p:commandButton>
-				<p:inputTextarea rows="12" disabled="true" value="Mensaje de ticket"></p:inputTextarea>
-			</div>
-			<div class="derecha">
-				<p:repeat var="" value=""></p:repeat>
-			</div>
-		</p:dialog>
-
-
 	</ui:define>
 </ui:composition>
 </html>

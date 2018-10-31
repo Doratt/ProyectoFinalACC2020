@@ -40,14 +40,17 @@ public class historialUsuarioBackingBean implements Serializable{
 	@PostConstruct
     public void init() {
 		usuarioLogeado = sessionBean.getUsuarioLogueado();
+		inicializarModelo();
 		//historialTicketUsuario= this.tc.findCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario(), 0, 5);
 		//System.out.println(historialTicketUsuario);
 		//historialTicketTecnico= tc.findCompletadosByEncargado(sessionBean.getUsuarioLogueado().getIdUsuario(), 1, 5);
 	}
 	
 	public void inicializarModelo() {
+		System.out.println("Me estoy inicializando");
 		try {
 		model=new LazyDataModel<Ticket>() {
+			
 			 @Override
              public Ticket getRowData(String rowKey) {
                  return obtenerRowData(rowKey);
@@ -68,6 +71,7 @@ public class historialUsuarioBackingBean implements Serializable{
 	}
 
 	   public Object obtenerRowKey(Ticket object) {
+		   System.out.println("Obteniendo row data");
 	        if (object != null) {
 	            return object.getIdTicket();
 	        }
@@ -97,9 +101,13 @@ public class historialUsuarioBackingBean implements Serializable{
         Page<Ticket> page=null;
         try {
             if (this.tc != null) {
-            	System.out.println(first);
-            	page=this.tc.findCompletadosByUsuario(usuarioLogeado.getIdUsuario(), PageRequest.of(PageParser.parsePage(first, pageSize), pageSize));
-                salida = page.getContent();
+            	System.out.println("El first es: "+first);
+            	System.out.println("El pagesize es: "+pageSize);
+            	System.out.println("El page parser devuelve: "+PageParser.parsePage(first, pageSize));
+            	page=tc.findCompletadosByUsuario(usuarioLogeado.getIdUsuario(), PageRequest.of(PageParser.parsePage(first, pageSize), pageSize));
+                System.out.println(page);
+            	salida = page.getContent();
+            	System.out.println(salida);
                 if (this.model != null) {
                     System.out.println(page.getTotalElements());
                 	this.model.setRowCount((Integer.valueOf(String.valueOf(page.getTotalElements()))));
