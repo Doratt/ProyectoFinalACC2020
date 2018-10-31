@@ -48,10 +48,13 @@
 
 <h:form id="frmCrearTicket">
 <div><p:outputLabel value="Descripción del problema"></p:outputLabel></div>
-<p:messages for="txtDescripcion" autoUpdate="true"></p:messages>
+<p:messages id="messages" for="txtDescripcion"></p:messages>
 <div><p:inputTextarea rows="12" style="width:100%; margin:20px 0;" id="txtDescripcion" value="#{dashboardBackingBean.descripcion}"
- 					  requiredMessage="Ingrese una descripción" required="true" maxlength="3000" ></p:inputTextarea></div>
-<p:commandButton type="submit" value="Crear Ticket" actionListener="#{dashboardBackingBean.crearTicket()}" update="frmTicketsPendientes"></p:commandButton>
+ 					  requiredMessage="Ingrese una descripción" required="true" maxlength="3000">
+ 					  <f:validateLength minimum="25">
+ 					  </f:validateLength>
+ 					  </p:inputTextarea></div>
+<p:commandButton type="submit" value="Crear Ticket" actionListener="#{dashboardBackingBean.crearTicket()}" update=":frmTicketsPendientes :frmCrearTicket:messages"></p:commandButton>
 </h:form>
 
 </p:dialog>

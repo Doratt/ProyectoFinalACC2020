@@ -19,7 +19,8 @@
 			<p:dataTable id="historial_usuario_table" var="ticket"
 				value="#{historialUsuarioBackingBean.model}"
 				paginator="true" rows="5" reflow="true" lazy="true"
-				paginatorTemplate="{PreviousPageLink} {NextPageLink}"
+				paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
 				rowKey="#{ticket.idTicket}" selection="#{historialUsuarioBackingBean.ticket}">
 				<f:facet name="header">
             Historial de tickets completados por usuario
@@ -32,6 +33,11 @@
 				</p:column>
 				<p:column headerText="Fecha de solicitud">
 					<h:outputText value="#{ticket.fechaCreacion}">
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Fecha completado">
+					<h:outputText value="#{ticket.fechaCompletado}">
 					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 					</h:outputText>
 				</p:column>
