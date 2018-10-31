@@ -37,9 +37,9 @@ public class UsuarioSessionTest {
 	
 	@Test
 	public void crearTicket() {
-		Ticket ticket = new Ticket(null, "Prueba de ticket (Prueba de integracion)", new Date());
+		Ticket ticket = new Ticket(null, "Prueba de ticket (Prueba de integracion)", new Date(), true);
 		ticket.setIdEstado(new Estado(Short.valueOf("1")));
-		ticket.setIdUsuario(new Usuario(Long.valueOf(4)));
+		ticket.setIdUsuarioCreador(new Usuario(Long.valueOf(4)));
 		ticket = ticketController.save(ticket);
 		assertNotNull(ticket.getIdTicket());
 	}

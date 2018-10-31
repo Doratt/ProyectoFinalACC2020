@@ -38,7 +38,7 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 
 	@Override
 	public Ticket save(Ticket ticket) {
-		ticket.setFechaSolicitud(Date.from(Instant.now()));
+		ticket.setFechaCreacion(Date.from(Instant.now()));
 		return this.ticketRepository.save(ticket);
 	}
 	@Override
@@ -60,7 +60,7 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 	@Override
 	public List<Ticket> findNoCompletadosByUsuario(Long idUsuario) {
 		
-		return this.ticketRepository.findByIdUsuario_IdUsuarioAndIdEstado_IdEstadoNot(idUsuario, Short.valueOf("5"));
+		return this.ticketRepository.findByIdUsuarioCreador_IdUsuarioAndIdEstado_IdEstadoNot(idUsuario, Short.valueOf("5"));
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 
 	@Override
 	public Page<Ticket> findNoasignadosBySucursal(Short idSucursal, Short idEstado, Pageable pg) {
-		return this.ticketRepository.findByIdEstado_IdEstadoInAndIdUsuario_IdSucursal_IdSucursal(idSucursal, idEstado, pg);
+		return this.ticketRepository.findByIdEstado_IdEstadoInAndIdUsuarioCreador_IdSucursal_IdSucursal(idSucursal, idEstado, pg);
 	}
 
 	

@@ -14,7 +14,7 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	// TODO
 	
 	//completado por encargado para parametros = ?1 donde 1 es el primer parametro
-	@Query("select t from Ticket t WHERE t.idUsuario.idUsuario = ?1 AND t.idEstado.idEstado = ?2 ORDER BY t.fechaCompletado DESC")
+	@Query("select t from Ticket t WHERE t.idUsuarioCreador.idUsuario = ?1 AND t.idEstado.idEstado = ?2 ORDER BY t.fechaCompletado DESC")
 	Page<Ticket> findCompletadosByEncargado(Long idUsuario, Short idEstado, Pageable pageable);
 
 	//No completado por encargado
@@ -23,15 +23,15 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	
 	
 
-	//completado por usuario
-	@Query("select t from Ticket t WHERE t.idUsuario.idUsuario = ?1 AND t.idEstado.idEstado = ?2 ORDER BY t.fechaCompletado DESC")
+	//completado por usuario creador
+	@Query("select t from Ticket t WHERE t.idUsuarioCreador.idUsuario = ?1 AND t.idEstado.idEstado = ?2 ORDER BY t.fechaCompletado DESC")
 	Page<Ticket> findByIdUsuario_IdUsuarioAndIdEstado_IdEstado(Long idUsuario, Short idEstado, Pageable pageable);
 
 	// no completado por usuario
-	List<Ticket> findByIdUsuario_IdUsuarioAndIdEstado_IdEstadoNot(Long idUsuario, Short idEstado);
+	List<Ticket> findByIdUsuarioCreador_IdUsuarioAndIdEstado_IdEstadoNot(Long idUsuario, Short idEstado);
 
 	// no asignados
-	Page<Ticket> findByIdEstado_IdEstadoInAndIdUsuario_IdSucursal_IdSucursal(Short idSucursal,
+	Page<Ticket> findByIdEstado_IdEstadoInAndIdUsuarioCreador_IdSucursal_IdSucursal(Short idSucursal,
 			Short idEstado, Pageable pg);
 	
 	//nuevo

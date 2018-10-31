@@ -44,7 +44,7 @@ public class DashboardBackingBean implements Serializable {
 	
 	public void crearTicket() {
 		setTicket(new Ticket());
-		ticket.setIdUsuario(sessionBean.getUsuarioLogueado());
+		ticket.setIdUsuarioCreador(sessionBean.getUsuarioLogueado());
 		if(getDescripcion().length()<= 3000) {
 			if(getDescripcion().length() > 25) {
 				ticket.setDescripcion(getDescripcion());
