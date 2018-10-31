@@ -22,7 +22,7 @@ public interface TicketController extends AbstractCrudController<Ticket, Long>{
 	
 	public Ticket reabrirTicket(int idTicket);
 	
-	public Ticket asignarTicket(int idTicket, int... idEncargados);
+	//public Ticket asignarTicket(int idTicket, int... idEncargados);
 	
 	public Ticket marcarMalAsignado(int idTicket);
 	
