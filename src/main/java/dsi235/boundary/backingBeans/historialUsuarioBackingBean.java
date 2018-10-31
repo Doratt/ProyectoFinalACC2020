@@ -101,17 +101,11 @@ public class historialUsuarioBackingBean implements Serializable{
         Page<Ticket> page=null;
         try {
             if (this.tc != null) {
-            	System.out.println("El first es: "+first);
-            	System.out.println("El pagesize es: "+pageSize);
-            	System.out.println("El page parser devuelve: "+PageParser.parsePage(first, pageSize));
             	page=tc.findCompletadosByUsuario(usuarioLogeado.getIdUsuario(), PageRequest.of(PageParser.parsePage(first, pageSize), pageSize));
-                System.out.println(page);
             	salida = page.getContent();
-            	System.out.println(salida);
                 if (this.model != null) {
                     System.out.println(page.getTotalElements());
                 	this.model.setRowCount((Integer.valueOf(String.valueOf(page.getTotalElements()))));
-                    
                 }
             }
         } catch (Exception ex) {

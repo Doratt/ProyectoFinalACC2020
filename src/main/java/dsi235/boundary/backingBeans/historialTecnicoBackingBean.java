@@ -40,14 +40,17 @@ public class historialTecnicoBackingBean implements Serializable{
 	@PostConstruct
     public void init() {
 		usuarioLogeado = sessionBean.getUsuarioLogueado();
+		inicializarModelo();
 		//historialTicketUsuario= this.tc.findCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario(), 0, 5);
 		//System.out.println(historialTicketUsuario);
 		//historialTicketTecnico= tc.findCompletadosByEncargado(sessionBean.getUsuarioLogueado().getIdUsuario(), 1, 5);
 	}
 	
 	public void inicializarModelo() {
+		System.out.println("Me estoy inicializando");
 		try {
 		model=new LazyDataModel<Ticket>() {
+			
 			 @Override
              public Ticket getRowData(String rowKey) {
                  return obtenerRowData(rowKey);
@@ -68,6 +71,7 @@ public class historialTecnicoBackingBean implements Serializable{
 	}
 
 	   public Object obtenerRowKey(Ticket object) {
+		   System.out.println("Obteniendo row data");
 	        if (object != null) {
 	            return object.getIdTicket();
 	        }
@@ -97,13 +101,13 @@ public class historialTecnicoBackingBean implements Serializable{
         Page<Ticket> page=null;
         try {
             if (this.tc != null) {
-            	System.out.println(first);
-            	page=this.tc.findCompletadosByEncargado(usuarioLogeado.getIdUsuario(), PageRequest.of(PageParser.parsePage(first, pageSize), pageSize));
-                salida = page.getContent();
+            	page=tc.findCompletadosByEncargado(usuarioLogeado.getIdUsuario(), PageRequest.of(PageParser.parsePage(first, pageSize), pageSize));
+            	System.out.println("El page: "+page);
+            	salida = page.getContent();
+            	System.out.println("Salida: "+salida);
                 if (this.model != null) {
                     System.out.println(page.getTotalElements());
                 	this.model.setRowCount((Integer.valueOf(String.valueOf(page.getTotalElements()))));
-                    
                 }
             }
         } catch (Exception ex) {
