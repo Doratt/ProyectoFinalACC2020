@@ -46,20 +46,23 @@ public class DashboardBackingBean implements Serializable {
 		setTicket(new Ticket());
 		ticket.setIdUsuario(sessionBean.getUsuarioLogueado());
 		if(getDescripcion().length()<= 3000) {
-			ticket.setDescripcion(getDescripcion());
-			ticket.setIdEstado(el.get(ESTADO.creado.value));
-			descripcion= null;
-			try {
-				tc.save(getTicket());
-				init();
-				
-				PrimeFaces current = PrimeFaces.current();
-				current.executeScript("PF('createTicket').hide()");
-			} catch (Exception e) {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Parece que hubo un problema con la creación de tu ticket"));
+			if(getDescripcion().length() > 25) {
+				ticket.setDescripcion(getDescripcion());
+				ticket.setIdEstado(el.get(ESTADO.creado.value));
+				descripcion= null;
+				try {
+					tc.save(getTicket());
+					init();
+					PrimeFaces current = PrimeFaces.current();
+					this.ticket = new Ticket();
+					current.executeScript("PF('createTicket').hide()");
+				} catch (Exception e) {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Parece que hubo un problema con la creación de tu ticket"));
+				}	
+			}else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Por favor brinde una descripcion mas completa del problema"));
 			}
 		}
-		this.ticket = new Ticket();
 	}
 
 

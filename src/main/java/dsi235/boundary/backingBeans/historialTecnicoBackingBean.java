@@ -22,9 +22,9 @@ import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
 import dsi235.utilities.PageParser;
 
-@ManagedBean(value="historialUsuarioBackingBean")
+@ManagedBean(value="historialTecnicoBackingBean")
 @SessionScope
-public class historialUsuarioBackingBean implements Serializable{
+public class historialTecnicoBackingBean implements Serializable{
 	
 	private static final long serialVersionUID = 2432906255201655180L;
 	
@@ -33,7 +33,7 @@ public class historialUsuarioBackingBean implements Serializable{
 	private Usuario usuarioLogeado;
 	private TicketController tc;
 	private LoginSessionBean sessionBean;
-	private Page<Ticket> historialTicketUsuario;
+	private Page<Ticket> historialTicketTecnico;
 
 	
 	
@@ -98,7 +98,7 @@ public class historialUsuarioBackingBean implements Serializable{
         try {
             if (this.tc != null) {
             	System.out.println(first);
-            	page=this.tc.findCompletadosByUsuario(usuarioLogeado.getIdUsuario(), PageRequest.of(PageParser.parsePage(first, pageSize), pageSize));
+            	page=this.tc.findCompletadosByEncargado(usuarioLogeado.getIdUsuario(), PageRequest.of(PageParser.parsePage(first, pageSize), pageSize));
                 salida = page.getContent();
                 if (this.model != null) {
                     System.out.println(page.getTotalElements());
@@ -157,11 +157,11 @@ public class historialUsuarioBackingBean implements Serializable{
 	}
 
 	public Page<Ticket> getHistorialTicketUsuario() {
-		return historialTicketUsuario;
+		return historialTicketTecnico;
 	}
 
 	public void setHistorialTicketUsuario(Page<Ticket> historialTicket) {
-		this.historialTicketUsuario = historialTicket;
+		this.historialTicketTecnico = historialTicket;
 	}
 
 }

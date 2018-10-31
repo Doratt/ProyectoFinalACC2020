@@ -9,12 +9,12 @@ import dsi235.entities.Ticket;
 
 public interface TicketController extends AbstractCrudController<Ticket, Long>{
 	
-	public Page<Ticket> findCompletadosByEncargado(Long idEncargado, int first, int pageSize);
+	public Page<Ticket> findCompletadosByEncargado(Long idEncargado, Pageable pg);
 
 	//Ordenado por prioridad
 	public List<Ticket> findNoCompletadosByEncargado(Long idEncargado);
 	
-	public Page<Ticket> findCompletadosByUsuario(Long idUsuario, int first, int pageSize);
+	public Page<Ticket> findCompletadosByUsuario(Long idUsuario, Pageable pg);
 	
 	public List<Ticket> findNoCompletadosByUsuario(Long idUsuario);
 	
