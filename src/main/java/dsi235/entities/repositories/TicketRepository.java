@@ -24,9 +24,13 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	
 
 	//completado por usuario creador
-	@Query("select t from Ticket t WHERE t.idUsuarioCreador.idUsuario = ?1 AND t.idEstado.idEstado = ?2 ORDER BY t.fechaCompletado DESC")
+	//@Query("select t from Ticket t WHERE t.idUsuarioCreador.idUsuario = ?1 AND t.idEstado.idEstado = ?2 ORDER BY t.fechaCompletado DESC")
+	@Query(value="SELECT * FROM ticket t WHERE t.id_usuario_creador = ?1 AND t.id_estado = ?2",
+			countQuery = "SELECT count(*) FROM ticket t WHERE t.id_usuario_creador = ?1 AND t.id_estado = ?2",
+		    nativeQuery = true)
 	Page<Ticket> findByIdUsuario_IdUsuarioAndIdEstado_IdEstado(Long idUsuario, Short idEstado, Pageable pageable);
-
+	
+	
 	// no completado por usuario
 	List<Ticket> findByIdUsuarioCreador_IdUsuarioAndIdEstado_IdEstadoNot(Long idUsuario, Short idEstado);
 

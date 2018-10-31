@@ -18,18 +18,18 @@
 		<p:dataTable id="tickets_pendientes_table" var="ticket" value="#{dashboardBackingBean.ticketsPendientes}"
 			paginator="true" rows="10" 
 			paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
-			sortBy="#{ticket.fechaSolicitud}" reflow="true" paginatorPosition="bottom">
+			sortBy="#{ticket.fechaCreacion}" reflow="true" paginatorPosition="bottom">
 			<f:facet name="header">
             Tickets No Completados
             </f:facet>
 			<p:column headerText="Solicitante">
-				<h:outputText value="#{ticket.idUsuario.nombre}" />
+				<h:outputText value="#{ticket.idUsuarioCreador.nombre}" />
 			</p:column>
 			<p:column headerText="Descripcion">
 				<h:outputText value="#{ticket.descripcion}" />
 			</p:column>
 			<p:column headerText="Fecha de solicitud">
-				<h:outputText value="#{ticket.fechaSolicitud}">
+				<h:outputText value="#{ticket.fechaCreacion}">
 				<f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
 			</p:column>
 			<p:column headerText="Estado">
@@ -50,7 +50,7 @@
 <div><p:outputLabel value="Descripción del problema"></p:outputLabel></div>
 <p:messages for="txtDescripcion" autoUpdate="true"></p:messages>
 <div><p:inputTextarea rows="12" style="width:100%; margin:20px 0;" id="txtDescripcion" value="#{dashboardBackingBean.descripcion}"
- 					  requiredMessage="Ingrese una descripción" required="true" maxlength="3000"></p:inputTextarea></div>
+ 					  requiredMessage="Ingrese una descripción" required="true" maxlength="3000" ></p:inputTextarea></div>
 <p:commandButton type="submit" value="Crear Ticket" actionListener="#{dashboardBackingBean.crearTicket()}" update="frmTicketsPendientes"></p:commandButton>
 </h:form>
 
