@@ -31,7 +31,7 @@
 				</p:column>
 				<p:column headerText="Fecha de solicitud">
 					<h:outputText value="#{ticket.fechaSolicitud}">
-					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+					<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 					</h:outputText>
 				</p:column>
 			</p:dataTable>

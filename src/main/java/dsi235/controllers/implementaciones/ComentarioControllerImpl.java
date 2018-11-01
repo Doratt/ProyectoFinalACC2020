@@ -6,7 +6,6 @@
 package dsi235.controllers.implementaciones;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import dsi235.controllers.ComentarioController;
 import dsi235.entities.Comentario;
+import dsi235.entities.Ticket;
 import dsi235.entities.repositories.ComentarioRepository;
 
 /**
@@ -31,8 +31,8 @@ public class ComentarioControllerImpl extends AbstractCrudControllerImpl<Comenta
 	}
 
 	@Override
-    public List<Comentario> findByIdTicket(Long idTicket) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Comentario> findByIdTicket(Ticket idTicket) {
+        return this.repo.findByIdTicket(idTicket);
     }
 
 	@Override
@@ -40,10 +40,6 @@ public class ComentarioControllerImpl extends AbstractCrudControllerImpl<Comenta
 		return this.repo;
 	}
 
-	@Override
-	public Optional<Comentario> findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
     
 }

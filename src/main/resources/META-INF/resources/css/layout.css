@@ -11,25 +11,25 @@ html, body {
 	font-family: "latoregular", "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
-.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
+.ui-state-highlight, .ui-widget-content .ui-state-highlight,
+	.ui-widget-header .ui-state-highlight {
 	background-color: #A3CB80;
 }
 
-.ui-button, button.ui-button.ui-state-default, .ui-button.ui-state-default{
-			border-color:green;
-		
-		background-color: #A3CB80 !important;
-	
+.ui-button, button.ui-button.ui-state-default, .ui-button.ui-state-default
+	{
+	border-color: green;
+	background-color: #A3CB80 !important;
 }
 
-.grid_layout{
+.grid_layout {
 	margin-left: 2em;
-	
 }
 
-.label_bold{
+.label_bold {
 	font-weight: bold !important;
 }
+
 .west, .center {
 	padding: 5px;
 }
@@ -47,7 +47,8 @@ html, body {
 	min-height: 100%;
 	position: fixed;
 }
-.padding-izquierda{
+
+.padding-izquierda {
 	float: left;
 	height: 100%;
 	color: white;
@@ -57,22 +58,23 @@ html, body {
 	min-width: 220px;
 	min-height: 100%;
 }
-.sin_borde{
+
+.sin_borde {
 	border: none;
-	
 }
 
 .usuario {
 	height: 120px;
 	text-align: center;
 	padding-top: 12px;
-	background-color: rgba(255,255,255,0.1);
+	background-color: rgba(255, 255, 255, 0.1);
 	border-radius: 5px;
 }
 
-.contenedor-links{
+.contenedor-links {
 	margin-top: 15px;
 }
+
 .contenedor-links a {
 	display: block;
 	padding: 10px;
@@ -82,14 +84,15 @@ html, body {
 	text-decoration: none;
 }
 
-.contenedor-links a:hover{
-	background-color: rgba(0,0,0,0.2);
+.contenedor-links a:hover {
+	background-color: rgba(0, 0, 0, 0.2);
 }
 
 .contenedor-links i {
-	margin-right: 10px;	
+	margin-right: 10px;
 }
-.contenedor-links h4{
+
+.contenedor-links h4 {
 	margin: 10px;
 	margin-top: 20px;
 }
@@ -110,25 +113,76 @@ html, body {
 	text-align: center;
 }
 
-.top-bar{
+.top-bar {
 	display: none;
 	background-color: #A3CB80;
 	color: white;
 	height: 55px;
 }
-.top-bar h3, .top-bar i{
+
+.top-bar h3, .top-bar i {
 	display: inline-block;
 }
+
 .top-bar i {
 	margin: 10px;
 }
-.top-bar i:hover{
+
+.top-bar i:hover {
 	cursor: pointer;
 }
 
-.visible{
+.visible {
 	display: block !important;
 }
+
+.frm-info{
+	overflow: auto;
+}
+
+.frm-info .izquierda {
+	padding-right: 5px;
+	float: left;
+	width: 50%;
+	height: 100%;
+}
+
+.frm-info .derecha {
+	float: left;
+	width: 50%;
+	height: 100%;
+	background: #D9F0C6;
+	padding: 10px;
+}
+.div-descripcion {
+	background: #eee;
+	padding: 10px;
+	border-radius: 5px;
+}
+.div-comentarios{
+	width: 100%;
+	height: 300px;
+}
+.agregar-comentario{
+	
+	height: 100px;
+	width: 100%;
+	position: relative;
+	bottom: 0;
+}
+.agregar-comentario textarea{
+	width: calc(100% - 30px);
+	height: 100%;
+}
+.agregar-comentario button{
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	top: 30px;
+	right: -10px;
+}
+
+
 
 @media ( max-width : 768px) {
 	.west {
@@ -140,9 +194,8 @@ html, body {
 		position: fixed;
 		top: 54px;
 		z-index: 1;
-		
 	}
-	.padding-izquierda{
+	.padding-izquierda {
 		display: none;
 	}
 	.center {
@@ -151,9 +204,25 @@ html, body {
 		padding-top: 60px;
 		padding-bottom: 10px;
 	}
-	.top-bar{
+	.top-bar {
 		width: 100%;
 		position: fixed;
 		display: block;
+	}
+	.frm-info{
+		padding-bottom: 55px;
+	}
+	.frm-info .izquierda {
+		float: none;
+		width: 100%;
+		height: auto;
+	}
+	.frm-info .derecha {
+		margin-top: 15px;
+		float: none;
+		width: 100%;
+		height: auto;
+		background: #D9F0C6;
+		padding: 20px;
 	}
 }
