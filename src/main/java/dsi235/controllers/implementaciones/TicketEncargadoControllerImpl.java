@@ -5,6 +5,9 @@
  */
 package dsi235.controllers.implementaciones;
 
+import java.sql.Date;
+import java.time.Instant;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,14 @@ public class TicketEncargadoControllerImpl extends AbstractCrudControllerImpl<Ti
 		super();
 		this.ticketEncargadoRepository = ticketEncargadoRepository;
 	}
+    
+    public TicketEncargado save(TicketEncargado ticketEncargado) {
+    	ticketEncargado.setFechaCreacion(Date.from(Instant.now()));
+    	
+    	return getRepository().save(ticketEncargado);
+    }
+    
+    
 
 	@Override
 	CrudRepository<TicketEncargado, Long> getRepository() {

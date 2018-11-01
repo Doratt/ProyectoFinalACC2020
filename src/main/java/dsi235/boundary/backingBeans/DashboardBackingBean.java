@@ -1,6 +1,7 @@
 package dsi235.boundary.backingBeans;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.ManagedBean;
@@ -12,7 +13,9 @@ import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.annotation.SessionScope;
 
+import dsi235.controllers.ComentarioController;
 import dsi235.controllers.TicketController;
+import dsi235.entities.Comentario;
 import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
 import dsi235.utilities.ESTADO;
@@ -35,11 +38,14 @@ public class DashboardBackingBean implements Serializable {
 	private LoginSessionBean sessionBean;
 	private EstadosLoader el;
 	private List<Ticket> ticketsPendientes;
+	private Comentario comentario;
+	private ComentarioController comentarioController;
 	
 	
 	 @PostConstruct
 	    public void init() {
 		 setTicketsPendientes(tc.findNoCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario()));
+		 setComentario(new Comentario());
 
 	 }
 	
@@ -60,10 +66,28 @@ public class DashboardBackingBean implements Serializable {
 				} catch (Exception e) {
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Parece que hubo un problema con la creación de tu ticket"));
 				}	
-			}else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Por favor brinde una descripcion mas completa del problema"));
 			}
 		}
+	}
+	
+	public void crearComentario() {
+		
+		if(!comentario.getContenido().isEmpty()) {
+			comentario.setActivo(true);
+			comentario.setFechaCreacion(new Date());
+			comentario.setIdTicket(this.ticketSeleccionado);
+			comentario.setIdUsuarioCreador(sessionBean.getUsuarioLogueado());
+			try {
+				comentarioController.save(comentario);
+				this.comentario = new Comentario();
+			}catch(Exception e) {
+				e.printStackTrace();
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Hubo un problema con la creación del comentario"));
+			}
+		}else {
+			System.out.println("contenido isempty");
+		}
+		
 	}
 
 
@@ -130,6 +154,19 @@ public class DashboardBackingBean implements Serializable {
 
 	public void setTicketSeleccionado(Ticket ticketSeleccionado) {
 		this.ticketSeleccionado = ticketSeleccionado;
+	}
+
+	public Comentario getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(Comentario comentario) {
+		this.comentario = comentario;
+	}
+
+	@Autowired
+	public void setComentarioController(ComentarioController comentarioController) {
+		this.comentarioController = comentarioController;
 	}
 
 

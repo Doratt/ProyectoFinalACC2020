@@ -13,7 +13,7 @@ public class FilterConfig {
     registration.setFilter(new LoginFilter());
     //TODO agregar todas las pantallas...
     registration.addUrlPatterns("/dashboard.jsf", "/adminView.jsf", "/asignaciones.jsf", "/historialTecnico.jsf", 
-    		"/historialUsuario.jsf");
+    		"/historialUsuario.jsf","/roles.jsf");
     return registration;
   }
 }
