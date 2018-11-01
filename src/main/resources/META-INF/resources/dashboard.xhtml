@@ -16,9 +16,11 @@
 
 		<h:form id="frmTicketsPendientes">
 
-			<p:dataTable id="tickets_pendientes_table" var="ticket" selectionMode="single"
+			<p:dataTable id="tickets_pendientes_table" var="ticket"
+				selectionMode="single"
 				value="#{dashboardBackingBean.ticketsPendientes}" paginator="true"
-				rows="10" selection="#{dashboardBackingBean.ticketSeleccionado}" rowKey="#{ticket.idTicket}"
+				rows="10" selection="#{dashboardBackingBean.ticketSeleccionado}"
+				rowKey="#{ticket.idTicket}"
 				paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
 				sortBy="#{ticket.fechaCreacion}" reflow="true"
 				paginatorPosition="bottom">
@@ -35,7 +37,7 @@
 				</p:column>
 				<p:column headerText="Fecha de solicitud">
 					<h:outputText value="#{ticket.fechaCreacion}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Estado">
@@ -55,13 +57,51 @@
 
 		<h:form id="frmInfoTicket">
 			<p:dialog
-				header='#{"Ticket: ".concat(dashboardBackingBean.ticketSeleccionado.idTicket)}'
+				header='#{"Ticket #".concat(dashboardBackingBean.ticketSeleccionado.idTicket)}'
 				widgetVar="infoTicket" modal="true" showEffect="fade"
-				hideEffect="fade" resizable="false" width="90%" height="90%">
+				hideEffect="fade" resizable="false" width="90%" height="90%"
+				fitViewport="true">
 
+				<div class="frm-info">
+					<div class="izquierda">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Estado: "></p:outputLabel>
+							<p:outputLabel
+								value="#{dashboardBackingBean.ticketSeleccionado.idEstado.nombre}"></p:outputLabel>
+							<p:outputLabel value="Fecha de creación: "></p:outputLabel>
+							<p:outputLabel
+								value="#{dashboardBackingBean.ticketSeleccionado.fechaCreacion}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm"></f:convertDateTime>
+							</p:outputLabel>
+						</h:panelGrid>
 
-				<p:outputLabel value="yasss"></p:outputLabel>
-
+						<br />
+						<p:outputLabel value="Descripción:"></p:outputLabel>
+						<div class="div-descripcion">
+							<p:outputLabel
+								value="#{dashboardBackingBean.ticketSeleccionado.descripcion}"></p:outputLabel>
+						</div>
+					</div>
+					<p:outputLabel value="Comentarios:"></p:outputLabel>
+					<div class="derecha">
+						<div class="div-comentarios">
+							<p:repeat var="com"	value="#{dashboardBackingBean.ticketSeleccionado.comentarioList}">
+								<p:outputLabel value="#{com.idUsuarioCreador.nombre}"/>
+								<p:outputLabel value="#{com.fechaCreacion}">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm"></f:convertDateTime>
+								</p:outputLabel>
+								<p:outputLabel value="#{com.contenido}"/>
+							</p:repeat>
+						</div>
+						<div class="agregar-comentario">
+							<p:inputTextarea
+								value="#{dashboardBackingBean.comentario.contenido}"
+								autoResize="false"></p:inputTextarea>
+							<p:commandButton icon="fa fa-comments-o"
+								actionListener="#{dashboardBackingBean.crearComentario()}"></p:commandButton>
+						</div>
+					</div>
+				</div>
 			</p:dialog>
 		</h:form>
 
@@ -73,16 +113,19 @@
 				<div>
 					<p:outputLabel value="Descripción del problema"></p:outputLabel>
 				</div>
-				<p:messages for="txtDescripcion" autoUpdate="true"></p:messages>
+				<p:messages id="messages" for="txtDescripcion"></p:messages>
 				<div>
 					<p:inputTextarea rows="12" style="width:100%; margin:20px 0;"
 						id="txtDescripcion" value="#{dashboardBackingBean.descripcion}"
-						requiredMessage="Ingrese una descripción" required="true"
-						maxlength="3000"></p:inputTextarea>
+						requiredMessage="Ingrese una descripción"  required="true"
+						maxlength="3000" validatorMessage="Por favor brinde una descripción más completa del problema">
+						<f:validateLength minimum="25">
+ 					    </f:validateLength>
+						</p:inputTextarea>
 				</div>
 				<p:commandButton type="submit" value="Crear Ticket"
 					actionListener="#{dashboardBackingBean.crearTicket()}"
-					update="frmTicketsPendientes"></p:commandButton>
+					update="frmTicketsPendientes :frmCrearTicket:messages"></p:commandButton>
 			</h:form>
 
 		</p:dialog>

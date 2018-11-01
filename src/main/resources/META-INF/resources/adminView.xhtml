@@ -31,8 +31,9 @@
 					<h:outputText value="#{adm.descripcion}" />
 				</p:column>
 				<p:column headerText="Fecha Solicitud">
-					<h:outputText value="#{adm.fechaCreacion}">
-						<f:convertDateTime pattern="dd-mm-yyyy" />
+
+					<h:outputText value="#{adm.fechaSolicitud}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 					</h:outputText>
 				</p:column>
 			</p:dataTable>
@@ -71,6 +72,13 @@
 
 
 						<h:outputLabel styleClass="label_bold">Fecha:</h:outputLabel>
+								<p:outputLabel value="#{adminBackingBean.ticket.fechaSolicitud}" >
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+								</p:outputLabel>
+							
+							</h:panelGrid>
+							</p:panelGrid>
+						</h:form>
 
 						<p:outputLabel value="#{adminBackingBean.ticket.fechaCreacion}">
 							<f:convertDateTime pattern="dd-mm-yyyy" />
