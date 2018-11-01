@@ -65,10 +65,13 @@ public class AdminBackingBean implements Serializable{
 	
 public void asignacion() {
 	try {
+		System.out.println(selectedPersons);
 		if(!selectedPersons.isEmpty()) {
-		
+			System.out.println(ticket);
+
 			selectedPersons.forEach(item-> {
-				TicketEncargado ticketasignado=new TicketEncargado(); 
+				TicketEncargado ticketasignado=new TicketEncargado();
+				ticketasignado.setIdUsuarioCreador(usuarioLogueado);
 				ticketasignado.setIdTicket(ticket);
 				ticketasignado.setIdUsuario(item);	
 				tec.save(ticketasignado);
@@ -78,7 +81,7 @@ public void asignacion() {
 			tc.save(ticket);
 		}
 	} catch (Exception e) {
-		
+		e.printStackTrace();
 
 	}
 }

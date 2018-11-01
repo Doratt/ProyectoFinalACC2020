@@ -23,6 +23,6 @@ public interface UsuarioController {
     // idDepto IT o Mantenimiento
     public List<Usuario> findTecnicosBySucursal(Short idSucursal, Integer idDepartamento,boolean activo);
 
-    public Page<Usuario> findTecnicosBySucursal(Short idSucursal, Integer idDepartamento,boolean activo,Pageable pg);
+    public Page<Usuario> findTecnicosBySucursal(Short idSucursal,boolean activo,Pageable pg);
     
 }

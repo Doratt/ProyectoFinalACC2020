@@ -1,6 +1,9 @@
 package dsi235.boundary.backingBeans;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -8,6 +11,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
+import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 
 import org.primefaces.model.LazyDataModel;
@@ -18,22 +22,34 @@ import org.springframework.data.domain.PageRequest;
 
 import dsi235.controllers.UsuarioController;
 import dsi235.controllers.UsuarioRolController;
+import dsi235.entities.Rol;
 import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
+import dsi235.entities.UsuarioRol;
 import dsi235.utilities.PageParser;
 
 @ManagedBean(value = "rolesBackingBean")
 @ViewScoped
-public class RolesBackingBean {
-	private Usuario usuarioLogueado;
-	private UsuarioRolController usr;
+public class RolesBackingBean implements Serializable {
+	private Usuario usuarioLogueado, usuarioBindeado;
+	private UsuarioRolController urc;
 	private UsuarioController uc;
 	private LoginSessionBean loginHandler;
 	private LazyDataModel<Usuario> model;
+	private List<SelectItem> roles;
+	private List<String> checked;
 
 	@PostConstruct
-	public void init() {
+	public void init(){
+		checked=new ArrayList<>();
+		roles=new ArrayList<SelectItem>();
+		roles.add(new SelectItem("1", "Tecnico"));
+		roles.add(new SelectItem("2", "Administrador"));
+		roles.add(new SelectItem("3", "Gerente"));
 		this.usuarioLogueado = loginHandler.getUsuarioLogueado();
+	
+		inicializarModelo();
+		
 	}
 
 	public void inicializarModelo() {
@@ -83,6 +99,30 @@ public class RolesBackingBean {
 		}
 		return null;
 	}
+	public void select() {
+		checked.clear();
+		try {
+		usuarioBindeado.getUsuarioRolList().forEach(r->{
+			checked.add(String.valueOf(r.getIdRol().getIdRol()));
+		});
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void guardar() {
+		
+		checked.forEach(rol->{
+			UsuarioRol urRol = new UsuarioRol();
+			urRol.setIdUsuario(usuarioBindeado);
+			urRol.setIdUsuarioModificador(usuarioLogueado);
+			urRol.setIdRol(new Rol(Short.valueOf(rol)));
+			urRol.setFechaCreacion(new Date());
+			urRol.setIdUsuarioCreador(usuarioLogueado);
+			urc.save(urRol);
+		});
+		
+	}
 
 	public List<Usuario> cargarDatos(int first, int pageSize, String sortField, SortOrder sortOrder,
 			Map<String, Object> filters) {
@@ -91,9 +131,8 @@ public class RolesBackingBean {
 
 		try {
 			short sucursal = this.usuarioLogueado.getIdSucursal().getIdSucursal();
-			Integer idDepartamento = this.usuarioLogueado.getIdDepartamento().getIdDepartamento();
 			if (this.uc != null) {
-				page = this.uc.findTecnicosBySucursal(sucursal, idDepartamento, true,
+				page = this.uc.findTecnicosBySucursal(sucursal, true,
 						PageRequest.of(PageParser.parsePage(first, pageSize), pageSize));
 				salida = page.getContent();
 				if (this.model != null) {
@@ -111,7 +150,6 @@ public class RolesBackingBean {
 		return salida;
 	}
 
-	
 	public Usuario getUser() {
 		return usuarioLogueado;
 	}
@@ -120,13 +158,13 @@ public class RolesBackingBean {
 		this.usuarioLogueado = user;
 	}
 
-	public UsuarioRolController getUsr() {
-		return usr;
+	public UsuarioRolController getUrc() {
+		return urc;
 	}
 
 	@Autowired
-	public void setUsr(UsuarioRolController usr) {
-		this.usr = usr;
+	public void setUrc(UsuarioRolController urc) {
+		this.urc = urc;
 	}
 
 	public UsuarioController getUc() {
@@ -154,5 +192,32 @@ public class RolesBackingBean {
 	public void setModel(LazyDataModel<Usuario> model) {
 		this.model = model;
 	}
+	
+
+	public List<SelectItem> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<SelectItem> roles) {
+		this.roles = roles;
+	}
+
+	public Usuario getUsuarioBindeado() {
+		return usuarioBindeado;
+	}
+
+	public void setUsuarioBindeado(Usuario usuarioBindeado) {
+		this.usuarioBindeado = usuarioBindeado;
+	}
+
+	public List<String> getChecked() {
+		return checked;
+	}
+
+	public void setChecked(List<String> checked) {
+		this.checked = checked;
+	}
+	
+	
 
 }

@@ -14,6 +14,6 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long>{
 	
 	//findTecnicosBySucursal
 	public List<Usuario> findByIdSucursal_IdSucursalAndIdDepartamento_IdDepartamentoAndActivo(Short idSucursal, Integer idDepartamento,boolean activo);
-	public Page<Usuario> findByIdSucursal_IdSucursalAndIdDepartamento_IdDepartamentoAndActivo(Short idSucursal, Integer idDepartamento,boolean activo,Pageable pg);
-
+	public Page<Usuario> findByIdSucursal_IdSucursalAndActivo(Short idSucursal,boolean activo,Pageable pg);
+	
 }

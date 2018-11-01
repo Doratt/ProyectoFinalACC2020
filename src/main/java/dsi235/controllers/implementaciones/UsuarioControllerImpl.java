@@ -29,8 +29,8 @@ public class UsuarioControllerImpl extends AbstractCrudControllerImpl<Usuario, L
 	}
 
 	@Override
-	public Page<Usuario> findTecnicosBySucursal(Short idSucursal, Integer idDepartamento,boolean activo,Pageable pg) {
-		return this.usuarioRepository.findByIdSucursal_IdSucursalAndIdDepartamento_IdDepartamentoAndActivo(idSucursal, idDepartamento,activo,pg);
+	public Page<Usuario> findTecnicosBySucursal(Short idSucursal,boolean activo,Pageable pg) {
+		return this.usuarioRepository.findByIdSucursal_IdSucursalAndActivo(idSucursal, activo, pg);
 	}
 
 	@Override

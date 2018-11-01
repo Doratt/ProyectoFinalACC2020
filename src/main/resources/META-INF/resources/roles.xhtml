@@ -7,10 +7,45 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="layout.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<p:dataTable id="roles_data" paginatorPosition="bottom"
+				value="#{rolesBackingBean.model}" var="rol"
+				emptyMessage="Aun no existen usuarios" lazy="true" rows="6"
+				paginator="true" reflow="true"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink}
+                         {NextPageLink} {LastPageLink}"
+                         selectionMode="single"
+				selection="#{rolesBackingBean.usuarioBindeado}">
+				<p:ajax event="rowSelect" oncomplete="PF('rol_dialog').show();" 
+				listener="#{rolesBackingBean.select}" update=":checkForm:menu"/>
 
-<p:dataTable >
-<p:column headerText="ID"></p:column>
-<p:column headerText="Empleado"></p:column>
-</p:dataTable>
+				<p:column headerText="ID">
+					<h:outputText value="#{rol.idUsuario}" />
+				</p:column>
+				<p:column headerText="Empleado">
+					<h:outputText value="#{rol.nombre}" />
 
+				</p:column>
+				<p:column headerText="Departamento">
+					<h:outputText value="#{rol.idDepartamento.nombre}" />
+
+				</p:column>
+
+
+			</p:dataTable>
+	
+		</h:form>
+				<p:dialog  id="rol" widgetVar="rol_dialog" header="Administrar roles" position="center">
+			<h:form id="checkForm">
+				<p:selectManyCheckbox id="menu" value="#{rolesBackingBean.checked}"
+					label="Ver" panelStyle="width:250px">
+					<p:ajax event="change" />
+					<f:selectItems value="#{rolesBackingBean.roles}" />
+				</p:selectManyCheckbox>
+				<p:commandButton value="Guardar" actionListener="#{rolesBackingBean.guardar}"/>
+				</h:form>
+</p:dialog>
+	</ui:define>
 </ui:composition>
+</html>

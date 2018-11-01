@@ -25,13 +25,13 @@
 					<h:outputText value="#{adm.idTicket}" />
 				</p:column>
 				<p:column headerText="Solicitante">
-					<h:outputText value="#{adm.idUsuario.nombre}" />
+					<h:outputText value="#{adm.idUsuarioCreador.nombre}" />
 				</p:column>
 				<p:column headerText="Descripcion">
 					<h:outputText value="#{adm.descripcion}" />
 				</p:column>
 				<p:column headerText="Fecha Solicitud">
-					<h:outputText value="#{adm.fechaSolicitud}">
+					<h:outputText value="#{adm.fechaCreacion}">
 						<f:convertDateTime pattern="dd-mm-yyyy" />
 					</h:outputText>
 				</p:column>
@@ -40,74 +40,80 @@
 
 		<p:dialog header="Asignar ticket" widgetVar="ticketInfo" modal="true"
 			resizable="false" width="60%">
-				
-						<h:form id="frmInfoTicket">
+
+			<h:form id="frmInfoTicket">
 
 
-					<p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank">
-							<h:panelGrid columns="2" cellpadding="2" >
-								<h:outputLabel styleClass="label_bold">ID:</h:outputLabel>
+				<p:panelGrid columns="2"
+					columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+					layout="grid" styleClass="ui-panelgrid-blank">
+					<h:panelGrid columns="2" cellpadding="2">
+						<h:outputLabel styleClass="label_bold">ID:</h:outputLabel>
 
-								<p:outputLabel value="#{adminBackingBean.ticket.idTicket}"></p:outputLabel>
-
-
-
-								<h:outputLabel for="list" value="Prioridad:" styleClass="label_bold"/>
-								<p:selectOneMenu id="list" value="#{adminBackingBean.ticket}">
-									<f:selectItem itemLabel="Alta" itemValue="1" />
-									<f:selectItem itemLabel="Media" itemValue="2" />
-									<f:selectItem itemLabel="Baja" itemValue="3" />
-								</p:selectOneMenu>
-						</h:panelGrid>
-
-						<h:panelGrid columns="2" cellpadding="4" styleClass="grid_layout">
-								<h:outputLabel styleClass="label_bold">Solicitante:</h:outputLabel>
-
-								<p:outputLabel
-									value="#{adminBackingBean.ticket.idUsuario.nombre}" ></p:outputLabel>
+						<p:outputLabel value="#{adminBackingBean.ticket.idTicket}"></p:outputLabel>
 
 
-								<h:outputLabel styleClass="label_bold">Fecha:</h:outputLabel>
 
-								<p:outputLabel value="#{adminBackingBean.ticket.fechaSolicitud}" >
-									<f:convertDateTime pattern="dd-mm-yyyy" />
-								</p:outputLabel>
-							
-							</h:panelGrid>
-							</p:panelGrid>
-						</h:form>
+						<h:outputLabel for="list" value="Prioridad:"
+							styleClass="label_bold" />
+						<p:selectOneMenu id="list" value="#{adminBackingBean.ticket}">
+							<f:selectItem itemLabel="Alta" itemValue="1" />
+							<f:selectItem itemLabel="Media" itemValue="2" />
+							<f:selectItem itemLabel="Baja" itemValue="3" />
+						</p:selectOneMenu>
+					</h:panelGrid>
 
-				
+					<h:panelGrid columns="2" cellpadding="4" styleClass="grid_layout">
+						<h:outputLabel styleClass="label_bold">Solicitante:</h:outputLabel>
 
-						<h:form id="table">
-							<p:outputLabel value="Filtrar tecnicos" />
-							<p:selectOneRadio id="filter_dep"
-								value="#{adminBackingBean.idDepartamento}" required="true">
-								<f:selectItem itemLabel="IT" itemValue="1" />
-								<f:selectItem itemLabel="Mantenimiento" itemValue="2" />
-								<p:ajax event="change"
-									listener="#{adminBackingBean.actualizarTabla()}"
-									update=":table"></p:ajax>
-							</p:selectOneRadio>
-							<p:dataTable id="encargados" var="enc"
-								value="#{adminBackingBean.users}" reflow="true" selection="#{adminBackingBean.selectedPersons}"
-								rowKey="#{enc.idUsuario}" scrollable="true" scrollHeight="100">
-								<f:facet name="header">
+						<p:outputLabel
+							value="#{adminBackingBean.ticket.idUsuarioCreador.nombre}"></p:outputLabel>
+
+
+						<h:outputLabel styleClass="label_bold">Fecha:</h:outputLabel>
+
+						<p:outputLabel value="#{adminBackingBean.ticket.fechaCreacion}">
+							<f:convertDateTime pattern="dd-mm-yyyy" />
+						</p:outputLabel>
+
+					</h:panelGrid>
+				</p:panelGrid>
+			</h:form>
+
+
+
+			<h:form id="table">
+				<p:outputLabel value="Filtrar tecnicos" />
+				<p:selectOneRadio id="filter_dep"
+					value="#{adminBackingBean.idDepartamento}" required="true">
+					<f:selectItem itemLabel="IT" itemValue="1" />
+					<f:selectItem itemLabel="Mantenimiento" itemValue="2" />
+					<p:ajax event="change"
+						listener="#{adminBackingBean.actualizarTabla()}" update=":table"></p:ajax>
+				</p:selectOneRadio>
+				<p:dataTable id="encargados" var="enc"
+					value="#{adminBackingBean.users}" reflow="true"
+					selection="#{adminBackingBean.selectedPersons}"
+					rowKey="#{enc.idUsuario}" scrollable="true" scrollHeight="100">
+					<f:facet name="header">
             		Empleados
            			 </f:facet>
-           			 			<p:column selectionMode="multiple" style="width:100px;text-align:center"/>
-								<p:column headerText="ID Empleado">
-									<h:outputText value="#{enc.idUsuario}" />
-								</p:column>
-								<p:column headerText="Nombre">
-									<h:outputText value="#{enc.nombre}" />
-								</p:column>
+					<p:column selectionMode="multiple"
+						style="width:100px;text-align:center"/>
+					<p:column headerText="ID Empleado">
+						<h:outputText value="#{enc.idUsuario}" />
+					</p:column>
+					<p:column headerText="Nombre">
+						<h:outputText value="#{enc.nombre}" />
+					</p:column>
 
-							</p:dataTable>
-								<p:commandButton type="submit" value="Asignar Ticket" onclick="PF('ticketInfo').hide();"
-								actionListener="#{adminBackingBean.asignacion}" style="margin-top:5px;" update=":form:ticket_data"></p:commandButton>
-						</h:form>
-				
+				</p:dataTable>
+				<p:commandButton type="submit" value="Asignar Ticket"
+					onclick="PF('ticketInfo').hide();"
+					actionListener="#{adminBackingBean.asignacion}"
+					style="margin-top:5px;" update=":form:ticket_data"></p:commandButton>
+			</h:form>
+
 
 
 		</p:dialog>
