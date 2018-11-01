@@ -17,20 +17,28 @@
 		<h:form id="historial_tecnico_form">
 
 			<p:dataTable id="historial_tecnico_table" var="ticket"
-				value="#{historialTecnicoBackingBean.historialTicketTecnico}"
-				paginator="true" rows="5" reflow="true"
-				paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}">
+				value="#{historialTecnicoBackingBean.model}"
+				paginator="true" rows="5" reflow="true" lazy="true"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+				rowKey="#{ticket.idTicket}" selection="#{historialTecnicoBackingBean.ticket}">
 				<f:facet name="header">
             Historial de tickets completados por técnico
             </f:facet>
 				<p:column headerText="Numero de Ticket">
-					<h:outputText value="#{ticket.id}" />
+					<h:outputText value="#{ticket.idTicket}" />
 				</p:column>
 				<p:column headerText="Descripcion">
 					<h:outputText value="#{ticket.descripcion}" />
 				</p:column>
 				<p:column headerText="Fecha de solicitud">
-					<h:outputText value="#{ticket.fechaSolicitud}" />
+					<h:outputText value="#{ticket.fechaCreacion}">
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+					</h:outputText>
+				</p:column>
+					<p:column headerText="Fecha completado">
+					<h:outputText value="#{ticket.fechaCompletado}">
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+					</h:outputText>
 				</p:column>
 			</p:dataTable>
 

@@ -43,8 +43,7 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 	}
 	@Override
 	public Page<Ticket> findCompletadosByEncargado(Long idEncargado, Pageable pg) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.ticketRepository.findCompletadosByEncargado(idEncargado, Short.valueOf("5"), pg);
 	}
 
 	@Override
