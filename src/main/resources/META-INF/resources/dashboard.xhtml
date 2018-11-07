@@ -27,8 +27,9 @@
 				<f:facet name="header">
             	Tickets No Completados
             	</f:facet>
-				<p:ajax event="rowSelect" oncomplete="PF('infoTicket').show();"
-					update=":frmInfoTicket" />
+				<p:ajax event="rowSelect"
+					listener="#{dashboardBackingBean.cargarComentarios}"
+					oncomplete="PF('infoTicket').show();" update=":frmInfoTicket" />
 				<p:column headerText="Solicitante">
 					<h:outputText value="#{ticket.idUsuarioCreador.nombre}" />
 				</p:column>
@@ -55,13 +56,13 @@
 
 
 
-		<h:form id="frmInfoTicket">
-			<p:dialog
-				header='#{"Ticket #".concat(dashboardBackingBean.ticketSeleccionado.idTicket)}'
-				widgetVar="infoTicket" modal="true" showEffect="fade"
-				hideEffect="fade" resizable="false" width="90%" height="90%"
-				fitViewport="true">
 
+		<p:dialog
+			header='#{"Ticket #".concat(dashboardBackingBean.ticketSeleccionado.idTicket)}'
+			widgetVar="infoTicket" modal="true" showEffect="fade"
+			hideEffect="fade" resizable="false" width="90%" height="90%"
+			fitViewport="true">
+			<h:form id="frmInfoTicket">
 				<div class="frm-info">
 					<div class="izquierda">
 						<h:panelGrid columns="2">
@@ -84,26 +85,33 @@
 					</div>
 					<p:outputLabel value="Comentarios:"></p:outputLabel>
 					<div class="derecha">
-						<div class="div-comentarios">
-							<p:repeat var="com"	value="#{dashboardBackingBean.ticketSeleccionado.comentarioList}">
-								<p:outputLabel value="#{com.idUsuarioCreador.nombre}"/>
-								<p:outputLabel value="#{com.fechaCreacion}">
+						<div id="divComents" class="div-comentarios">
+							<p:repeat var="com" value="#{dashboardBackingBean.comentarios}">
+								<p:outputLabel style="margin-right:10px; font-weight:bold"
+									value="#{com.idUsuarioCreador.nombre}" />
+								<p:outputLabel value="#{com.fechaCreacion}"
+									style="font-weight:bold;">
 									<f:convertDateTime pattern="dd/MM/yyyy HH:mm"></f:convertDateTime>
 								</p:outputLabel>
-								<p:outputLabel value="#{com.contenido}"/>
+								<br />
+								<p:outputLabel value="#{com.contenido}" />
+								<p:separator style="border-color:#A3CB80; width:75%;" />
 							</p:repeat>
 						</div>
-						<div class="agregar-comentario">
+						<div class="agregar-comentario" style="margin-top: 10px;">
 							<p:inputTextarea
 								value="#{dashboardBackingBean.comentario.contenido}"
 								autoResize="false"></p:inputTextarea>
 							<p:commandButton icon="fa fa-comments-o"
-								actionListener="#{dashboardBackingBean.crearComentario()}"></p:commandButton>
+								actionListener="#{dashboardBackingBean.crearComentario()}"
+								update=":frmInfoTicket">
+							</p:commandButton>
 						</div>
 					</div>
 				</div>
-			</p:dialog>
-		</h:form>
+			</h:form>
+		</p:dialog>
+
 
 		<p:dialog header="Crear nuevo ticket" widgetVar="createTicket"
 			modal="true" showEffect="fade" hideEffect="fade" resizable="false"
@@ -117,11 +125,12 @@
 				<div>
 					<p:inputTextarea rows="12" style="width:100%; margin:20px 0;"
 						id="txtDescripcion" value="#{dashboardBackingBean.descripcion}"
-						requiredMessage="Ingrese una descripción"  required="true"
-						maxlength="3000" validatorMessage="Por favor brinde una descripción más completa del problema">
+						requiredMessage="Ingrese una descripción" required="true"
+						maxlength="3000"
+						validatorMessage="Por favor brinde una descripción más completa del problema">
 						<f:validateLength minimum="25">
- 					    </f:validateLength>
-						</p:inputTextarea>
+						</f:validateLength>
+					</p:inputTextarea>
 				</div>
 				<p:commandButton type="submit" value="Crear Ticket"
 					actionListener="#{dashboardBackingBean.crearTicket()}"

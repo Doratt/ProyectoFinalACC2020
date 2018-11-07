@@ -17,14 +17,17 @@
 			<f:facet name="header">
             Asignaciones Pendientes
             </f:facet>
+            <p:column headerText="Numero de ticket">
+				<h:outputText value="#{ticket.idTicket}" />
+			</p:column>
 			<p:column headerText="Solicitante">
-				<h:outputText value="#{ticket.idUsuario.nombre}" />
+				<h:outputText value="#{ticket.idUsuarioCreador.nombre}" />
 			</p:column>
 			<p:column headerText="Descripcion">
 				<h:outputText value="#{ticket.descripcion}" />
 			</p:column>
 			<p:column headerText="Fecha de solicitud">
-				<h:outputText value="#{ticket.fechaSolicitud}"><f:convertDateTime pattern ="dd-mm-yyyy"/></h:outputText>
+				<h:outputText value="#{ticket.fechaCreacion}"><f:convertDateTime pattern ="dd-mm-yyyy"/></h:outputText>
 			</p:column>
 			<p:column headerText="Estado">
 				<h:outputText value="#{ticket.idEstado.nombre}" />
