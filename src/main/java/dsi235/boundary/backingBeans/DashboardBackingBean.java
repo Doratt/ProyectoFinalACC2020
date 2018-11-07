@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.annotation.SessionScope;
 
 import dsi235.controllers.ComentarioController;
@@ -21,7 +22,7 @@ import dsi235.entities.Usuario;
 import dsi235.utilities.ESTADO;
 import dsi235.utilities.EstadosLoader;
 
-@ManagedBean(value="dashboardBackingBean")
+@ManagedBean(value = "dashboardBackingBean")
 @SessionScope
 public class DashboardBackingBean implements Serializable {
 
@@ -40,39 +41,38 @@ public class DashboardBackingBean implements Serializable {
 	private List<Ticket> ticketsPendientes;
 	private Comentario comentario;
 	private ComentarioController comentarioController;
-	
-	
-	 @PostConstruct
-	    public void init() {
-		 setTicketsPendientes(tc.findNoCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario()));
-		 setComentario(new Comentario());
+	private List<Comentario> comentarios;
 
-	 }
-	
+	@PostConstruct
+	public void init() {
+		setTicketsPendientes(tc.findNoCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario()));
+		setComentario(new Comentario());
+	}
+
 	public void crearTicket() {
 		setTicket(new Ticket());
 		ticket.setIdUsuarioCreador(sessionBean.getUsuarioLogueado());
-		if(getDescripcion().length()<= 3000) {
-			if(getDescripcion().length() > 25) {
-				ticket.setDescripcion(getDescripcion());
-				ticket.setIdEstado(el.get(ESTADO.creado.value));
-				descripcion= null;
-				try {
-					tc.save(getTicket());
-					init();
-					PrimeFaces current = PrimeFaces.current();
-					this.ticket = new Ticket();
-					current.executeScript("PF('createTicket').hide()");
-				} catch (Exception e) {
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Parece que hubo un problema con la creación de tu ticket"));
-				}	
+		if (getDescripcion().length() <= 3000 && getDescripcion().length() > 25) {
+
+			ticket.setDescripcion(getDescripcion());
+			ticket.setIdEstado(el.get(ESTADO.creado.value));
+			descripcion = null;
+			try {
+				tc.save(getTicket());
+				init();
+				PrimeFaces current = PrimeFaces.current();
+				this.ticket = new Ticket();
+				current.executeScript("PF('createTicket').hide()");
+			} catch (Exception e) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Error!", "Parece que hubo un problema con la creación de tu ticket"));
 			}
 		}
 	}
-	
+
 	public void crearComentario() {
-		
-		if(!comentario.getContenido().isEmpty()) {
+
+		if (!comentario.getContenido().isEmpty()) {
 			comentario.setActivo(true);
 			comentario.setFechaCreacion(new Date());
 			comentario.setIdTicket(this.ticketSeleccionado);
@@ -80,46 +80,44 @@ public class DashboardBackingBean implements Serializable {
 			try {
 				comentarioController.save(comentario);
 				this.comentario = new Comentario();
-			}catch(Exception e) {
+				cargarComentarios();
+			} catch (Exception e) {
 				e.printStackTrace();
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Hubo un problema con la creación del comentario"));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Error!", "Hubo un problema con la creación del comentario"));
 			}
-		}else {
+		} else {
 			System.out.println("contenido isempty");
 		}
-		
 	}
-
+	
+	public void cargarComentarios() {
+		setComentarios(comentarioController.findByIdTicket(ticketSeleccionado));
+	}
 
 	public Ticket getTicket() {
 		return ticket;
 	}
-	
 
 	public void setTicket(Ticket ticket) {
 		this.ticket = ticket;
 	}
 
-
 	public String getDescripcion() {
 		return descripcion;
 	}
-
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
-
 	public Usuario getUsuarioLogeado() {
 		return usuarioLogeado;
 	}
 
-
 	public void setUsuarioLogeado(Usuario usuarioLogeado) {
 		this.usuarioLogeado = usuarioLogeado;
 	}
-
 
 	public TicketController getTc() {
 		return tc;
@@ -169,12 +167,12 @@ public class DashboardBackingBean implements Serializable {
 		this.comentarioController = comentarioController;
 	}
 
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
 
-	
-	
-	
-	
-	
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
 }
-
-

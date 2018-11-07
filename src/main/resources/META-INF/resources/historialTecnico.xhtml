@@ -20,7 +20,7 @@
 				value="#{historialTecnicoBackingBean.model}"
 				paginator="true" rows="5" reflow="true" lazy="true"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
-				rowKey="#{ticket.idTicket}" selection="#{historialTecnicoBackingBean.ticket}">
+				rowKey="#{ticket.idTicket}" selection="#{historialTecnicoBackingBean.ticket}" emptyMessage="No hay tickets completados">
 				<f:facet name="header">
             Historial de tickets completados por técnico
             </f:facet>
