@@ -14,14 +14,21 @@
 	<ui:define name="content">
 
 
-		<h:form id="historial_usuario_form">
 
+		<h:form id="historial_usuario_form">
+		<p:contextMenu for="historial_usuario_table"
+				event="click contextmenu">
+				<p:menuitem value="  Reabrir ticket" icon="fa fa-refresh" actionListener="#{historialUsuarioBackingBean.saludar}"/>
+				<p:menuitem value="  Calificar Solucion" icon="fa fa-star" oncomplete="PF('calificarTicket').show()"></p:menuitem>
+			</p:contextMenu>
 			<p:dataTable id="historial_usuario_table" var="ticket"
-				value="#{historialUsuarioBackingBean.model}"
-				paginator="true" rows="5" reflow="true" lazy="true"
-				paginatorPosition="bottom"
+				value="#{historialUsuarioBackingBean.model}" paginator="true"
+				rows="5" reflow="true" lazy="true" paginatorPosition="bottom"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
-				rowKey="#{ticket.idTicket}" selection="#{historialUsuarioBackingBean.ticket}">
+				rowKey="#{ticket.idTicket}"
+				selection="#{historialUsuarioBackingBean.ticket}" 
+				selectionMode="single"
+				>
 				<f:facet name="header">
             Historial de tickets completados por usuario
             </f:facet>
@@ -33,15 +40,33 @@
 				</p:column>
 				<p:column headerText="Fecha de solicitud">
 					<h:outputText value="#{ticket.fechaCreacion}">
-					<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Fecha completado">
 					<h:outputText value="#{ticket.fechaCompletado}">
-					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 					</h:outputText>
 				</p:column>
 			</p:dataTable>
+
+			<p:dialog header="Calificar solucion" widgetVar="calificarTicket"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="false"
+			width="80%" height="80%">
+
+			<h:form id="frmCalificarTicket">
+				<p:rating stars="10" cancel="false" value="#{historialUsuarioBackingBean.calificacion}"></p:rating>
+				<p:outputLabel value="Deja un breve comentario para describir tu experiencia: (Opcional)" ></p:outputLabel>
+				<p:inputTextarea
+								value="#{historialUsuarioBackingBean.comentario}"
+								autoResize="false"></p:inputTextarea>
+				<p:commandButton type="submit" value="Calificar"
+					actionListener="#{historialUsuarioBackingBean.calificarTicket}"
+					></p:commandButton>
+			</h:form>
+
+		</p:dialog>
+
 
 		</h:form>
 	</ui:define>

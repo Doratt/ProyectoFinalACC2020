@@ -11,7 +11,6 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.annotation.SessionScope;
 
 import dsi235.controllers.ComentarioController;
@@ -42,6 +41,7 @@ public class DashboardBackingBean implements Serializable {
 	private Comentario comentario;
 	private ComentarioController comentarioController;
 	private List<Comentario> comentarios;
+
 
 	@PostConstruct
 	public void init() {
@@ -88,6 +88,22 @@ public class DashboardBackingBean implements Serializable {
 			}
 		} else {
 			System.out.println("contenido isempty");
+		}
+	}
+	
+	public void cancelarTicket() {
+		System.out.println("Llegue al metodo");
+		ticketSeleccionado.setFechaCompletado(new Date());
+		ticketSeleccionado.setFechaModificacion(new Date());
+		ticketSeleccionado.setIdEstado(el.get(ESTADO.completado.value));
+		ticketSeleccionado.setIdUsuarioModificador(sessionBean.getUsuarioLogueado());
+		try {
+			tc.save(ticketSeleccionado);
+			init();
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Error!", "Hubo un problema al cancelar su ticket"));
+			e.printStackTrace();
 		}
 	}
 	
@@ -174,5 +190,9 @@ public class DashboardBackingBean implements Serializable {
 	public void setComentarios(List<Comentario> comentarios) {
 		this.comentarios = comentarios;
 	}
+
+	
+	
+	
 
 }

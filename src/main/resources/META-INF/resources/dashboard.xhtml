@@ -31,6 +31,9 @@
 					listener="#{dashboardBackingBean.cargarComentarios}"
 					oncomplete="PF('infoTicket').show();" update=":frmInfoTicket" />
 				<p:column headerText="Solicitante">
+					<h:outputText value="#{ticket.idTicket}" />
+				</p:column>
+				<p:column headerText="Solicitante">
 					<h:outputText value="#{ticket.idUsuarioCreador.nombre}" />
 				</p:column>
 				<p:column headerText="Descripcion">
@@ -82,6 +85,13 @@
 							<p:outputLabel
 								value="#{dashboardBackingBean.ticketSeleccionado.descripcion}"></p:outputLabel>
 						</div>
+						<p:commandButton
+							actionListener="#{dashboardBackingBean.cancelarTicket()}"
+							type="submit"
+							value="Cancelar ticket" 
+							update="frmTicketsPendientes"
+							oncomplete="PF('infoTicket').hide();">
+						</p:commandButton>
 					</div>
 					<p:outputLabel value="Comentarios:"></p:outputLabel>
 					<div class="derecha">
