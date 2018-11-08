@@ -2,6 +2,7 @@ package dsi235.boundary.backingBeans;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -17,7 +18,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.context.annotation.SessionScope;
 
+import dsi235.controllers.RetroalimentacionController;
 import dsi235.controllers.TicketController;
+import dsi235.entities.Retroalimentacion;
 import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
 import dsi235.utilities.PageParser;
@@ -34,6 +37,10 @@ public class historialUsuarioBackingBean implements Serializable{
 	private TicketController tc;
 	private LoginSessionBean sessionBean;
 	private Page<Ticket> historialTicketUsuario;
+	private Short calificacion;
+	private String comentario;
+	private RetroalimentacionController rc;
+	private Retroalimentacion retroalimentacion;
 
 	
 	
@@ -46,8 +53,25 @@ public class historialUsuarioBackingBean implements Serializable{
 		//historialTicketTecnico= tc.findCompletadosByEncargado(sessionBean.getUsuarioLogueado().getIdUsuario(), 1, 5);
 	}
 	
+	public void calificarTicket() {
+		retroalimentacion = new Retroalimentacion();
+		retroalimentacion.setCalificacion(calificacion);
+		if(!comentario.isEmpty()) {
+			retroalimentacion.setComentario(comentario);
+		}
+		retroalimentacion.setFechaCreacion(new Date());
+		retroalimentacion.setIdTicket(ticket);
+		retroalimentacion.setIdUsuarioCreador(sessionBean.getUsuarioLogueado());
+		retroalimentacion.setActivo(true);
+		try {
+			rc.save(retroalimentacion);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public void inicializarModelo() {
-		System.out.println("Me estoy inicializando");
 		try {
 		model=new LazyDataModel<Ticket>() {
 			
@@ -71,7 +95,6 @@ public class historialUsuarioBackingBean implements Serializable{
 	}
 
 	   public Object obtenerRowKey(Ticket object) {
-		   System.out.println("Obteniendo row data");
 	        if (object != null) {
 	            return object.getIdTicket();
 	        }
@@ -166,4 +189,39 @@ public class historialUsuarioBackingBean implements Serializable{
 		this.historialTicketUsuario = historialTicket;
 	}
 
+	public Short getCalificacion() {
+		return calificacion;
+	}
+
+	public void setCalificacion(Short calificacion) {
+		this.calificacion = calificacion;
+	}
+
+	public String getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
+
+	public RetroalimentacionController getRc() {
+		return rc;
+	}
+
+	@Autowired
+	public void setRc(RetroalimentacionController rc) {
+		this.rc = rc;
+	}
+
+	public Retroalimentacion getRetroalimentacion() {
+		return retroalimentacion;
+	}
+
+	public void setRetroalimentacion(Retroalimentacion retroalimentacion) {
+		this.retroalimentacion = retroalimentacion;
+	}
+	
+	
+	
 }

@@ -5,19 +5,17 @@
 -- Dumped from database version 9.4.19
 -- Dumped by pg_dump version 9.6.10
 
--- Started on 2018-10-31 13:17:14 CST
+-- Started on 2018-11-08 09:55:32 CST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
--- SET idle_in_transaction_session_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
-
--- SET row_security = off;
-
+SET row_security = off;
 
 --
 -- TOC entry 2158 (class 0 OID 16385)
@@ -116,18 +114,20 @@ INSERT INTO public.estado VALUES (5, 'Completado', 'El tecnico ha marcado el tic
 -- Data for Name: ticket; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.ticket VALUES (1, 1, 'Prueba de creacion de tickets', '2018-10-31 05:36:02.908+00', NULL, NULL, 5, NULL, NULL, true);
-INSERT INTO public.ticket VALUES (7, 1, 'uno mas de la pc jaja jeje', '2018-10-31 06:17:47.383+00', NULL, NULL, 1, NULL, NULL, false);
-INSERT INTO public.ticket VALUES (8, 1, 'Aqui solo llenando tickets', '2018-10-31 06:17:55.745+00', NULL, NULL, 1, NULL, NULL, false);
-INSERT INTO public.ticket VALUES (10, 1, 'Preparando para ver que pex', '2018-10-31 06:18:06.213+00', NULL, NULL, 1, NULL, NULL, false);
 INSERT INTO public.ticket VALUES (2, 1, 'Mire no me funcion ael internet', '2018-10-31 05:01:52.577+00', NULL, NULL, 5, NULL, NULL, true);
 INSERT INTO public.ticket VALUES (3, 1, 'No encienden las luces del cpu', '2018-10-31 05:03:18.035+00', NULL, NULL, 5, NULL, NULL, true);
-INSERT INTO public.ticket VALUES (4, 1, 'Problema generico de la pc', '2018-10-31 06:17:14.351+00', NULL, NULL, 5, NULL, NULL, false);
-INSERT INTO public.ticket VALUES (5, 1, 'Otro problema generico de la pc', '2018-10-31 06:17:24.874+00', NULL, NULL, 5, NULL, NULL, false);
-INSERT INTO public.ticket VALUES (6, 1, 'OTRO PROBLEMA GENERICO DE LA PC', '2018-10-31 06:17:33.262+00', NULL, NULL, 5, NULL, NULL, false);
-INSERT INTO public.ticket VALUES (9, 6, 'Mi computadora no detecta el monitor. El monitor enciende pero no da imagen.  ', '2018-10-31 06:33:21.537+00', NULL, NULL, 5, NULL, NULL, false);
-INSERT INTO public.ticket VALUES (11, 6, 'Mi Monitor no enciende, solo enciende el LED, pero no da imagen.', '2018-10-31 06:37:34.835+00', NULL, NULL, 1, NULL, NULL, false);
-INSERT INTO public.ticket VALUES (12, 6, 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?', '2018-10-31 06:38:29.64+00', NULL, NULL, 1, NULL, NULL, false);
+INSERT INTO public.ticket VALUES (10, 1, 'El mouse de la computadora no funciona', '2018-11-07 17:30:14.428+00', '2018-11-07 17:30:14.428+00', NULL, 5, 1, '2018-11-07 17:30:14.428+00', false);
+INSERT INTO public.ticket VALUES (9, 6, 'Mi computadora no detecta el monitor. El monitor enciende pero no da imagen.  ', '2018-10-31 06:33:21.537+00', NULL, NULL, 1, NULL, NULL, false);
+INSERT INTO public.ticket VALUES (1, 1, 'Problema con los headsets ', '2018-10-31 05:36:02.908+00', NULL, NULL, 5, NULL, NULL, true);
+INSERT INTO public.ticket VALUES (4, 1, 'La pc no enciende en la manana', '2018-10-31 06:17:14.351+00', NULL, NULL, 5, NULL, NULL, false);
+INSERT INTO public.ticket VALUES (5, 1, 'El internet esta muy lento', '2018-10-31 06:17:24.874+00', NULL, NULL, 5, NULL, NULL, false);
+INSERT INTO public.ticket VALUES (6, 1, 'La cerradura de la puerta no funciona', '2018-10-31 06:17:33.262+00', NULL, NULL, 5, NULL, NULL, false);
+INSERT INTO public.ticket VALUES (7, 1, 'La computadora tarda demasiado en arrancar', '2018-10-31 06:17:47.383+00', NULL, NULL, 1, NULL, NULL, false);
+INSERT INTO public.ticket VALUES (8, 1, 'Las lamparas parpadean', '2018-10-31 06:17:55.745+00', NULL, NULL, 1, NULL, NULL, false);
+INSERT INTO public.ticket VALUES (12, 6, 'El monitor de la computadora parpadea', '2018-10-31 23:34:05.046+00', NULL, NULL, 2, NULL, NULL, false);
+INSERT INTO public.ticket VALUES (11, 6, 'Mi Monitor no enciende, solo enciende el LED, pero no da imagen.', '2018-10-31 06:37:34.835+00', NULL, NULL, 5, NULL, NULL, false);
+INSERT INTO public.ticket VALUES (14, 1, 'Descripcion valida con muchos caracteres', '2018-11-07 17:25:13.015+00', '2018-11-07 17:25:13.015+00', NULL, 5, 1, '2018-11-07 17:25:13.015+00', false);
+INSERT INTO public.ticket VALUES (13, 1, 'El telefono no tiene tono', '2018-11-07 17:25:21.832+00', '2018-11-07 17:25:21.832+00', NULL, 5, 1, '2018-11-07 17:25:21.832+00', false);
 
 
 --
@@ -136,6 +136,11 @@ INSERT INTO public.ticket VALUES (12, 6, 'Sed ut perspiciatis unde omnis iste na
 -- Data for Name: comentario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO public.comentario VALUES (1, 8, 3, '2018-10-31 06:17:47.383+00', 'Primer comentario insertado desde pgadmin', NULL, NULL, true);
+INSERT INTO public.comentario VALUES (4, 8, 1, '2018-10-31 06:17:47.383+00', 'Segundo comentario insertado desde pgadmin', NULL, NULL, true);
+INSERT INTO public.comentario VALUES (17, 8, 1, '2018-11-06 22:16:34.999+00', 'Primer comentario de interfaz con actualizacion', NULL, NULL, true);
+INSERT INTO public.comentario VALUES (18, 9, 1, '2018-11-08 07:44:16.454+00', 'Describa mejor su problema por favor', NULL, NULL, true);
+INSERT INTO public.comentario VALUES (19, 9, 6, '2018-11-08 07:44:56.485+00', 'No quiero', NULL, NULL, true);
 
 
 --
@@ -144,7 +149,7 @@ INSERT INTO public.ticket VALUES (12, 6, 'Sed ut perspiciatis unde omnis iste na
 -- Name: comentario_id_comentario_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.comentario_id_comentario_seq', 1, false);
+SELECT pg_catalog.setval('public.comentario_id_comentario_seq', 19, true);
 
 
 --
@@ -202,6 +207,8 @@ SELECT pg_catalog.setval('public.profesion_id_profesion_seq', 1, false);
 -- Data for Name: retroalimentacion; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO public.retroalimentacion VALUES (1, 4, NULL, 5, 1, '2018-11-08 05:24:33.997+00', NULL, NULL, true);
+INSERT INTO public.retroalimentacion VALUES (2, 9, 'Estuvo excelente', 4, 1, '2018-11-08 05:25:26.236+00', NULL, NULL, true);
 
 
 --
@@ -210,7 +217,7 @@ SELECT pg_catalog.setval('public.profesion_id_profesion_seq', 1, false);
 -- Name: retroalimentacion_id_retroalimentacion_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.retroalimentacion_id_retroalimentacion_seq', 1, false);
+SELECT pg_catalog.setval('public.retroalimentacion_id_retroalimentacion_seq', 2, true);
 
 
 --
@@ -250,6 +257,9 @@ SELECT pg_catalog.setval('public.sucursal_id_sucursal_seq', 1, false);
 
 INSERT INTO public.ticket_encargado VALUES (1, 9, 3, 1, '2018-10-31 06:33:21.452+00', NULL, NULL, false);
 INSERT INTO public.ticket_encargado VALUES (2, 9, 12, 1, '2018-10-31 06:33:21.508+00', NULL, NULL, false);
+INSERT INTO public.ticket_encargado VALUES (3, 12, 2, 1, '2018-10-31 23:34:04.938+00', NULL, NULL, false);
+INSERT INTO public.ticket_encargado VALUES (4, 12, 14, 1, '2018-10-31 23:34:05.035+00', NULL, NULL, false);
+INSERT INTO public.ticket_encargado VALUES (5, 9, 1, 1, '2018-10-31 06:17:33.262+00', NULL, NULL, true);
 
 
 --
@@ -258,7 +268,7 @@ INSERT INTO public.ticket_encargado VALUES (2, 9, 12, 1, '2018-10-31 06:33:21.50
 -- Name: ticket_encargado_id_ticket_encargado_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.ticket_encargado_id_ticket_encargado_seq', 2, true);
+SELECT pg_catalog.setval('public.ticket_encargado_id_ticket_encargado_seq', 6, true);
 
 
 --
@@ -267,7 +277,7 @@ SELECT pg_catalog.setval('public.ticket_encargado_id_ticket_encargado_seq', 2, t
 -- Name: ticket_id_ticket_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.ticket_id_ticket_seq', 12, true);
+SELECT pg_catalog.setval('public.ticket_id_ticket_seq', 14, true);
 
 
 --
@@ -341,10 +351,10 @@ INSERT INTO public.usuario_rol VALUES (14, 17, 1, 1, '2018-10-10 08:23:54+00', N
 -- Name: usuario_rol_id_usuario_rol_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.usuario_rol_id_usuario_rol_seq', 1, false);
+SELECT pg_catalog.setval('public.usuario_rol_id_usuario_rol_seq', 3, true);
 
 
--- Completed on 2018-10-31 13:17:14 CST
+-- Completed on 2018-11-08 09:55:32 CST
 
 --
 -- PostgreSQL database dump complete

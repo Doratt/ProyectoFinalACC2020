@@ -6,34 +6,114 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <ui:composition template="layout.xhtml">
-    <ui:define name="title">Asignaciones Pendientes (Técnico)</ui:define>
-    <ui:define name="content">
-    	<h:form id="formAsignaciones">
-    	<p:dataTable var="ticket" value="#{asignacionesBackingBean.tickets}"
-			paginator="true" rows="10" reflow="true" emptyMessage="No hay asignaciones pendientes"
-			paginatorTemplate="{PreviousPageLink} {NextPageLink}"
-			sortBy="#{ticket.fechaSolicitud}" paginatorPosition="bottom">
-			<f:facet name="header">
+<ui:composition template="layout.xhtml">
+	<ui:define name="title">Asignaciones Pendientes (Técnico)</ui:define>
+	<ui:define name="content">
+		<h:form id="formAsignaciones">
+			<p:dataTable var="ticket" value="#{asignacionesBackingBean.tickets}"
+				paginator="true" rows="10" reflow="true"
+				emptyMessage="No hay asignaciones pendientes"
+				paginatorTemplate="{PreviousPageLink} {NextPageLink}"
+				sortBy="#{ticket.fechaSolicitud}" paginatorPosition="bottom"
+				selection="#{asignacionesBackingBean.ticketSeleccionado}"
+				selectionMode="single" rowKey="#{ticket.idTicket}">
+				<p:ajax event="rowSelect"
+					listener="#{asignacionesBackingBean.cargarComentarios}"
+					oncomplete="PF('infoTicket').show();" update=":frmInfoTicket" />
+				<f:facet name="header">
             Asignaciones Pendientes
             </f:facet>
-            <p:column headerText="Numero de ticket">
-				<h:outputText value="#{ticket.idTicket}" />
-			</p:column>
-			<p:column headerText="Solicitante">
-				<h:outputText value="#{ticket.idUsuarioCreador.nombre}" />
-			</p:column>
-			<p:column headerText="Descripcion">
-				<h:outputText value="#{ticket.descripcion}" />
-			</p:column>
-			<p:column headerText="Fecha de solicitud">
-				<h:outputText value="#{ticket.fechaCreacion}"><f:convertDateTime pattern ="dd-mm-yyyy"/></h:outputText>
-			</p:column>
-			<p:column headerText="Estado">
-				<h:outputText value="#{ticket.idEstado.nombre}" />
-			</p:column>
-		</p:dataTable>
+				<p:column headerText="Numero de ticket">
+					<h:outputText value="#{ticket.idTicket}" />
+				</p:column>
+				<p:column headerText="Solicitante">
+					<h:outputText value="#{ticket.idUsuarioCreador.nombre}" />
+				</p:column>
+				<p:column headerText="Descripcion">
+					<h:outputText value="#{ticket.descripcion}" />
+				</p:column>
+				<p:column headerText="Fecha de solicitud">
+					<h:outputText value="#{ticket.fechaCreacion}">
+						<f:convertDateTime pattern="dd-mm-yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Estado">
+					<h:outputText value="#{ticket.idEstado.nombre}" />
+				</p:column>
+			</p:dataTable>
 		</h:form>
-    </ui:define>
+
+		<p:dialog
+			header='#{"Ticket #".concat(asignacionesBackingBean.ticketSeleccionado.idTicket)}'
+			widgetVar="infoTicket" modal="true" showEffect="fade"
+			hideEffect="fade" resizable="false" width="90%" height="90%"
+			fitViewport="true">
+			<h:form id="frmInfoTicket">
+				<div class="frm-info">
+					<div class="izquierda">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Estado: "></p:outputLabel>
+							<p:outputLabel
+								value="#{asignacionesBackingBean.ticketSeleccionado.idEstado.nombre}"></p:outputLabel>
+							<p:outputLabel value="Fecha de creación: "></p:outputLabel>
+							<p:outputLabel
+								value="#{asignacionesBackingBean.ticketSeleccionado.fechaCreacion}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm"></f:convertDateTime>
+							</p:outputLabel>
+						</h:panelGrid>
+
+						<br />
+						<p:outputLabel value="Descripción:"></p:outputLabel>
+						<div class="div-descripcion">
+							<p:outputLabel
+								value="#{asignacionesBackingBean.ticketSeleccionado.descripcion}"></p:outputLabel>
+						</div>
+						<br />
+						<div>
+							<p:outputLabel value="Modificar el estado del ticket:"></p:outputLabel>
+							<br />
+							<p:selectOneMenu id="estados"
+								value="#{asignacionesBackingBean.estadoSeleccionado}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItem itemLabel="Asignado" itemValue="1" />
+								<f:selectItem itemLabel="En pausa" itemValue="2" />
+								<f:selectItem itemLabel="Completado" itemValue="4" />
+							</p:selectOneMenu>
+							<br/>
+							
+						</div>
+					</div>
+					<p:outputLabel value="Comentarios:"></p:outputLabel>
+					<div class="derecha">
+						<div id="divComents" class="div-comentarios">
+							<p:repeat var="com"
+								value="#{asignacionesBackingBean.comentarios}">
+								<p:outputLabel style="margin-right:10px; font-weight:bold"
+									value="#{com.idUsuarioCreador.nombre}" />
+								<p:outputLabel value="#{com.fechaCreacion}"
+									style="font-weight:bold;">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm"></f:convertDateTime>
+								</p:outputLabel>
+								<br />
+								<p:outputLabel value="#{com.contenido}" />
+								<p:separator style="border-color:#A3CB80; width:75%;" />
+							</p:repeat>
+						</div>
+						<div class="agregar-comentario" style="margin-top: 10px;">
+							<p:inputTextarea
+								value="#{asignacionesBackingBean.comentario.contenido}"
+								autoResize="false"></p:inputTextarea>
+							<p:commandButton icon="fa fa-comments-o"
+								actionListener="#{asignacionesBackingBean.crearComentario()}"
+								update=":frmInfoTicket">
+							</p:commandButton>
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</p:dialog>
+
+
+	</ui:define>
 </ui:composition>
 </html>
