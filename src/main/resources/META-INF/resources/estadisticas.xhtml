@@ -12,125 +12,127 @@
 <ui:composition template="layout.xhtml">
 	<ui:define name="title">ESTADISTICAS</ui:define>
 	<ui:define name="content">
-
+		
+		<h4 style="margin-top: 0">Elija el rango de fechas</h4>
 		<h:panelGrid columns="2" cellpadding="5">
-			<p:outputLabel for="popup" value="Popup:" />
+			<p:outputLabel value="Seleccione la fecha inicial:" />
 			<p:calendar id="fechaInicial" value="#{calendarView.date2}" />
-			<p:outputLabel for="popup" value="Popup:" />
+			<p:outputLabel value="Seleccione la fecha final:" />
 			<p:calendar id="fechaFinal" value="#{calendarView.date2}" />
 		</h:panelGrid>
 
-		<h3 style="margin-top: 0">SUCURSAL</h3>
+		<h4 style="margin-top: 0">Elija la sucursal</h4>
 		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-			<p:outputLabel for="console" value="Console:" />
-			<p:selectOneRadio id="console" value="#{radioView.console}">
-				<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
-				<f:selectItem itemLabel="PS4" itemValue="PS4" />
-				<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+			<p:selectOneRadio id="sucursal" value="#{radioView.console}">
+				<f:selectItem itemLabel="Sucursal 1" itemValue="s2" />
+				<f:selectItem itemLabel="Sucursal 2" itemValue="s1" />
 			</p:selectOneRadio>
 		</h:panelGrid>
 
 		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-			<p:outputLabel for="console" value="DEPARTAMENTO" />
-			<p:selectOneMenu id="console" value="#{selectOneMenuView.console}"
+			<h4 style="margin-top: 0">Elija el departamento</h4>
+			<p:selectOneMenu id="departamento" value="#{selectOneMenuView.console}"
 				style="width:125px">
-				<f:selectItem itemLabel="Select One" itemValue="" />
-				<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
-				<f:selectItem itemLabel="PS4" itemValue="PS4" />
-				<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+				<f:selectItem itemLabel="Seleccione" itemValue="item1" />
+				<f:selectItem itemLabel="Atencion al cliente" itemValue="atencion" />
+				<f:selectItem itemLabel="Mantenimiento" itemValue="mantenimiento" />
+				<f:selectItem itemLabel="Redes" itemValue="redes" />
 			</p:selectOneMenu>
 		</h:panelGrid>
-
+		
+		<h4 style="margin-top: 0">Ingrese id del tecnico</h4>
 		<p:inputText placeholder="000"
 			requiredMessage="Ingrese id del técnico"
 			validatorMessage="Ingrese un id válido" id="txtIdTecnico" type="text"
-			required="true" maxlength="100" value="#{}">
-			</p:inputText>
+			required="true" maxlength="100">
+		</p:inputText>
 
-			<p:commandButton value="Buscar" type="submit"
-				update="estadistica-form"></p:commandButton>
+		<p:commandButton value="Buscar" type="submit"
+			update="estadistica-form"></p:commandButton>
+		<br></br><br></br>
+		
+		
+		<h:form id="estadistica-form">
+			<p:dataTable id="estadistica_tabla" var="estadistica"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+				paginator="true" rows="10" style="margin-bottom:20px">
 
-			<h:form id="estadistica-form">
-				<p:dataTable id="estadistica_tabla" var="estadistica" value="#{}"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-					paginator="true" rows="10" style="margin-bottom:20px">
+				<f:facet name="{Exporters}">
+					<h:commandLink>
+						<p:graphicImage name="images/excel.png" width="24" />
+						<p:dataExporter type="xls" target="tbl" fileName="datos" />
+					</h:commandLink>
 
-					<f:facet name="{Exporters}">
-						<h:commandLink>
-							<p:graphicImage name="/demo/images/excel.png" width="24" />
-							<p:dataExporter type="xls" target="tbl" fileName="cars" />
-						</h:commandLink>
+					<h:commandLink>
+						<p:graphicImage name="images/pdf.png" width="24" />
+						<p:dataExporter type="pdf" target="tbl" fileName="datos" />
+					</h:commandLink>
 
-						<h:commandLink>
-							<p:graphicImage name="/demo/images/pdf.png" width="24" />
-							<p:dataExporter type="pdf" target="tbl" fileName="cars" />
-						</h:commandLink>
+					<h:commandLink>
+						<p:graphicImage name="images/csv.png" width="24" />
+						<p:dataExporter type="csv" target="tbl" fileName="datos" />
+					</h:commandLink>
 
-						<h:commandLink>
-							<p:graphicImage name="/demo/images/csv.png" width="24" />
-							<p:dataExporter type="csv" target="tbl" fileName="cars" />
-						</h:commandLink>
+					<h:commandLink>
+						<p:graphicImage name="images/xml.png" width="24" />
+						<p:dataExporter type="xml" target="tbl" fileName="datos" />
+					</h:commandLink>
+				</f:facet>
 
-						<h:commandLink>
-							<p:graphicImage name="/demo/images/xml.png" width="24" />
-							<p:dataExporter type="xml" target="tbl" fileName="cars" />
-						</h:commandLink>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Id" />
 					</f:facet>
+					<h:outputText value="#{car.id}" />
+				</p:column>
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Id" />
-						</f:facet>
-						<h:outputText value="#{car.id}" />
-					</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Year" />
+					</f:facet>
+					<h:outputText value="#{car.year}" />
+				</p:column>
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Year" />
-						</f:facet>
-						<h:outputText value="#{car.year}" />
-					</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Brand" />
+					</f:facet>
+					<h:outputText value="#{car.brand}" />
+				</p:column>
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Brand" />
-						</f:facet>
-						<h:outputText value="#{car.brand}" />
-					</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Color" />
+					</f:facet>
+					<h:outputText value="#{car.color}" />
+				</p:column>
+			</p:dataTable>
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Color" />
-						</f:facet>
-						<h:outputText value="#{car.color}" />
-					</p:column>
-				</p:dataTable>
+			<h3>Export Page Data Only</h3>
+			<h:commandLink>
+				<p:graphicImage name="/demo/images/excel.png" />
+				<p:dataExporter type="xls" target="tbl" fileName="cars"
+					pageOnly="true" />
+			</h:commandLink>
 
-				<h3>Export Page Data Only</h3>
-				<h:commandLink>
-					<p:graphicImage name="/demo/images/excel.png" />
-					<p:dataExporter type="xls" target="tbl" fileName="cars"
-						pageOnly="true" />
-				</h:commandLink>
+			<h:commandLink>
+				<p:graphicImage name="/demo/images/pdf.png" />
+				<p:dataExporter type="pdf" target="tbl" fileName="cars"
+					pageOnly="true" />
+			</h:commandLink>
 
-				<h:commandLink>
-					<p:graphicImage name="/demo/images/pdf.png" />
-					<p:dataExporter type="pdf" target="tbl" fileName="cars"
-						pageOnly="true" />
-				</h:commandLink>
+			<h:commandLink>
+				<p:graphicImage name="/demo/images/csv.png" />
+				<p:dataExporter type="csv" target="tbl" fileName="cars"
+					pageOnly="true" />
+			</h:commandLink>
 
-				<h:commandLink>
-					<p:graphicImage name="/demo/images/csv.png" />
-					<p:dataExporter type="csv" target="tbl" fileName="cars"
-						pageOnly="true" />
-				</h:commandLink>
-
-				<h:commandLink>
-					<p:graphicImage name="/demo/images/xml.png" />
-					<p:dataExporter type="xml" target="tbl" fileName="cars"
-						pageOnly="true" />
-				</h:commandLink>
-			</h:form>
+			<h:commandLink>
+				<p:graphicImage name="/demo/images/xml.png" />
+				<p:dataExporter type="xml" target="tbl" fileName="cars"
+					pageOnly="true" />
+			</h:commandLink>
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>

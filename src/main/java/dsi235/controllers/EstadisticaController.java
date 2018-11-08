@@ -24,6 +24,7 @@ public interface EstadisticaController {
     public List<TiempoResolucion> calcularTiempoResolucionTecnico(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento, Long idTecnico);
     
     public NumeroTickets calcularNumTicketsDepto(Date fechaInicio, Date fechaFin, Short idSucursal);
+    
     //Ordenar por numero de tickets
     public NumeroTickets calcularNumTicketsUsuario(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento);
 
