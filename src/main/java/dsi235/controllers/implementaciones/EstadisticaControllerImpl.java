@@ -23,11 +23,6 @@ public class EstadisticaControllerImpl implements EstadisticaController{
 		this.ticketRepository = ticketRepository;
 	}
 
-	@Override
-    public List<TiempoResolucion> calcularTiempoResolucion(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento, Long idTecnico) {
-        return null;
-    }
-
     @Override
     public NumeroTickets calcularNumTicketsDepto(Date fechaInicio, Date fechaFin, Short idSucursal) {
         return null;
@@ -48,5 +43,25 @@ public class EstadisticaControllerImpl implements EstadisticaController{
     public List<Ticket> verRetroalimentacion(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento, Long idTecnico) {
         return null;
     }
+
+	@Override
+	public List<TiempoResolucion> calcularTiempoResolucionSucursal(Date fechaInicio, Date fechaFin, Short idSucursal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<TiempoResolucion> calcularTiempoResolucionDepto(Date fechaInicio, Date fechaFin, Short idSucursal,
+			int idDepartamento) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<TiempoResolucion> calcularTiempoResolucionTecnico(Date fechaInicio, Date fechaFin, Short idSucursal,
+			int idDepartamento, Long idTecnico) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
