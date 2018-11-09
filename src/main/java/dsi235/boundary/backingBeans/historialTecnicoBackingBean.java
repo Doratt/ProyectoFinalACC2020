@@ -2,6 +2,7 @@ package dsi235.boundary.backingBeans;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -20,6 +21,8 @@ import org.springframework.web.context.annotation.SessionScope;
 import dsi235.controllers.TicketController;
 import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
+import dsi235.utilities.ESTADO;
+import dsi235.utilities.EstadosLoader;
 import dsi235.utilities.PageParser;
 
 @ManagedBean(value="historialTecnicoBackingBean")
@@ -34,6 +37,7 @@ public class historialTecnicoBackingBean implements Serializable{
 	private TicketController tc;
 	private LoginSessionBean sessionBean;
 	private Page<Ticket> historialTicketTecnico;
+	private EstadosLoader el;
 
 	
 	
@@ -44,6 +48,21 @@ public class historialTecnicoBackingBean implements Serializable{
 		//historialTicketUsuario= this.tc.findCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario(), 0, 5);
 		//System.out.println(historialTicketUsuario);
 		//historialTicketTecnico= tc.findCompletadosByEncargado(sessionBean.getUsuarioLogueado().getIdUsuario(), 1, 5);
+	}
+	
+	
+	public void reabrirTicket() {
+		Ticket nuevoTicket = new Ticket();
+		nuevoTicket.setComentarioList(ticket.getComentarioList());
+		nuevoTicket.setDescripcion("Este ticket hace referencia al ticket#"+ticket.getIdTicket()+"\n"+ticket.getDescripcion());
+		nuevoTicket.setFechaCreacion(new Date());
+		nuevoTicket.setActivo(true);
+		nuevoTicket.setIdEstado(el.get(ESTADO.creado.value));
+		nuevoTicket.setIdUsuarioCreador(sessionBean.getUsuarioLogueado());
+		try {
+			tc.save(nuevoTicket);
+		} catch (Exception e) {
+		}
 	}
 	
 	public void inicializarModelo() {
@@ -166,6 +185,11 @@ public class historialTecnicoBackingBean implements Serializable{
 
 	public void setHistorialTicketUsuario(Page<Ticket> historialTicket) {
 		this.historialTicketTecnico = historialTicket;
+	}
+
+	@Autowired
+	public void setEl(EstadosLoader el) {
+		this.el = el;
 	}
 
 }

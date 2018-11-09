@@ -29,7 +29,8 @@
             	</f:facet>
 				<p:ajax event="rowSelect"
 					listener="#{dashboardBackingBean.cargarComentarios}"
-					oncomplete="PF('infoTicket').show();" update=":frmInfoTicket :j_idt34" />
+					oncomplete="PF('infoTicket').show();"
+					update=":frmInfoTicket :j_idt34" />
 				<p:column headerText="Solicitante">
 					<h:outputText value="#{ticket.idTicket}" />
 				</p:column>
@@ -85,12 +86,12 @@
 							<p:outputLabel
 								value="#{dashboardBackingBean.ticketSeleccionado.descripcion}"></p:outputLabel>
 						</div>
-						<p:commandButton
-							actionListener="#{dashboardBackingBean.cancelarTicket()}"
-							type="submit"
-							value="Cancelar ticket" 
-							update="frmTicketsPendientes"
+						<p:commandButton value="Cancelar ticket"
 							oncomplete="PF('infoTicket').hide();">
+							<p:ajax
+								listener="#{dashboardBackingBean.cancelarTicket}"
+								update=":frmTicketsPendientes">
+							</p:ajax>
 						</p:commandButton>
 					</div>
 					<p:outputLabel value="Comentarios:"></p:outputLabel>
