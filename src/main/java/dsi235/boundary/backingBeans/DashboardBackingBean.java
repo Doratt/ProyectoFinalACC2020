@@ -74,6 +74,9 @@ public class DashboardBackingBean implements Serializable {
 				PrimeFaces current = PrimeFaces.current();
 				this.ticket = new Ticket();
 				current.executeScript("PF('createTicket').hide()");
+				 FacesContext context = FacesContext.getCurrentInstance();
+		         
+			        context.addMessage(null, new FacesMessage("Éxito",  "Ticket creado exitosamente") );
 			} catch (Exception e) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 						"Error!", "Parece que hubo un problema con la creación de tu ticket"));
@@ -112,6 +115,8 @@ public class DashboardBackingBean implements Serializable {
 		try {
 			tc.save(ticketSeleccionado);
 			init();
+			FacesContext context = FacesContext.getCurrentInstance();
+	        context.addMessage(null, new FacesMessage("Cancelado",  "Ticket cancelado") );
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"Error!", "Hubo un problema al cancelar su ticket"));

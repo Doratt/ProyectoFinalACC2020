@@ -13,8 +13,10 @@
 
 	<ui:define name="title">Dashboard</ui:define>
 	<ui:define name="content">
+	
 
 		<h:form id="frmTicketsPendientes">
+		<p:growl id="growl" showDetail="true" sticky="false" />  
 
 			<p:dataTable id="tickets_pendientes_table" var="ticket"
 				selectionMode="single"
