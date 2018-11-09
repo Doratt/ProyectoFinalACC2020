@@ -62,6 +62,7 @@ public class historialTecnicoBackingBean implements Serializable{
 		try {
 			tc.save(nuevoTicket);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	

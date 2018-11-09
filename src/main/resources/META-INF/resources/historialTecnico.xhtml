@@ -17,10 +17,12 @@
 		<h:form id="historial_tecnico_form">
 
 			<p:dataTable id="historial_tecnico_table" var="ticket"
-				value="#{historialTecnicoBackingBean.model}"
-				paginator="true" rows="5" reflow="true" lazy="true"
+				value="#{historialTecnicoBackingBean.model}" paginator="true"
+				rows="5" reflow="true" lazy="true"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
-				rowKey="#{ticket.idTicket}" selection="#{historialTecnicoBackingBean.ticket}" emptyMessage="No hay tickets completados">
+				rowKey="#{ticket.idTicket}"
+				selection="#{historialTecnicoBackingBean.ticket}"
+				emptyMessage="No hay tickets completados">
 				<f:facet name="header">
             Historial de tickets completados por técnico
             </f:facet>
@@ -32,13 +34,20 @@
 				</p:column>
 				<p:column headerText="Fecha de solicitud">
 					<h:outputText value="#{ticket.fechaCreacion}">
-					<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 					</h:outputText>
 				</p:column>
-					<p:column headerText="Fecha completado">
+				<p:column headerText="Fecha completado">
 					<h:outputText value="#{ticket.fechaCompletado}">
-					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 					</h:outputText>
+				</p:column>
+				<p:column headerText="Reabrir" style="text-align:center;">
+					<p:commandButton icon="fa fa-refresh" >
+						<p:ajax update=":historial_tecnico_form:historial_tecnico_table" listener="#{historialTecnicoBackingBean.reabrirTicket}"></p:ajax>
+						<f:setPropertyActionListener value="#{ticket}"
+							target="#{historialTecnicoBackingBean.ticket}" />
+					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 
