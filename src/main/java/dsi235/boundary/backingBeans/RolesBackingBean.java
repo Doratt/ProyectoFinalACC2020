@@ -111,7 +111,7 @@ public class RolesBackingBean implements Serializable {
 	}
 	
 	public void guardar() {
-		
+		List<Rol> roles = usuarioBindeado.getRolList();
 		checked.forEach(rol->{
 			UsuarioRol urRol = new UsuarioRol();
 			urRol.setIdUsuario(usuarioBindeado);

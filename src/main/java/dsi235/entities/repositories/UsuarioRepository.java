@@ -24,3 +24,4 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long>{
 	
 	 //public NumeroTickets calcularNumTicketsDepto(Date fechaInicio, Date fechaFin, Short idSucursal);
 }
+

@@ -2,6 +2,7 @@ package dsi235.boundary.backingBeans;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -57,10 +58,12 @@ public class AdminBackingBean implements Serializable{
 	
 	public void select(SelectEvent ev) {
 		this.users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(), idDepartamento,true);
+		this.users.remove(ticket.getIdUsuarioCreador());
 	}
 	
 	public void actualizarTabla() {
 		this.users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(), idDepartamento,true);
+		this.users.remove(ticket.getIdUsuarioCreador());
 	}
 	
 public void asignacion() {
@@ -72,6 +75,7 @@ public void asignacion() {
 			selectedPersons.forEach(item-> {
 				TicketEncargado ticketasignado=new TicketEncargado();
 				ticketasignado.setIdUsuarioCreador(usuarioLogueado);
+				ticketasignado.setFechaCreacion(new Date());
 				ticketasignado.setIdTicket(ticket);
 				ticketasignado.setIdUsuario(item);	
 				tec.save(ticketasignado);

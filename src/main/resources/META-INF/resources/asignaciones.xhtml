@@ -19,7 +19,8 @@
 				selectionMode="single" rowKey="#{ticket.idTicket}">
 				<p:ajax event="rowSelect"
 					listener="#{asignacionesBackingBean.cargarComentarios}"
-					oncomplete="PF('infoTicket').show();" update=":frmInfoTicket :j_idt33"/>
+					oncomplete="PF('infoTicket').show();"
+					update=":frmInfoTicket :j_idt33" />
 				<f:facet name="header">
             Asignaciones Pendientes
             </f:facet>
@@ -79,9 +80,19 @@
 								<f:selectItem itemLabel="Completado" itemValue="4" />
 								<p:ajax event="change" update="@this"></p:ajax>
 							</p:selectOneMenu>
-							<br />
+							<br /> <br />
 							<p:commandButton value="Modificar Estado" icon="fa fa-cog">
-							<p:ajax listener="#{asignacionesBackingBean.modificarEstadoTicket}" update=":formAsignaciones :frmInfoTicket"></p:ajax>
+								<p:ajax
+									listener="#{asignacionesBackingBean.modificarEstadoTicket}"
+									update=":formAsignaciones :frmInfoTicket">
+								</p:ajax>
+							</p:commandButton>
+							<br /> <br />
+							<p:commandButton value="Marcar mal asignado"
+								icon="fa fa-exclamation-triangle">
+								<p:ajax listener="#{asignacionesBackingBean.marcarMalAsignado}"
+									update=":formAsignaciones :frmInfoTicket">
+								</p:ajax>
 							</p:commandButton>
 						</div>
 					</div>

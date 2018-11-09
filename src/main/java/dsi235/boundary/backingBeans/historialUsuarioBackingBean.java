@@ -23,6 +23,8 @@ import dsi235.controllers.TicketController;
 import dsi235.entities.Retroalimentacion;
 import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
+import dsi235.utilities.ESTADO;
+import dsi235.utilities.EstadosLoader;
 import dsi235.utilities.PageParser;
 
 @ManagedBean(value="historialUsuarioBackingBean")
@@ -41,6 +43,7 @@ public class historialUsuarioBackingBean implements Serializable{
 	private String comentario;
 	private RetroalimentacionController rc;
 	private Retroalimentacion retroalimentacion;
+	private EstadosLoader el;
 
 	
 	
@@ -70,6 +73,20 @@ public class historialUsuarioBackingBean implements Serializable{
 		}
 	}
 	
+	public void reabrirTicket() {
+		Ticket nuevoTicket = new Ticket();
+		nuevoTicket.setComentarioList(ticket.getComentarioList());
+		nuevoTicket.setDescripcion("Este ticket hace referencia al ticket#"+ticket.getIdTicket()+"\n"+ticket.getDescripcion());
+		nuevoTicket.setFechaCreacion(new Date());
+		nuevoTicket.setActivo(true);
+		nuevoTicket.setIdEstado(el.get(ESTADO.creado.value));
+		nuevoTicket.setIdUsuarioCreador(sessionBean.getUsuarioLogueado());
+		try {
+			tc.save(nuevoTicket);
+		} catch (Exception e) {
+		}
+		
+	}
 	
 	public void inicializarModelo() {
 		try {
@@ -220,6 +237,10 @@ public class historialUsuarioBackingBean implements Serializable{
 
 	public void setRetroalimentacion(Retroalimentacion retroalimentacion) {
 		this.retroalimentacion = retroalimentacion;
+	}
+	@Autowired
+	public void setEl(EstadosLoader el) {
+		this.el = el;
 	}
 	
 	
