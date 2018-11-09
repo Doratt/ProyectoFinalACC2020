@@ -1,4 +1,4 @@
-dpackage dsi235.entities.repositories;
+package dsi235.entities.repositories;
 
 import java.util.Date;
 import java.util.List;
@@ -22,5 +22,5 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long>{
 	
 	//Numero de tickets por departamento
 	
-	 public NumeroTickets calcularNumTicketsDepto(Date fechaInicio, Date fechaFin, Short idSucursal);
+	 //public NumeroTickets calcularNumTicketsDepto(Date fechaInicio, Date fechaFin, Short idSucursal);
 }
