@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+	<title>NumeroTickets</title>
+</h:head>
+<ui:composition template="layout.xhtml">
+	<ui:define name="title">NUMERO DE TICKETS</ui:define>
+	<ui:define name="content">
+
+		<h4 style="margin-top: 0">Elija el rango de fechas</h4>
+		<h:panelGrid columns="2" cellpadding="5">
+			<p:outputLabel value="Seleccione la fecha inicial:" />
+			<p:calendar id="fechaInicial" value="#{calendarView.date2}" />
+			<p:outputLabel value="Seleccione la fecha final:" />
+			<p:calendar id="fechaFinal" value="#{calendarView.date2}" />
+		</h:panelGrid>
+
+		<h4 style="margin-top: 0">Elija su parametro de busqueda</h4>
+		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+			<p:selectOneRadio id="parametro" value="#{radioView.console}">
+				<f:selectItem itemLabel="Sucursal" itemValue="sucursal" />
+				<f:selectItem itemLabel="Departamento" itemValue="depto" />
+				<f:selectItem itemLabel="Tecnico" itemValue="tecnico" />
+				<f:selectItem itemLabel="Usuario solicitante" itemValue="tecnico" />
+			</p:selectOneRadio>
+		</h:panelGrid>
+
+		<div id="sucursal-div">
+			<h4 style="margin-top: 0">Elija la sucursal</h4>
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+				<p:selectOneRadio id="sucursal" value="#{radioView.console}">
+					<f:selectItem itemLabel="Sucursal 1" itemValue="s2" />
+					<f:selectItem itemLabel="Sucursal 2" itemValue="s1" />
+				</p:selectOneRadio>
+			</h:panelGrid>
+		</div>
+
+		<div id="depto-div">
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+				<h4 style="margin-top: 0">Elija el departamento</h4>
+				<p:selectOneMenu id="departamento"
+					value="#{selectOneMenuView.console}" style="width:125px">
+					<f:selectItem itemLabel="Seleccione" itemValue="item1" />
+					<f:selectItem itemLabel="IT" itemValue="it" />
+					<f:selectItem itemLabel="Mantenimiento" itemValue="mante" />
+					<f:selectItem itemLabel="Recursos Humanos" itemValue="rrhh" />
+					<f:selectItem itemLabel="Contabilidad" itemValue="conta" />
+					<f:selectItem itemLabel="Atencion al cliente" itemValue="aten" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+		</div>
+
+		<div id="div-solicitante">
+			<h4 style="margin-top: 0">Ingrese id del usuario solicitante</h4>
+			<p:inputText placeholder="000"
+				requiredMessage="Ingrese id del usuario"
+				validatorMessage="Ingrese un id válido" id="txtIdUsuario"
+				type="text" required="true" maxlength="100">
+			</p:inputText>
+		</div>
+		<br></br>
+		<br></br>
+		<p:commandButton value="Buscar" type="submit"
+			update="estadistica-form"></p:commandButton>
+		<br></br>
+		<br></br>
+
+		<h:form id="estadistica-form">
+			<p:dataTable id="estadistica_tabla" var="estadistica"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+				paginator="true" rows="10" style="margin-bottom:20px">
+				<f:facet name="{Exporters}">
+					<h:commandLink>
+						<p:graphicImage name="images/excel.png" width="24" />
+						<p:dataExporter type="xls" target="tbl" fileName="datos" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="images/pdf.png" width="24" />
+						<p:dataExporter type="pdf" target="tbl" fileName="datos" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="images/csv.png" width="24" />
+						<p:dataExporter type="csv" target="tbl" fileName="datos" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="images/xml.png" width="24" />
+						<p:dataExporter type="xml" target="tbl" fileName="datos" />
+					</h:commandLink>
+				</f:facet>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Nombre" />
+					</f:facet>
+					<h:outputText value="#{car.id}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Numero de tickets" />
+					</f:facet>
+					<h:outputText value="#{car.year}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
