@@ -7,6 +7,7 @@ package dsi235.controllers.implementaciones;
 
 import java.sql.Date;
 import java.time.Instant;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
@@ -41,6 +42,11 @@ public class TicketEncargadoControllerImpl extends AbstractCrudControllerImpl<Ti
 	@Override
 	CrudRepository<TicketEncargado, Long> getRepository() {
 		return this.ticketEncargadoRepository;
+	}
+
+	@Override
+	public List<TicketEncargado> findByIdTicket_IdTicket(Long idTicket) {
+		return this.ticketEncargadoRepository.findByIdTicket_IdTicket(idTicket);
 	}
     
     

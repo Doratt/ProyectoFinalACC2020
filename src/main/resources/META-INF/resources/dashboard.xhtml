@@ -29,7 +29,7 @@
             	</f:facet>
 				<p:ajax event="rowSelect"
 					listener="#{dashboardBackingBean.cargarComentarios}"
-					oncomplete="PF('infoTicket').show();" update=":frmInfoTicket" />
+					oncomplete="PF('infoTicket').show();" update=":frmInfoTicket :j_idt34" />
 				<p:column headerText="Solicitante">
 					<h:outputText value="#{ticket.idTicket}" />
 				</p:column>

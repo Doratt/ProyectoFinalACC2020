@@ -14,12 +14,12 @@
 				paginator="true" rows="10" reflow="true"
 				emptyMessage="No hay asignaciones pendientes"
 				paginatorTemplate="{PreviousPageLink} {NextPageLink}"
-				sortBy="#{ticket.fechaSolicitud}" paginatorPosition="bottom"
+				sortBy="#{ticket.fechaCreacion}" paginatorPosition="bottom"
 				selection="#{asignacionesBackingBean.ticketSeleccionado}"
 				selectionMode="single" rowKey="#{ticket.idTicket}">
 				<p:ajax event="rowSelect"
 					listener="#{asignacionesBackingBean.cargarComentarios}"
-					oncomplete="PF('infoTicket').show();" update=":frmInfoTicket" />
+					oncomplete="PF('infoTicket').show();" update=":frmInfoTicket :j_idt33"/>
 				<f:facet name="header">
             Asignaciones Pendientes
             </f:facet>
@@ -34,7 +34,7 @@
 				</p:column>
 				<p:column headerText="Fecha de solicitud">
 					<h:outputText value="#{ticket.fechaCreacion}">
-						<f:convertDateTime pattern="dd-mm-yyyy" />
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Estado">
@@ -74,13 +74,15 @@
 							<br />
 							<p:selectOneMenu id="estados"
 								value="#{asignacionesBackingBean.estadoSeleccionado}">
-								<f:selectItem itemLabel="Select One" itemValue="" />
 								<f:selectItem itemLabel="Asignado" itemValue="1" />
 								<f:selectItem itemLabel="En pausa" itemValue="2" />
 								<f:selectItem itemLabel="Completado" itemValue="4" />
+								<p:ajax event="change" update="@this"></p:ajax>
 							</p:selectOneMenu>
-							<br/>
-							
+							<br />
+							<p:commandButton value="Modificar Estado" icon="fa fa-cog">
+							<p:ajax listener="#{asignacionesBackingBean.modificarEstadoTicket}" update=":formAsignaciones :frmInfoTicket"></p:ajax>
+							</p:commandButton>
 						</div>
 					</div>
 					<p:outputLabel value="Comentarios:"></p:outputLabel>
