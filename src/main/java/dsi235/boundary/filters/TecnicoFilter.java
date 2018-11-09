@@ -11,15 +11,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import dsi235.boundary.backingBeans.LoginSessionBean;
 
-@Component
-@Order(Ordered.HIGHEST_PRECEDENCE)
-public class LoginFilter implements Filter {
+//@Component
+public class TecnicoFilter implements Filter {
 	
 	private static final String LOGIN_PAGE = "login.jsf";
 
@@ -34,7 +31,7 @@ public class LoginFilter implements Filter {
 		LoginSessionBean loginSession = (LoginSessionBean) httpServletRequest.getSession().getAttribute("loginSessionBean");
 
 		if (loginSession != null) {
-			if (loginSession.isLoggedIn()) {
+			if (loginSession.isTecnico()) {
 				filterChain.doFilter(request, response);
 			} else {
 				httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + LOGIN_PAGE);
