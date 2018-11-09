@@ -73,19 +73,44 @@ public class AsignacionesBackingBean implements Serializable {
 	}
 
 	public void cargarComentarios() {
-		setEstadoSeleccionado(Short.valueOf(String.valueOf(ticketSeleccionado.getIdEstado().getIdEstado()-1)));
+		setEstadoSeleccionado(Short.valueOf(String.valueOf(ticketSeleccionado.getIdEstado().getIdEstado() - 1)));
 		System.out.println(estadoSeleccionado);
 		setComentarios(comentarioController.findByIdTicket(ticketSeleccionado));
 	}
 
+	public void marcarMalAsignado() {
+
+		ticketSeleccionado.setIdEstado(el.get(ESTADO.creado.value));
+		asignados = tec.findByIdTicket_IdTicket(ticketSeleccionado.getIdTicket());
+		for (TicketEncargado ticketEncargado : asignados) {
+			ticketEncargado.setActivo(false);
+			try {
+				tec.save(ticketEncargado);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			ticketController.save(ticketSeleccionado);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		init();
+		PrimeFaces current = PrimeFaces.current();
+		current.executeScript("PF('infoTicket').hide()");
+
+
+	}
+
 	public void modificarEstadoTicket() {
 		if (estadoSeleccionado != 0) {
-			if ((estadoSeleccionado+1) != ticketSeleccionado.getIdEstado().getIdEstado()) {
+			if ((estadoSeleccionado + 1) != ticketSeleccionado.getIdEstado().getIdEstado()) {
 				ticketSeleccionado.setIdUsuarioModificador(sessionBean.getUsuarioLogueado());
 				ticketSeleccionado.setFechaModificacion(new Date());
 				if (estadoSeleccionado == ESTADO.completado.value) {
 					ticketSeleccionado.setFechaCompletado(new Date());
-					asignados=tec.findByIdTicket_IdTicket(ticketSeleccionado.getIdTicket());
+					asignados = tec.findByIdTicket_IdTicket(ticketSeleccionado.getIdTicket());
 					for (TicketEncargado ticketEncargado : asignados) {
 						ticketEncargado.setActivo(false);
 						ticketEncargado.setFechaModificacion(new Date());
@@ -96,16 +121,16 @@ public class AsignacionesBackingBean implements Serializable {
 							e.printStackTrace();
 						}
 					}
-				} 
-					ticketSeleccionado.setIdEstado(el.get(estadoSeleccionado));
-					try {
-						ticketController.save(ticketSeleccionado);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					init();
-					PrimeFaces current = PrimeFaces.current();
-					current.executeScript("PF('infoTicket').hide()");
+				}
+				ticketSeleccionado.setIdEstado(el.get(estadoSeleccionado));
+				try {
+					ticketController.save(ticketSeleccionado);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				init();
+				PrimeFaces current = PrimeFaces.current();
+				current.executeScript("PF('infoTicket').hide()");
 			}
 			System.out.println("El estado seleccionado es el mismo");
 		}
