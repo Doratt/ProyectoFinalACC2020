@@ -162,6 +162,7 @@ html, body {
 .div-comentarios{
 	width: 100%;
 	height: 300px;
+	overflow: auto;
 }
 .agregar-comentario{
 	

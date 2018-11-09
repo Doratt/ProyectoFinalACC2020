@@ -13,13 +13,7 @@
 	<ui:define name="title">Historial</ui:define>
 	<ui:define name="content">
 		<h:form id="historial_usuario_form">
-			<p:contextMenu id="context" for="historial_usuario_table"
-				event="click contextmenu">
-				<p:menuitem value="  Reabrir ticket" icon="fa fa-refresh"
-					actionListener="#{historialUsuarioBackingBean.reabrirTicket}" />
-				<p:menuitem value="  Calificar Solucion" icon="fa fa-star"
-					oncomplete="PF('calificarTicket').show()"></p:menuitem>
-			</p:contextMenu>
+			
 			<p:dataTable id="historial_usuario_table" var="ticket"
 				value="#{historialUsuarioBackingBean.model}" paginator="true"
 				rows="5" reflow="true" lazy="true" paginatorPosition="bottom"
@@ -27,11 +21,14 @@
 				rowKey="#{ticket.idTicket}"
 				selection="#{historialUsuarioBackingBean.ticket}"
 				selectionMode="single">
+				
 				<f:facet name="header">
             Historial de tickets completados por usuario
             </f:facet>
+            
 				<p:column headerText="Numero de Ticket">
 					<h:outputText value="#{ticket.idTicket}" />
+					
 				</p:column>
 				<p:column headerText="Descripcion">
 					<h:outputText value="#{ticket.descripcion}" />
@@ -47,6 +44,14 @@
 					</h:outputText>
 				</p:column>
 			</p:dataTable>
+			<p:contextMenu for="historial_usuario_table" event="click">
+				
+				<p:menuitem value="  Reabrir ticket" icon="fa fa-refresh"
+					actionListener="#{historialUsuarioBackingBean.reabrirTicket}" />
+				<p:menuitem value="  Calificar Solucion" icon="fa fa-star"
+					oncomplete="PF('calificarTicket').show()"></p:menuitem>
+			</p:contextMenu>
+			
 			<p:dialog header="Calificar solucion" widgetVar="calificarTicket"
 				modal="true" showEffect="fade" hideEffect="fade" resizable="false"
 				width="80%" height="80%">

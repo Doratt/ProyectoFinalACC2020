@@ -4,7 +4,12 @@ import dsi235.entities.Ticket;
 
 public class TiempoResolucion extends Ticket {
 
-    private String tiempo;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private String tiempo;
 
     private Long tiempoResolucion;
 

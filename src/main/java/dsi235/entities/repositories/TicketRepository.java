@@ -50,4 +50,14 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	// nuevo
 	// Page<Ticket> findAll(Pageable pageable);
 
+	@Query(value = "SELECT t FROM Ticket t JOIN FETCH t.retroalimentacion r WHERE t.idUsuarioCreador.idSucursal.idSucursal = ?1 AND (t.fechaCompletado BETWEEN ?2 AND ?3) AND t.idEstado.idEstado = 5")
+	List<Ticket> retroalimentarionBySucursal(Short idSucursal, Date fecha1, Date fecha2);
+	
+	@Query(value = "SELECT t FROM Ticket t JOIN FETCH t.retroalimentacion r JOIN t.ticketEncargadoList te WHERE te.idUsuario.idUsuario = ?1 AND (t.fechaCompletado BETWEEN ?2 AND ?3) AND t.idEstado.idEstado = 5")
+	List<Ticket> retroalimentarionByTecnico(Long idUsuario, Date fecha1, Date fecha2);
+	
+	@Query(value = "SELECT t FROM Ticket t JOIN FETCH t.retroalimentacion r WHERE t.idUsuarioCreador.idDepartamento.idDepartamento= ?1 AND (t.fechaCompletado BETWEEN ?2 AND ?3) AND t.idEstado.idEstado = 5")
+	List<Ticket> retroalimentarionByDepartamento(Integer idDepartamento, Date fecha1, Date fecha2);
+	
+	
 }
