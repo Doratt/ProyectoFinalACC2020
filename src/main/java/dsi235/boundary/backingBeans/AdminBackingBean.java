@@ -78,10 +78,17 @@ public void asignacion() {
 				ticketasignado.setFechaCreacion(new Date());
 				ticketasignado.setIdTicket(ticket);
 				ticketasignado.setIdUsuario(item);	
-				tec.save(ticketasignado);
+				ticketasignado.setActivo(true);
+				try {
+					tec.save(ticketasignado);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 			});
 			
 			ticket.setIdEstado(el.get(ESTADO.asignado.value));
+			ticket.setActivo(true);
 			tc.save(ticket);
 		}
 	} catch (Exception e) {

@@ -92,11 +92,12 @@ public class AsignacionesBackingBean implements Serializable {
 		}
 		try {
 			ticketController.save(ticketSeleccionado);
+			init();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		
-		init();
+		
 		PrimeFaces current = PrimeFaces.current();
 		current.executeScript("PF('infoTicket').hide()");
 

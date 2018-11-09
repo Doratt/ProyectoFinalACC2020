@@ -38,7 +38,7 @@ public class TicketControllerImpl extends AbstractCrudControllerImpl<Ticket, Lon
 
 	@Override
 	public Ticket save(Ticket ticket) {
-		if(ticket.getFechaCreacion().equals(null)){
+		if(ticket.getFechaCreacion()==null){
 			ticket.setFechaCreacion(Date.from(Instant.now()));	
 		}
 		return this.ticketRepository.save(ticket);

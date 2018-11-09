@@ -8,9 +8,13 @@ import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.persistence.PostUpdate;
 
 import org.primefaces.PrimeFaces;
+import org.primefaces.push.annotation.OnOpen;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.annotation.SessionScope;
 
 import dsi235.controllers.ComentarioController;
@@ -49,15 +53,22 @@ public class DashboardBackingBean implements Serializable {
 		setComentario(new Comentario());
 	}
 
+	
+	public void reload() {
+		init();
+	}
+	
 	public void crearTicket() {
+		System.out.println("Llegue al metodo");
 		setTicket(new Ticket());
 		ticket.setIdUsuarioCreador(sessionBean.getUsuarioLogueado());
 		if (getDescripcion().length() <= 3000 && getDescripcion().length() > 25) {
-
+			System.out.println("Pase del if");
 			ticket.setDescripcion(getDescripcion());
 			ticket.setIdEstado(el.get(ESTADO.creado.value));
 			descripcion = null;
 			try {
+				System.out.println("Entre al try");
 				tc.save(getTicket());
 				init();
 				PrimeFaces current = PrimeFaces.current();
@@ -66,6 +77,7 @@ public class DashboardBackingBean implements Serializable {
 			} catch (Exception e) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 						"Error!", "Parece que hubo un problema con la creación de tu ticket"));
+				e.printStackTrace();
 			}
 		}
 	}

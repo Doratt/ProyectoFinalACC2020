@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.primefaces.push.annotation.OnOpen;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,10 +51,10 @@ public class historialTecnicoBackingBean implements Serializable{
 		//historialTicketTecnico= tc.findCompletadosByEncargado(sessionBean.getUsuarioLogueado().getIdUsuario(), 1, 5);
 	}
 	
+
 	
 	public void reabrirTicket() {
 		Ticket nuevoTicket = new Ticket();
-		nuevoTicket.setComentarioList(ticket.getComentarioList());
 		nuevoTicket.setDescripcion("Este ticket hace referencia al ticket#"+ticket.getIdTicket()+"\n"+ticket.getDescripcion());
 		nuevoTicket.setFechaCreacion(new Date());
 		nuevoTicket.setActivo(true);
