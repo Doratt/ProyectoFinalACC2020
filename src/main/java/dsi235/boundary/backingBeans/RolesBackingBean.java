@@ -112,7 +112,11 @@ public class RolesBackingBean implements Serializable {
 	
 	public void guardar() {
 		List<Rol> roles = usuarioBindeado.getRolList();
-		checked.forEach(rol->{
+		List<Short> idRoles = new ArrayList<Short>();
+		for (Rol rol : roles) {
+			idRoles.add(rol.getIdRol());
+		}
+		/*checked.forEach(rol->{
 			UsuarioRol urRol = new UsuarioRol();
 			urRol.setIdUsuario(usuarioBindeado);
 			urRol.setIdUsuarioModificador(usuarioLogueado);
@@ -120,7 +124,22 @@ public class RolesBackingBean implements Serializable {
 			urRol.setFechaCreacion(new Date());
 			urRol.setIdUsuarioCreador(usuarioLogueado);
 			urc.save(urRol);
-		});
+		});*/
+		for(int i=1; i<=3; i++) {
+			if(checked.contains(i) && idRoles.contains(i)) {
+				roles.get(i).setActivo(true);
+			}else if(checked.contains(i) && !idRoles.contains(i)) {
+				UsuarioRol urRol = new UsuarioRol();
+				urRol.setIdUsuario(usuarioBindeado);
+				urRol.setIdUsuarioModificador(usuarioLogueado);
+				urRol.setIdRol(new Rol(Short.valueOf(checked.get(i))));
+				urRol.setFechaCreacion(new Date());
+				urRol.setIdUsuarioCreador(usuarioLogueado);
+				urc.save(urRol);
+			}else if(!checked.contains(i) && idRoles.contains(i)) {
+				roles.get(i).setActivo(false);
+			}
+		}
 		
 	}
 
