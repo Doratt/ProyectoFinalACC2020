@@ -14,6 +14,7 @@ import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import dsi235.controllers.ComentarioController;
+import dsi235.controllers.NotificationController;
 import dsi235.controllers.TicketController;
 import dsi235.controllers.TicketEncargadoController;
 import dsi235.entities.Comentario;
@@ -30,6 +31,7 @@ public class AsignacionesBackingBean implements Serializable {
 	private static final long serialVersionUID = -9176707771226005862L;
 	private LoginSessionBean sessionBean;
 	private TicketController ticketController;
+	private NotificationController nc;
 
 	private List<Ticket> tickets;
 	private Ticket ticketSeleccionado;
@@ -95,11 +97,10 @@ public class AsignacionesBackingBean implements Serializable {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
+
 		init();
 		PrimeFaces current = PrimeFaces.current();
 		current.executeScript("PF('infoTicket').hide()");
-
 
 	}
 
@@ -121,6 +122,10 @@ public class AsignacionesBackingBean implements Serializable {
 							e.printStackTrace();
 						}
 					}
+					StringBuilder contenido = new StringBuilder().append("Saludos estimado ")
+							.append(ticketSeleccionado.getIdUsuarioCreador().getNombre())
+							.append(", su problema ha sido resuelto exitosamente");
+					nc.enviarCorreo(ticketSeleccionado.getIdUsuarioCreador(), contenido.toString());
 				}
 				ticketSeleccionado.setIdEstado(el.get(estadoSeleccionado));
 				try {
@@ -207,6 +212,14 @@ public class AsignacionesBackingBean implements Serializable {
 
 	public void setAsignados(List<TicketEncargado> asignados) {
 		this.asignados = asignados;
+	}
+
+	public NotificationController getNc() {
+		return nc;
+	}
+
+	public void setNc(NotificationController nc) {
+		this.nc = nc;
 	}
 
 }

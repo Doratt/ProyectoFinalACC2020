@@ -18,6 +18,8 @@ import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import dsi235.controllers.NotificationController;
 import dsi235.controllers.TicketController;
 import dsi235.controllers.TicketEncargadoController;
 import dsi235.controllers.UsuarioController;
@@ -37,6 +39,7 @@ public class AdminBackingBean implements Serializable{
 	private LoginSessionBean sessionBean;
 	private TicketController tc;
 	private TicketEncargadoController tec;
+	private NotificationController nc;
 	private Ticket ticket;
 	private Integer idDepartamento;
 	private LoginSessionBean loginObj;
@@ -66,29 +69,33 @@ public class AdminBackingBean implements Serializable{
 		this.users.remove(ticket.getIdUsuarioCreador());
 	}
 	
-public void asignacion() {
-	try {
-		System.out.println(selectedPersons);
-		if(!selectedPersons.isEmpty()) {
-			System.out.println(ticket);
+	public void asignacion() {
+		try {
+			if (!selectedPersons.isEmpty()) {
+				selectedPersons.forEach(item -> {
+					StringBuilder contenido = new StringBuilder().append("Saludos estimado ").append(item.getNombre())
+							.append("\nSe le ha asignado un nuevo ticket:\n").append(ticket.getDescripcion());
+					TicketEncargado ticketasignado = new TicketEncargado();
+					ticketasignado.setIdUsuarioCreador(usuarioLogueado);
+					ticketasignado.setFechaCreacion(new Date());
+					ticketasignado.setIdTicket(ticket);
+					ticketasignado.setIdUsuario(item);
+					tec.save(ticketasignado);
+					nc.enviarCorreo(item, contenido.toString());
+				});
 
-			selectedPersons.forEach(item-> {
-				TicketEncargado ticketasignado=new TicketEncargado();
-				ticketasignado.setIdUsuarioCreador(usuarioLogueado);
-				ticketasignado.setFechaCreacion(new Date());
-				ticketasignado.setIdTicket(ticket);
-				ticketasignado.setIdUsuario(item);	
-				tec.save(ticketasignado);
-			});
-			
-			ticket.setIdEstado(el.get(ESTADO.asignado.value));
-			tc.save(ticket);
+				ticket.setIdEstado(el.get(ESTADO.asignado.value));
+				tc.save(ticket);
+				StringBuilder contenido = new StringBuilder().append("Saludos estimado ")
+						.append(ticket.getIdUsuarioCreador().getNombre())
+						.append(", su solicitud ha sido asignada exitosamente a un tecnico capacitado, le mantendremos al tanto del proceso.");
+				nc.enviarCorreo(ticket.getIdUsuarioCreador(), contenido.toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
 		}
-	} catch (Exception e) {
-		e.printStackTrace();
-
 	}
-}
 	
 	
 	public void inicializarModelo() {
@@ -266,6 +273,14 @@ public void asignacion() {
 	@Autowired
 	public void setTec(TicketEncargadoController tec) {
 		this.tec = tec;
+	}
+
+	public NotificationController getNc() {
+		return nc;
+	}
+
+	public void setNc(NotificationController nc) {
+		this.nc = nc;
 	}
 	
 	
