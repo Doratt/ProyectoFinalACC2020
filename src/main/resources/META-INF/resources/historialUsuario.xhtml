@@ -57,12 +57,12 @@
 				width="80%" height="80%">
 
 				<h:form id="frmCalificarTicket">
-					<p:rating stars="10" cancel="false"
-						value="#{historialUsuarioBackingBean.calificacion}"></p:rating>
+					<p:rating stars="10" cancel="false" style="" 
+						value="#{historialUsuarioBackingBean.calificacion}"></p:rating><br></br>
 					<p:outputLabel
-						value="Deja un breve comentario para describir tu experiencia: (Opcional)"></p:outputLabel>
-					<p:inputTextarea value="#{historialUsuarioBackingBean.comentario}"
-						autoResize="false"></p:inputTextarea>
+						value="Deja un breve comentario para describir tu experiencia: (Opcional)"></p:outputLabel><br></br><br></br>
+					<p:inputTextarea value="#{historialUsuarioBackingBean.comentario}" maxlength="2000" style="width:90%;"
+						autoResize="false"></p:inputTextarea><br></br><br></br>
 					<p:commandButton type="submit" value="Calificar"
 						actionListener="#{historialUsuarioBackingBean.calificarTicket}"></p:commandButton>
 				</h:form>
