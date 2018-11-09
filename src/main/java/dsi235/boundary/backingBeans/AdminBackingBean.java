@@ -18,6 +18,8 @@ import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import dsi235.controllers.NotificationController;
 import dsi235.controllers.TicketController;
 import dsi235.controllers.TicketEncargadoController;
 import dsi235.controllers.UsuarioController;
@@ -31,154 +33,162 @@ import dsi235.utilities.PageParser;
 
 @ManagedBean(value = "adminBackingBean")
 @ViewScoped
-public class AdminBackingBean implements Serializable{
+public class AdminBackingBean implements Serializable {
 
 	private LazyDataModel<Ticket> model;
 	private LoginSessionBean sessionBean;
 	private TicketController tc;
 	private TicketEncargadoController tec;
+	private NotificationController nc;
 	private Ticket ticket;
 	private Integer idDepartamento;
 	private LoginSessionBean loginObj;
 	private Usuario usuarioLogueado;
 	private EstadosLoader el;
 	private Estado estado;
-	private List<Usuario> users,selectedPersons;
+	private List<Usuario> users, selectedPersons;
 	private Usuario usuario;
 	private UsuarioController uc;
 
-	
 	@PostConstruct
 	private void init() {
-	this.usuarioLogueado=loginObj.getUsuarioLogueado();
-	this.estado=el.get(ESTADO.creado.value);
-	inicializarModelo();		
-	this.idDepartamento=1;
+		this.usuarioLogueado = loginObj.getUsuarioLogueado();
+		this.estado = el.get(ESTADO.creado.value);
+		inicializarModelo();
+		this.idDepartamento = 1;
 	}
-	
+
 	public void select(SelectEvent ev) {
-		this.users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(), idDepartamento,true);
+		this.users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(), idDepartamento,
+				true);
 		this.users.remove(ticket.getIdUsuarioCreador());
 	}
-	
+
 	public void actualizarTabla() {
-		this.users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(), idDepartamento,true);
+		this.users = this.uc.findTecnicosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(), idDepartamento,
+				true);
 		this.users.remove(ticket.getIdUsuarioCreador());
 	}
-	
-public void asignacion() {
-	try {
-		System.out.println(selectedPersons);
-		if(!selectedPersons.isEmpty()) {
-			System.out.println(ticket);
 
-			selectedPersons.forEach(item-> {
-				TicketEncargado ticketasignado=new TicketEncargado();
-				ticketasignado.setIdUsuarioCreador(usuarioLogueado);
-				ticketasignado.setFechaCreacion(new Date());
-				ticketasignado.setIdTicket(ticket);
-				ticketasignado.setIdUsuario(item);	
-				ticketasignado.setActivo(true);
-				try {
-					tec.save(ticketasignado);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-			});
-			
-			ticket.setIdEstado(el.get(ESTADO.asignado.value));
-			ticket.setActivo(true);
-			tc.save(ticket);
+	public void asignacion() {
+		try {
+			System.out.println(selectedPersons);
+			if (!selectedPersons.isEmpty()) {
+
+				selectedPersons.forEach(item -> {
+					StringBuilder contenido = new StringBuilder().append("Saludos estimado ").append(item.getNombre())
+							.append("\nSe le ha asignado un nuevo ticket:\n").append(ticket.getDescripcion());
+
+					TicketEncargado ticketasignado = new TicketEncargado();
+					ticketasignado.setIdUsuarioCreador(usuarioLogueado);
+					ticketasignado.setFechaCreacion(new Date());
+					ticketasignado.setIdTicket(ticket);
+					ticketasignado.setIdUsuario(item);
+					ticketasignado.setActivo(true);
+					try {
+						tec.save(ticketasignado);
+						nc.enviarCorreo(item, contenido.toString());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				});
+
+				ticket.setIdEstado(el.get(ESTADO.asignado.value));
+				ticket.setActivo(true);
+				tc.save(ticket);
+				StringBuilder contenido = new StringBuilder().append("Saludos estimado ")
+						.append(ticket.getIdUsuarioCreador().getNombre())
+						.append(", su solicitud ha sido asignada exitosamente a un tecnico capacitado, le mantendremos al tanto del proceso.");
+				nc.enviarCorreo(ticket.getIdUsuarioCreador(), contenido.toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
 		}
-	} catch (Exception e) {
-		e.printStackTrace();
-
 	}
-}
-	
-	
+
 	public void inicializarModelo() {
 		try {
-		model=new LazyDataModel<Ticket>() {
-			 @Override
-             public Ticket getRowData(String rowKey) {
-                 return obtenerRowData(rowKey);
-             }
+			model = new LazyDataModel<Ticket>() {
+				@Override
+				public Ticket getRowData(String rowKey) {
+					return obtenerRowData(rowKey);
+				}
 
-             @Override
-             public Object getRowKey(Ticket object) {
-                 return obtenerRowKey(object);
-             }
-             @Override
-             public List<Ticket> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters){
-                 return cargarDatos(first,pageSize, sortField, sortOrder, filters);
-             }
-		};
-		}catch (Exception ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+				@Override
+				public Object getRowKey(Ticket object) {
+					return obtenerRowKey(object);
+				}
+
+				@Override
+				public List<Ticket> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+						Map<String, Object> filters) {
+					return cargarDatos(first, pageSize, sortField, sortOrder, filters);
+				}
+			};
+		} catch (Exception ex) {
+			Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
 		}
 	}
 
-	   public Object obtenerRowKey(Ticket object) {
-	        if (object != null) {
-	            return object.getIdTicket();
-	        }
-	        return null;
-	    }
-	
-	   public Ticket obtenerRowData(String rowKey) {
-	        try {
-	            List<Ticket> registros = (List<Ticket>) this.model.getWrappedData();
-	            if (registros != null && !registros.isEmpty()) {
-	                Long buscado = Long.parseLong(rowKey);
-	                for (Ticket r : registros) {
-	                    if (r.getIdTicket().compareTo(buscado) == 0) {
-	                        return r;
-	                    }
-	                }
-	            }
-	        } catch (Exception ex) {
-	            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
-	        }
-	        return null;
-	    }
-
-	   
-	public List<Ticket> cargarDatos(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-        List<Ticket> salida = null;
-        Page<Ticket> page=null;
-        try {
-            if (this.tc != null) {
-            	System.out.println(first);
-            	page=this.tc.findNoasignadosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(),this.estado.getIdEstado(),PageRequest.of(PageParser.parsePage(first, pageSize), pageSize));
-                salida = page.getContent();
-                if (this.model != null) {
-                    System.out.println(page.getTotalElements());
-                	this.model.setRowCount((Integer.valueOf(String.valueOf(page.getTotalElements()))));
-                    
-                }
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
-        } finally {
-            if (salida == null) {
-                salida = Collections.emptyList();
-            }
-        }
-        return salida;
-    }
-	
-
-    public LazyDataModel<Ticket> getModel() {
-		return model;
+	public Object obtenerRowKey(Ticket object) {
+		if (object != null) {
+			return object.getIdTicket();
+		}
+		return null;
 	}
 
+	public Ticket obtenerRowData(String rowKey) {
+		try {
+			List<Ticket> registros = (List<Ticket>) this.model.getWrappedData();
+			if (registros != null && !registros.isEmpty()) {
+				Long buscado = Long.parseLong(rowKey);
+				for (Ticket r : registros) {
+					if (r.getIdTicket().compareTo(buscado) == 0) {
+						return r;
+					}
+				}
+			}
+		} catch (Exception ex) {
+			Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+		}
+		return null;
+	}
+
+	public List<Ticket> cargarDatos(int first, int pageSize, String sortField, SortOrder sortOrder,
+			Map<String, Object> filters) {
+		List<Ticket> salida = null;
+		Page<Ticket> page = null;
+		try {
+			if (this.tc != null) {
+				System.out.println(first);
+				page = this.tc.findNoasignadosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(),
+						this.estado.getIdEstado(), PageRequest.of(PageParser.parsePage(first, pageSize), pageSize));
+				salida = page.getContent();
+				if (this.model != null) {
+					System.out.println(page.getTotalElements());
+					this.model.setRowCount((Integer.valueOf(String.valueOf(page.getTotalElements()))));
+
+				}
+			}
+		} catch (Exception ex) {
+			Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+		} finally {
+			if (salida == null) {
+				salida = Collections.emptyList();
+			}
+		}
+		return salida;
+	}
+
+	public LazyDataModel<Ticket> getModel() {
+		return model;
+	}
 
 	public void setModel(LazyDataModel<Ticket> model) {
 		this.model = model;
 	}
-
 
 	public LoginSessionBean getSessionBean() {
 		return sessionBean;
@@ -192,7 +202,6 @@ public void asignacion() {
 	public TicketController getTc() {
 		return tc;
 	}
-
 
 	@Autowired
 	public void setTc(TicketController tc) {
@@ -274,11 +283,13 @@ public void asignacion() {
 	public void setTec(TicketEncargadoController tec) {
 		this.tec = tec;
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	public NotificationController getNc() {
+		return nc;
+	}
+
+	public void setNc(NotificationController nc) {
+		this.nc = nc;
+	}
+
 }
