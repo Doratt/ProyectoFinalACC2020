@@ -18,4 +18,10 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long>{
 	public List<Usuario> findByIdSucursal_IdSucursalAndIdDepartamento_IdDepartamentoAndActivo(Short idSucursal, Integer idDepartamento,boolean activo);
 	public Page<Usuario> findByIdSucursal_IdSucursalAndActivo(Short idSucursal,boolean activo,Pageable pg);
 	
-	}
+	//Estadisticas
+	
+	//Numero de tickets por departamento
+	
+	 //public NumeroTickets calcularNumTicketsDepto(Date fechaInicio, Date fechaFin, Short idSucursal);
+}
+
