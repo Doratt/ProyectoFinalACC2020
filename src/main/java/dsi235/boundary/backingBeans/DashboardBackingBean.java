@@ -66,6 +66,7 @@ public class DashboardBackingBean implements Serializable {
 			System.out.println("Pase del if");
 			ticket.setDescripcion(getDescripcion());
 			ticket.setIdEstado(el.get(ESTADO.creado.value));
+			ticket.setActivo(true);
 			descripcion = null;
 			try {
 				System.out.println("Entre al try");

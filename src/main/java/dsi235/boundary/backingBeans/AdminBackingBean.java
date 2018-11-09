@@ -288,6 +288,7 @@ public class AdminBackingBean implements Serializable {
 		return nc;
 	}
 
+	@Autowired
 	public void setNc(NotificationController nc) {
 		this.nc = nc;
 	}
