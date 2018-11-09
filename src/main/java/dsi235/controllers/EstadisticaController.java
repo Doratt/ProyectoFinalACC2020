@@ -17,6 +17,7 @@ import dsi235.entities.estadisticas.TiempoResolucion;
  * @author doratt
  */
 public interface EstadisticaController {
+	
     public List<TiempoResolucion> calcularTiempoResolucionSucursal(Date fechaInicio, Date fechaFin, Short idSucursal);
     
     public List<TiempoResolucion> calcularTiempoResolucionDepto(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento);

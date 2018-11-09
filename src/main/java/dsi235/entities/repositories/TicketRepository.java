@@ -15,14 +15,16 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	// TODO
 	
 	// Calcular tiempo de resolucion por sucursal
-	//@Query(value = "SELECT * FROM ticket t JOIN usuario as te ON t.id_usuario WHERE te.id_sucursal = ?3 AND t.id_estado = ?4 AND (t.fecha_completado BETWEEN ?1 AND ?2)", nativeQuery = true)
-	//List<TiempoResolucion> calcularTiempoResolucionSucursal(Date fechaInicio, Date fechaFin, Short idSucursal, Short idEstado);
+	@Query(value = "SELECT * FROM ticket t JOIN usuario as te ON t.id_usuario_creador=te.id_usuario WHERE te.id_sucursal = ?3 AND t.id_estado = ?4 AND (t.fecha_completado BETWEEN ?1 AND ?2)", nativeQuery = true)
+	List<TiempoResolucion> calcularTiempoResolucionSucursal(Date fechaInicio, Date fechaFin, Short idSucursal, Short idEstado);
 
 	// Calcular tiempo de resolucion por Departamento
-	//List<TiempoResolucion> calcularTiempoResolucionDepto(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento, Short idEstado);
+	@Query(value = "SELECT * FROM ticket t JOIN usuario as te ON t.id_usuario_creador=te.id_usuario WHERE te.id_sucursal = ?3 AND te.id_departamento = ?4 AND t.id_estado = ?5 AND (t.fecha_completado BETWEEN ?1 AND ?2)", nativeQuery = true)
+	List<TiempoResolucion> calcularTiempoResolucionDepto(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento, Short idEstado);
 	
 	// Calcular tiempo de resolucion por Tecnico
-	//List<TiempoResolucion> calcularTiempoResolucionTecnico(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento, Long idTecnico, Short idEstado);
+	@Query(value = "SELECT * FROM ticket t JOIN ticket_encargado as te ON t.id_ticket = te.id_ticket WHERE te.id_usuario = ?3 AND t.id_estado = ?4 AND (t.fecha_completado BETWEEN ?1 AND ?2)", nativeQuery = true)
+	List<TiempoResolucion> calcularTiempoResolucionTecnico(Date fechaInicio, Date fechaFin, Long idTecnico, Short idEstado);
 	
 	// completado por encargado para parametros = ?1 donde 1 es el primer parametro
 	@Query(value = "SELECT * FROM ticket_encargado te JOIN ticket as t ON te.id_ticket = t.id_ticket WHERE te.id_usuario = ?1 AND t.id_estado = ?2", countQuery = "SELECT count(*) FROM ticket_encargado te JOIN ticket as t ON te.id_ticket = t.id_ticket WHERE te.id_usuario = 3 AND t.id_estado = 5", nativeQuery = true)
