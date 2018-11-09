@@ -77,6 +77,19 @@ public class AsignacionesBackingBean implements Serializable {
 		System.out.println(estadoSeleccionado);
 		setComentarios(comentarioController.findByIdTicket(ticketSeleccionado));
 	}
+	private void marcarMalAsignado() {
+		ticketSeleccionado.setIdEstado(ESTADO.creado.value);
+		asignados=tec.findByIdTicket_IdTicket(ticketSeleccionado.getIdTicket());
+		for (TicketEncargado ticketEncargado : asignados) {
+			ticketEncargado.setActivo(false);
+			try {
+				tec.save(ticketEncargado);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 
 	public void modificarEstadoTicket() {
 		if (estadoSeleccionado != 0) {

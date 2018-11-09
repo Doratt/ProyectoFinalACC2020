@@ -79,9 +79,12 @@
 								<f:selectItem itemLabel="Completado" itemValue="4" />
 								<p:ajax event="change" update="@this"></p:ajax>
 							</p:selectOneMenu>
-							<br />
+							<br /><br />
 							<p:commandButton value="Modificar Estado" icon="fa fa-cog">
 							<p:ajax listener="#{asignacionesBackingBean.modificarEstadoTicket}" update=":formAsignaciones :frmInfoTicket"></p:ajax>
+							</p:commandButton>
+							<br /><br />
+							<p:commandButton value="Marcar mal asignado" icon="warning">
 							</p:commandButton>
 						</div>
 					</div>
