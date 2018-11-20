@@ -6,17 +6,16 @@
     <application>
      <!--el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver-->
         <locale-config>
-            <default-locale>es</default-locale>
-<!--            <supported-locale>es</supported-locale>
-            <supported-locale>en</supported-locale>-->
+            <default-locale>eng</default-locale>
+            <supported-locale>spa</supported-locale>
         </locale-config>
         <resource-bundle>
-            <base-name>/dsi235/boundary/idiomas/General</base-name>
-            <var>TraduccionesGenerales</var>
+            <base-name>general</base-name>
+            <var>gen</var>
         </resource-bundle> 
-         <resource-bundle>
-            <base-name>/dsi235/boundary/idiomas/paginas/LoginLN</base-name>
-            <var>LoginLN</var>
-        </resource-bundle>    
+<!--          <resource-bundle> -->
+<!--             <base-name>/dsi235/boundary/idiomas/paginas/LoginLN</base-name> -->
+<!--             <var>LoginLN</var> -->
+<!--         </resource-bundle>     -->
     </application>
 </faces-config>
