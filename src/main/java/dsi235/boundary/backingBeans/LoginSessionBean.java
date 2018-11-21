@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -18,8 +19,6 @@ import dsi235.entities.UsuarioRol;
 @SessionScoped
 public class LoginSessionBean implements Serializable {
 
-
-
 	/**
 	 * 
 	 */
@@ -29,31 +28,40 @@ public class LoginSessionBean implements Serializable {
 
 	private UsuarioController usuarioController;
 
+	private Locale locale;
+
+
+
+	@PostConstruct
+	public void init() {
+		locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+	}
+
 	public void login(String correo, String contrasena) {
 		usuarioLogueado = usuarioController.autenticar(correo, contrasena);
 	}
-	
+
 	public void changeLanguageUS() {
 		System.out.println("cambiando a ingles");
 		try {
-		FacesContext.getCurrentInstance().getViewRoot().setLocale(new Locale("eng"));
-		System.out.println(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
-		}catch(Exception e) {
+			locale = new Locale("eng");
+			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+			System.out.println(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void changeLanguageES() {
 		System.out.println("cambiando a espanol");
 		try {
-		FacesContext.getCurrentInstance().getViewRoot().setLocale(new Locale("spa"));
-		System.out.println(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
-		}catch(Exception e) {
+			locale = new Locale("spa");
+			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+			System.out.println(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
 
 	public boolean isLoggedIn() {
 		return usuarioLogueado != null;
@@ -61,40 +69,34 @@ public class LoginSessionBean implements Serializable {
 
 	public boolean isTecnico() {
 		List<UsuarioRol> urList = this.usuarioLogueado.getUsuarioRolList();
-		for(UsuarioRol ur : urList) {
-			if(ur.getIdRol().getIdRol().equals(Short.valueOf("1"))) {
+		for (UsuarioRol ur : urList) {
+			if (ur.getIdRol().getIdRol().equals(Short.valueOf("1"))) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public boolean isAdministrador() {
 		List<UsuarioRol> urList = this.usuarioLogueado.getUsuarioRolList();
-		for(UsuarioRol ur : urList) {
-			if(ur.getIdRol().getIdRol().equals(Short.valueOf("2"))) {
+		for (UsuarioRol ur : urList) {
+			if (ur.getIdRol().getIdRol().equals(Short.valueOf("2"))) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public boolean isGerente() {
 		List<UsuarioRol> urList = this.usuarioLogueado.getUsuarioRolList();
-		for(UsuarioRol ur : urList) {
-			if(ur.getIdRol().getIdRol().equals(Short.valueOf("3"))) {
+		for (UsuarioRol ur : urList) {
+			if (ur.getIdRol().getIdRol().equals(Short.valueOf("3"))) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	@Autowired
 	public void setUsuarioController(UsuarioController usuarioController) {
 		this.usuarioController = usuarioController;
@@ -102,6 +104,14 @@ public class LoginSessionBean implements Serializable {
 
 	public Usuario getUsuarioLogueado() {
 		return usuarioLogueado;
+	}
+	
+	public Locale getLocale() {
+		return locale;
+	}
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
 	}
 
 }

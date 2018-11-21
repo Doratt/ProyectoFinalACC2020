@@ -11,7 +11,7 @@
         </locale-config>
         <resource-bundle>
             <base-name>general</base-name>
-            <var>gen</var>
+            <var>trad</var>
         </resource-bundle> 
 <!--          <resource-bundle> -->
 <!--             <base-name>/dsi235/boundary/idiomas/paginas/LoginLN</base-name> -->

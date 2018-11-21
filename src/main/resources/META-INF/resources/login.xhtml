@@ -8,39 +8,48 @@
 <h:head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" />
-	<title>Iniciar sesión</title>
+	<title>Login</title>
 	<h:outputStylesheet name="css/login.css" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </h:head>
 
 <h:body>
-	<h2 class="titulo">Ticket System</h2>
+	<h2 class="titulo">
+		<p:outputLabel value="#{gen['login']}"></p:outputLabel>
+	</h2>
 
 
 	<h:form id="login-form">
 		<div class="login-wrapper">
- 			<p:messages autoUpdate="true"></p:messages> 
- 			<p:outputLabel>Correo</p:outputLabel>
-			<p:inputText placeholder="ejemplo@ejemplo.com"
- 				requiredMessage="Ingrese su correo" 
- 				validatorMessage="Ingrese un correo válido" id="txtNombre"
-				type="email" required="true" maxlength="100" 
-				value="#{loginBackingBean.correo}"> 
+			<p:messages></p:messages>
+			<p:outputLabel value="#{trad['login.correo']}"></p:outputLabel>
+			<p:inputText
+				requiredMessage="#{trad['login.correo.requiredmessage']}"
+				validatorMessage="#{trad['login.correo.validatormessage']}"
+				id="txtNombre" type="email" required="true" maxlength="100"
+				value="#{loginBackingBean.correo}">
 				<f:validateRegex
-					pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/> 
-			</p:inputText> 
+					pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+			</p:inputText>
 
- 			<p:outputLabel>Contraseña</p:outputLabel> 
- 			<p:inputText id="txtContrasena" required="true" type="password" 
- 				requiredMessage="Ingrese su contraseña"
- 				value="#{loginBackingBean.contrasena}" maxlength="100" /> 
-			<p:commandButton value="#{gen['login']}" type="submit"
+			<p:outputLabel value="#{trad['login.contrasena']}"></p:outputLabel>
+			<p:inputText id="txtContrasena" required="true" type="password"
+				requiredMessage="#{trad['login.contrasena.requiredmessage']}"
+				value="#{loginBackingBean.contrasena}" maxlength="100" />
+			<p:commandButton value="#{trad['login']}" type="submit"
 				update="login-form" action="#{loginBackingBean.login()}"></p:commandButton>
 		</div>
-<h:commandButton value="Espanol"  action="#{loginSessionBean.changeLanguageES()}"/>
-<h:commandButton value="English"  action="#{loginSessionBean.changeLanguageUS()}"/>
 
 
+
+	</h:form>
+	<h:form>
+		<div class="div-idiomas">
+			<h:commandButton value="Español"
+				action="#{loginSessionBean.changeLanguageES()}" />
+			<h:commandButton value="English"
+				action="#{loginSessionBean.changeLanguageUS()}" />
+		</div>
 	</h:form>
 
 </h:body>

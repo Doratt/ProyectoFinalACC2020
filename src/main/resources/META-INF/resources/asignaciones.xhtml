@@ -7,7 +7,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="layout.xhtml">
-	<ui:define name="title">Asignaciones Pendientes (Técnico)</ui:define>
+	<ui:define name="title"><h:outputText value="#{trad['layout.asignacionespendientes']}"/> </ui:define>
 	<ui:define name="content">
 		<h:form id="formAsignaciones">
 			<p:dataTable var="ticket" value="#{asignacionesBackingBean.tickets}"
@@ -20,31 +20,31 @@
 				<p:ajax event="rowSelect"
 					listener="#{asignacionesBackingBean.cargarComentarios}"
 					oncomplete="PF('infoTicket').show();"
-					update=":frmInfoTicket :j_idt33" />
+					update=":frmInfoTicket :dialogoticket" />
 				<f:facet name="header">
-            Asignaciones Pendientes
+            <h:outputText value="#{trad['layout.asignacionespendientes']}"/>
             </f:facet>
-				<p:column headerText="Numero de ticket">
+				<p:column headerText="ID">
 					<h:outputText value="#{ticket.idTicket}" />
 				</p:column>
-				<p:column headerText="Solicitante">
+				<p:column headerText="#{trad['dashboard.solicitante']}">
 					<h:outputText value="#{ticket.idUsuarioCreador.nombre}" />
 				</p:column>
-				<p:column headerText="Descripcion">
+				<p:column headerText="#{trad['dashboard.descripcion']}">
 					<h:outputText value="#{ticket.descripcion}" />
 				</p:column>
-				<p:column headerText="Fecha de solicitud">
+				<p:column headerText="#{trad['dashboard.fechasolicitud']}">
 					<h:outputText value="#{ticket.fechaCreacion}">
 						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 					</h:outputText>
 				</p:column>
-				<p:column headerText="Estado">
+				<p:column headerText="#{trad['dashboard.estado']}">
 					<h:outputText value="#{ticket.idEstado.nombre}" />
 				</p:column>
 			</p:dataTable>
 		</h:form>
 
-		<p:dialog
+		<p:dialog id="dialogoticket"
 			header='#{"Ticket #".concat(asignacionesBackingBean.ticketSeleccionado.idTicket)}'
 			widgetVar="infoTicket" modal="true" showEffect="fade"
 			hideEffect="fade" resizable="false" width="90%" height="90%"
@@ -53,10 +53,10 @@
 				<div class="frm-info">
 					<div class="izquierda">
 						<h:panelGrid columns="2">
-							<p:outputLabel value="Estado: "></p:outputLabel>
+							<p:outputLabel value="#{trad['dashboard.estado']}"></p:outputLabel>
 							<p:outputLabel
 								value="#{asignacionesBackingBean.ticketSeleccionado.idEstado.nombre}"></p:outputLabel>
-							<p:outputLabel value="Fecha de creación: "></p:outputLabel>
+							<p:outputLabel value="#{trad['dashboard.fechasolicitud']}"></p:outputLabel>
 							<p:outputLabel
 								value="#{asignacionesBackingBean.ticketSeleccionado.fechaCreacion}">
 								<f:convertDateTime pattern="dd/MM/yyyy HH:mm"></f:convertDateTime>
@@ -64,14 +64,14 @@
 						</h:panelGrid>
 
 						<br />
-						<p:outputLabel value="Descripción:"></p:outputLabel>
+						<p:outputLabel value="#{trad['dashboard.descripcion']}"></p:outputLabel>
 						<div class="div-descripcion">
 							<p:outputLabel
 								value="#{asignacionesBackingBean.ticketSeleccionado.descripcion}"></p:outputLabel>
 						</div>
 						<br />
 						<div>
-							<p:outputLabel value="Modificar el estado del ticket:"></p:outputLabel>
+							<p:outputLabel value="#{trad['asignaciones.modificar']}"></p:outputLabel>
 							<br />
 							<p:selectOneMenu id="estados"
 								value="#{asignacionesBackingBean.estadoSeleccionado}">
@@ -81,14 +81,14 @@
 								<p:ajax event="change" update="@this"></p:ajax>
 							</p:selectOneMenu>
 							<br /> <br />
-							<p:commandButton value="Modificar Estado" icon="fa fa-cog">
+							<p:commandButton value="#{trad['asignaciones.modificarbtn']}" icon="fa fa-cog">
 								<p:ajax
 									listener="#{asignacionesBackingBean.modificarEstadoTicket}"
 									update=":formAsignaciones :frmInfoTicket">
 								</p:ajax>
 							</p:commandButton>
 							<br /> <br />
-							<p:commandButton value="Marcar mal asignado"
+							<p:commandButton value="#{trad['asignaciones.marcarmalasignado']}"
 								icon="fa fa-exclamation-triangle">
 								<p:ajax listener="#{asignacionesBackingBean.marcarMalAsignado}"
 									update=":formAsignaciones :frmInfoTicket">
@@ -96,7 +96,7 @@
 							</p:commandButton>
 						</div>
 					</div>
-					<p:outputLabel value="Comentarios:"></p:outputLabel>
+					<p:outputLabel value="#{trad['dashboard.comentarios']}"></p:outputLabel>
 					<div class="derecha">
 						<div id="divComents" class="div-comentarios">
 							<p:repeat var="com"

@@ -7,6 +7,23 @@
 	background-color: white;
 }
 
+.div-idiomas{
+	margin: 15px auto;
+	background-color: rgba(255,255,255,0.8);
+	border-radius: 5px;
+	text-align: center;
+	width: 200px;
+}
+.div-idiomas input{
+	display: inline-block;
+	background-color: #4a4a4a;
+	color: white;
+	padding: 8px 12px;
+	border-radius: 5px;
+	margin: 5px;
+	border: 0;
+}
+
 .login-wrapper input {
 	display: block;
 	padding: 10px;
