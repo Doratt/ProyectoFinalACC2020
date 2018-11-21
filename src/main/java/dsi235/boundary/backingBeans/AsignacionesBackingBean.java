@@ -86,6 +86,12 @@ public class AsignacionesBackingBean implements Serializable {
 		asignados = tec.findByIdTicket_IdTicket(ticketSeleccionado.getIdTicket());
 		for (TicketEncargado ticketEncargado : asignados) {
 			ticketEncargado.setActivo(false);
+			StringBuilder contenido = new StringBuilder().append("Saludos estimado ")
+					.append(ticketEncargado.getIdUsuarioCreador().getNombre())
+					.append(", uno de los tecnicos a quien usted asigno el ticket con descripcion: \n"
+							+ ticketEncargado.getIdTicket().getDescripcion())
+					.append("\n Ha marcado el ticket como mal asignado, por lo tanto ha vuelto a las asignaciones pendientes");
+			nc.enviarCorreo(ticketEncargado.getIdUsuarioCreador(), contenido.toString());
 			try {
 				tec.save(ticketEncargado);
 			} catch (Exception e) {
@@ -219,6 +225,7 @@ public class AsignacionesBackingBean implements Serializable {
 		return nc;
 	}
 
+	@Autowired
 	public void setNc(NotificationController nc) {
 		this.nc = nc;
 	}

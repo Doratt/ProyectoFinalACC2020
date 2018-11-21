@@ -18,9 +18,12 @@ import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.annotation.SessionScope;
 
 import dsi235.controllers.ComentarioController;
+import dsi235.controllers.NotificationController;
 import dsi235.controllers.TicketController;
+import dsi235.controllers.TicketEncargadoController;
 import dsi235.entities.Comentario;
 import dsi235.entities.Ticket;
+import dsi235.entities.TicketEncargado;
 import dsi235.entities.Usuario;
 import dsi235.utilities.ESTADO;
 import dsi235.utilities.EstadosLoader;
@@ -45,6 +48,8 @@ public class DashboardBackingBean implements Serializable {
 	private Comentario comentario;
 	private ComentarioController comentarioController;
 	private List<Comentario> comentarios;
+	private NotificationController nc;
+	private TicketEncargadoController tec;
 
 
 	@PostConstruct
@@ -71,6 +76,11 @@ public class DashboardBackingBean implements Serializable {
 			try {
 				System.out.println("Entre al try");
 				tc.save(getTicket());
+				StringBuilder contenido = new StringBuilder().append("Saludos ")
+						.append(sessionBean.getUsuarioLogueado().getNombre())
+						.append(", su ticket ha sido creado y esta en espera de ser asignado"
+								+ ", le mantendremos al tanto del proceso.");
+				nc.enviarCorreo(sessionBean.getUsuarioLogueado(), contenido.toString());
 				init();
 				PrimeFaces current = PrimeFaces.current();
 				this.ticket = new Ticket();
@@ -97,6 +107,14 @@ public class DashboardBackingBean implements Serializable {
 				comentarioController.save(comentario);
 				this.comentario = new Comentario();
 				cargarComentarios();
+				
+				List<TicketEncargado> encargados = tec.findByIdTicket_IdTicket(ticketSeleccionado.getIdTicket());
+				for (TicketEncargado ticketEncargado : encargados) {
+					StringBuilder contenido = new StringBuilder().append("Saludos estimado ")
+							.append(ticketEncargado.getIdUsuario().getNombre())
+							.append(", le informamos que hay un nuevo comentario en uno de sus tickets asignados");
+					nc.enviarCorreo(ticketEncargado.getIdUsuario(), contenido.toString());
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -114,6 +132,19 @@ public class DashboardBackingBean implements Serializable {
 		ticketSeleccionado.setIdEstado(el.get(ESTADO.completado.value));
 		ticketSeleccionado.setIdUsuarioModificador(sessionBean.getUsuarioLogueado());
 		try {
+			List<TicketEncargado> encargados = tec.findByIdTicket_IdTicket(ticketSeleccionado.getIdTicket());
+			System.out.println("Lista de encargados:"+encargados);
+			if(encargados!=null && !encargados.isEmpty()) {
+				System.out.println("encargados no es null ni esta vacio");
+				for (TicketEncargado ticketEncargado : encargados) {
+					StringBuilder contenido = new StringBuilder().append("Saludos estimado ")
+							.append(ticketEncargado.getIdUsuario().getNombre())
+							.append(", le informamos que el ticket #")
+							.append(ticketSeleccionado.getIdTicket())
+							.append("\n que estaba asignado a usted, ha sido cancelado por su solicitante");
+					nc.enviarCorreo(ticketEncargado.getIdUsuario(), contenido.toString());
+				}
+			}
 			tc.save(ticketSeleccionado);
 			init();
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -209,7 +240,15 @@ public class DashboardBackingBean implements Serializable {
 		this.comentarios = comentarios;
 	}
 
-	
+	@Autowired
+	public void setNc(NotificationController nc) {
+		this.nc = nc;
+	}
+
+	@Autowired
+	public void setTec(TicketEncargadoController tec) {
+		this.tec = tec;
+	}
 	
 	
 
