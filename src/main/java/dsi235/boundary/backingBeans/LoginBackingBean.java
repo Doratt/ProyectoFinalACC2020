@@ -2,9 +2,12 @@ package dsi235.boundary.backingBeans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ResourceBundle;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
+import javax.faces.annotation.ManagedProperty;
+import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -21,14 +24,20 @@ public class LoginBackingBean implements Serializable {
 	private final static String MAIN_URL = "dashboard.jsf?faces-redirect=true";
 	// Autowired
 	private LoginSessionBean sessionBean;
+	
+
+
 
 	public String login() {
 
 		sessionBean.login(correo, contrasena);
 
 		if (sessionBean.getUsuarioLogueado() == null) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			Application app = context.getApplication();
+			ResourceBundle trad = app.getResourceBundle(context, "trad");
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Credenciales inválidas", ""));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, trad.getString("login.credencialesinvalidas"), ""));
 			return null;
 		} else {
 			return MAIN_URL;
