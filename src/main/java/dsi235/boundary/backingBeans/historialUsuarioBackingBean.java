@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 
+import org.primefaces.PrimeFaces;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,19 +58,28 @@ public class historialUsuarioBackingBean implements Serializable{
 	}
 	
 	public void calificarTicket() {
-		retroalimentacion = new Retroalimentacion();
-		retroalimentacion.setCalificacion(calificacion);
-		if(!comentario.isEmpty()) {
-			retroalimentacion.setComentario(comentario);
-		}
-		retroalimentacion.setFechaCreacion(new Date());
-		retroalimentacion.setIdTicket(ticket);
-		retroalimentacion.setIdUsuarioCreador(sessionBean.getUsuarioLogueado());
-		retroalimentacion.setActivo(true);
-		try {
-			rc.save(retroalimentacion);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(ticket.getRetroalimentacion()==null) {
+			retroalimentacion = new Retroalimentacion();
+			retroalimentacion.setCalificacion(calificacion);
+			if(!comentario.isEmpty()) {
+				retroalimentacion.setComentario(comentario);
+			}
+			retroalimentacion.setFechaCreacion(new Date());
+			retroalimentacion.setIdTicket(ticket);
+			retroalimentacion.setIdUsuarioCreador(sessionBean.getUsuarioLogueado());
+			retroalimentacion.setActivo(true);
+			try {
+				rc.save(retroalimentacion);
+				PrimeFaces current = PrimeFaces.current();
+				current.executeScript("PF('calificarTicket').hide()");
+				calificacion=0;
+				comentario="";  
+				inicializarModelo();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			System.out.println("Ticket ya comentado");
 		}
 	}
 	

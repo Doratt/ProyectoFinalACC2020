@@ -64,7 +64,8 @@
 					<p:inputTextarea value="#{historialUsuarioBackingBean.comentario}" maxlength="2000" style="width:90%;"
 						autoResize="false"></p:inputTextarea><br></br><br></br>
 					<p:commandButton type="submit" value="Calificar"
-						actionListener="#{historialUsuarioBackingBean.calificarTicket}"></p:commandButton>
+						actionListener="#{historialUsuarioBackingBean.calificarTicket}"
+						update=":historial_usuario_form"></p:commandButton>
 				</h:form>
 			</p:dialog>
 		</h:form>

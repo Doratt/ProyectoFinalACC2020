@@ -8,7 +8,7 @@
 
 <ui:composition template="layout.xhtml">
 	<ui:define name="content">
-		<h:form>
+		<h:form id="rolesfrm">
 			<p:dataTable id="roles_data" paginatorPosition="bottom"
 				value="#{rolesBackingBean.model}" var="rol"
 				emptyMessage="Aun no existen usuarios" lazy="true" rows="6"
@@ -43,7 +43,8 @@
 					<p:ajax event="change" />
 					<f:selectItems value="#{rolesBackingBean.roles}" />
 				</p:selectManyCheckbox>
-				<p:commandButton value="Guardar" actionListener="#{rolesBackingBean.guardar}"/>
+				<p:commandButton value="Guardar" actionListener="#{rolesBackingBean.guardar}"
+				update=":rolesfrm"/>
 				</h:form>
 </p:dialog>
 	</ui:define>
