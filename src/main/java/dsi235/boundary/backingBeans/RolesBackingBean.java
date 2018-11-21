@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -14,6 +15,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 
+import org.primefaces.PrimeFaces;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,10 @@ import dsi235.utilities.PageParser;
 @ManagedBean(value = "rolesBackingBean")
 @ViewScoped
 public class RolesBackingBean implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3518758767678270767L;
 	private Usuario usuarioLogueado, usuarioBindeado;
 	private UsuarioRolController urc;
 	private UsuarioController uc;
@@ -40,16 +46,16 @@ public class RolesBackingBean implements Serializable {
 	private List<String> checked;
 
 	@PostConstruct
-	public void init(){
-		checked=new ArrayList<>();
-		roles=new ArrayList<SelectItem>();
+	public void init() {
+		checked = new ArrayList<>();
+		roles = new ArrayList<SelectItem>();
 		roles.add(new SelectItem("1", "Tecnico"));
 		roles.add(new SelectItem("2", "Administrador"));
 		roles.add(new SelectItem("3", "Gerente"));
 		this.usuarioLogueado = loginHandler.getUsuarioLogueado();
-	
+
 		inicializarModelo();
-		
+
 	}
 
 	public void inicializarModelo() {
@@ -99,48 +105,72 @@ public class RolesBackingBean implements Serializable {
 		}
 		return null;
 	}
+
 	public void select() {
 		checked.clear();
 		try {
-		usuarioBindeado.getUsuarioRolList().forEach(r->{
-			checked.add(String.valueOf(r.getIdRol().getIdRol()));
-		});
-		}catch(Exception e) {
+			usuarioBindeado.getUsuarioRolList().forEach(r -> {
+				if(r.getActivo())
+				checked.add(String.valueOf(r.getIdRol().getIdRol()));
+			});
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void guardar() {
-		List<Rol> roles = usuarioBindeado.getRolList();
-		List<Short> idRoles = new ArrayList<Short>();
-		for (Rol rol : roles) {
-			idRoles.add(rol.getIdRol());
+		System.out.println(checked);
+		List<UsuarioRol> ur = usuarioBindeado.getUsuarioRolList();
+		List<Short> rolesDeUser = new ArrayList<>();
+		for (UsuarioRol usuarioRol : ur) {
+			rolesDeUser.add(usuarioRol.getIdRol().getIdRol());
 		}
-		/*checked.forEach(rol->{
-			UsuarioRol urRol = new UsuarioRol();
-			urRol.setIdUsuario(usuarioBindeado);
-			urRol.setIdUsuarioModificador(usuarioLogueado);
-			urRol.setIdRol(new Rol(Short.valueOf(rol)));
-			urRol.setFechaCreacion(new Date());
-			urRol.setIdUsuarioCreador(usuarioLogueado);
-			urc.save(urRol);
-		});*/
-		for(int i=1; i<=3; i++) {
-			if(checked.contains(i) && idRoles.contains(i)) {
-				roles.get(i).setActivo(true);
-			}else if(checked.contains(i) && !idRoles.contains(i)) {
-				UsuarioRol urRol = new UsuarioRol();
-				urRol.setIdUsuario(usuarioBindeado);
-				urRol.setIdUsuarioModificador(usuarioLogueado);
-				urRol.setIdRol(new Rol(Short.valueOf(checked.get(i))));
-				urRol.setFechaCreacion(new Date());
-				urRol.setIdUsuarioCreador(usuarioLogueado);
-				urc.save(urRol);
-			}else if(!checked.contains(i) && idRoles.contains(i)) {
-				roles.get(i).setActivo(false);
+
+		for (int i = 1; i <= 3; i++) {
+			System.out.println("Estoy en for");
+			// En caso de que este seleccionado el check y este en la base, sera activo si
+// no es activo
+			if (rolesDeUser.contains(Short.valueOf(String.valueOf(i))) && checked.contains(String.valueOf(i))) {
+				System.out.println("Estoy en la base y en el check");
+				for (UsuarioRol usuarioRol : ur) {
+					if (usuarioRol.getIdRol().getIdRol() == i) {
+						if (!usuarioRol.getActivo()) {
+							usuarioRol.setActivo(true);
+							urc.save(usuarioRol);
+							inicializarModelo();
+							
+						}
+					}
+				}
+				// En caso de que no este seleccionado el check y este en la base, sera no
+				// activo si es activo
+			} else if (rolesDeUser.contains(Short.valueOf(String.valueOf(i))) && !checked.contains(String.valueOf(i))) {
+				System.out.println("Estoy en la base y NO en el check");
+				for (UsuarioRol usuarioRol : ur) {
+					if (usuarioRol.getIdRol().getIdRol() == i) {
+						if (usuarioRol.getActivo()) {
+							usuarioRol.setActivo(false);
+							urc.save(usuarioRol);
+							inicializarModelo();
+						}
+					}
+				}
+				// En caso de que este seleccionado el check y no este en la base, crea un nuevo
+				// registro
+			} else if (!rolesDeUser.contains(Short.valueOf(String.valueOf(i))) && checked.contains(String.valueOf(i))) {
+				System.out.println("NO estoy en la base y si en el check");
+				UsuarioRol nuevoRol = new UsuarioRol();
+				nuevoRol.setActivo(true);
+				nuevoRol.setFechaCreacion(new Date());
+				nuevoRol.setIdUsuario(usuarioBindeado);
+				nuevoRol.setIdRol(new Rol(Short.valueOf(String.valueOf(i))));
+				nuevoRol.setIdUsuarioCreador(usuarioLogueado);
+				urc.save(nuevoRol);
+				inicializarModelo();
 			}
 		}
-		
+		PrimeFaces current = PrimeFaces.current();
+		current.executeScript("PF('rol_dialog').hide()");
 	}
 
 	public List<Usuario> cargarDatos(int first, int pageSize, String sortField, SortOrder sortOrder,
@@ -211,7 +241,6 @@ public class RolesBackingBean implements Serializable {
 	public void setModel(LazyDataModel<Usuario> model) {
 		this.model = model;
 	}
-	
 
 	public List<SelectItem> getRoles() {
 		return roles;
@@ -236,7 +265,5 @@ public class RolesBackingBean implements Serializable {
 	public void setChecked(List<String> checked) {
 		this.checked = checked;
 	}
-	
-	
 
 }
