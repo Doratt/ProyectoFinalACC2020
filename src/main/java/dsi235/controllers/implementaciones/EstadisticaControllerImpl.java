@@ -30,18 +30,27 @@ public class EstadisticaControllerImpl implements EstadisticaController{
 
     //Ordenar por numero de tickets
     @Override
-    public NumeroTickets calcularNumTicketsUsuario(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento) {
+    public NumeroTickets calcularNumTicketsUsuario(Date fechaInicio, Date fechaFin, Short idSucursal, Integer idDepartamento) {
         return null;
     }
 
     @Override
-    public NumeroTickets calcularNumTicketsTecnico(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento) {
+    public NumeroTickets calcularNumTicketsTecnico(Date fechaInicio, Date fechaFin, Short idSucursal, Integer idDepartamento) {
         return null;
     }
 
     @Override
-    public List<Ticket> verRetroalimentacion(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento, Long idTecnico) {
-        return null;
+    public List<Ticket> verRetroalimentacion(Date fechaInicio, Date fechaFin, Short idSucursal, Integer idDepartamento, Long idTecnico) {
+        
+    	if(idSucursal != null) {
+    		return ticketRepository.retroalimentarionBySucursal(idSucursal, fechaInicio, fechaFin);
+    	}else if(idDepartamento != null) {
+    		return ticketRepository.retroalimentarionByDepartamento(idDepartamento, fechaInicio, fechaFin);
+    	}else if(idTecnico != null) {
+    		return ticketRepository.retroalimentarionByTecnico(idTecnico, fechaInicio, fechaFin);
+    	}
+    	
+    	return null;
     }
 
 	@Override
@@ -52,14 +61,14 @@ public class EstadisticaControllerImpl implements EstadisticaController{
 
 	@Override
 	public List<TiempoResolucion> calcularTiempoResolucionDepto(Date fechaInicio, Date fechaFin, Short idSucursal,
-			int idDepartamento) {
+			Integer idDepartamento) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<TiempoResolucion> calcularTiempoResolucionTecnico(Date fechaInicio, Date fechaFin, Short idSucursal,
-			int idDepartamento, Long idTecnico) {
+			Integer idDepartamento, Long idTecnico) {
 		// TODO Auto-generated method stub
 		return null;
 	}

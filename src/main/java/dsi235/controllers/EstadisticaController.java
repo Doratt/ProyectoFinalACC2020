@@ -17,19 +17,24 @@ import dsi235.entities.estadisticas.TiempoResolucion;
  * @author doratt
  */
 public interface EstadisticaController {
-	
-    public List<TiempoResolucion> calcularTiempoResolucionSucursal(Date fechaInicio, Date fechaFin, Short idSucursal);
-    
-    public List<TiempoResolucion> calcularTiempoResolucionDepto(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento);
-    
-    public List<TiempoResolucion> calcularTiempoResolucionTecnico(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento, Long idTecnico);
-    
-    public NumeroTickets calcularNumTicketsDepto(Date fechaInicio, Date fechaFin, Short idSucursal);
-    
-    //Ordenar por numero de tickets
-    public NumeroTickets calcularNumTicketsUsuario(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento);
 
-    public NumeroTickets calcularNumTicketsTecnico(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento);
-    
-    public List<Ticket> verRetroalimentacion(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento, Long idTecnico);
+	public List<TiempoResolucion> calcularTiempoResolucionSucursal(Date fechaInicio, Date fechaFin, Short idSucursal);
+
+	public List<TiempoResolucion> calcularTiempoResolucionDepto(Date fechaInicio, Date fechaFin, Short idSucursal,
+			Integer idDepartamento);
+
+	public List<TiempoResolucion> calcularTiempoResolucionTecnico(Date fechaInicio, Date fechaFin, Short idSucursal,
+			Integer idDepartamento, Long idTecnico);
+
+	public NumeroTickets calcularNumTicketsDepto(Date fechaInicio, Date fechaFin, Short idSucursal);
+
+	// Ordenar por numero de tickets
+	public NumeroTickets calcularNumTicketsUsuario(Date fechaInicio, Date fechaFin, Short idSucursal,
+			Integer idDepartamento);
+
+	public NumeroTickets calcularNumTicketsTecnico(Date fechaInicio, Date fechaFin, Short idSucursal,
+			Integer idDepartamento);
+
+	public List<Ticket> verRetroalimentacion(Date fechaInicio, Date fechaFin, Short idSucursal, Integer idDepartamento,
+			Long idTecnico);
 }
