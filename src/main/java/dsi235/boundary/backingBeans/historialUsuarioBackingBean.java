@@ -45,7 +45,7 @@ public class historialUsuarioBackingBean implements Serializable{
 	private RetroalimentacionController rc;
 	private Retroalimentacion retroalimentacion;
 	private EstadosLoader el;
-
+	private boolean calificado;
 	
 	
 	@PostConstruct
@@ -57,8 +57,21 @@ public class historialUsuarioBackingBean implements Serializable{
 		//historialTicketTecnico= tc.findCompletadosByEncargado(sessionBean.getUsuarioLogueado().getIdUsuario(), 1, 5);
 	}
 	
+	
+	public void checkIfCalificado() {
+		if(ticket.getRetroalimentacion()!=null) {
+			calificacion=ticket.getRetroalimentacion().getCalificacion();
+			comentario=ticket.getRetroalimentacion().getComentario();
+			calificado=true;
+		}else {
+			comentario="";
+			calificacion=0;
+			calificado=false;
+		}
+	}
+	
 	public void calificarTicket() {
-		if(ticket.getRetroalimentacion()==null) {
+		
 			retroalimentacion = new Retroalimentacion();
 			retroalimentacion.setCalificacion(calificacion);
 			if(!comentario.isEmpty()) {
@@ -78,9 +91,6 @@ public class historialUsuarioBackingBean implements Serializable{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else {
-			System.out.println("Ticket ya comentado");
-		}
 	}
 	
 	public void reabrirTicket() {
@@ -253,6 +263,12 @@ public class historialUsuarioBackingBean implements Serializable{
 		this.el = el;
 	}
 	
-	
+	public boolean isCalificado() {
+		return calificado;
+	}
+
+	public void setCalificado(boolean calificado) {
+		this.calificado = calificado;
+	}
 	
 }

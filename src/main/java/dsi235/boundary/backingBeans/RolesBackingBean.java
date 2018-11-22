@@ -183,7 +183,7 @@ public class RolesBackingBean implements Serializable {
 			if (this.uc != null) {
 				page = this.uc.findTecnicosBySucursal(sucursal, true,
 						PageRequest.of(PageParser.parsePage(first, pageSize), pageSize));
-				salida = page.getContent();
+				salida = page.getContent();	
 				if (this.model != null) {
 					this.model.setRowCount((Integer.valueOf(String.valueOf(page.getTotalElements()))));
 

@@ -7,7 +7,9 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="layout.xhtml">
-	<ui:define name="title"><h:outputText value="#{trad['layout.historial']}"/> </ui:define>
+	<ui:define name="title">
+		<h:outputText value="#{trad['layout.historial']}" />
+	</ui:define>
 	<ui:define name="content">
 
 
@@ -21,8 +23,8 @@
 				selection="#{historialTecnicoBackingBean.ticket}"
 				emptyMessage="No hay tickets completados">
 				<f:facet name="header">
-            <h:outputText value="#{trad['historialt.tabla']}"/>
-            </f:facet>
+					<h:outputText value="#{trad['historialt.tabla']}" />
+				</f:facet>
 				<p:column headerText="ID">
 					<h:outputText value="#{ticket.idTicket}" />
 				</p:column>
@@ -39,9 +41,11 @@
 						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 					</h:outputText>
 				</p:column>
-				<p:column headerText="#{trad['historialt.reabrir']}" style="text-align:center;">
-					<p:commandButton icon="fa fa-refresh" >
-						<p:ajax update=":historial_tecnico_form:historial_tecnico_table" listener="#{historialTecnicoBackingBean.reabrirTicket}"></p:ajax>
+				<p:column headerText="#{trad['historialt.reabrir']}"
+					style="text-align:center;">
+					<p:commandButton icon="fa fa-refresh">
+						<p:ajax update=":historial_tecnico_form:historial_tecnico_table"
+							listener="#{historialTecnicoBackingBean.reabrirTicket}"></p:ajax>
 						<f:setPropertyActionListener value="#{ticket}"
 							target="#{historialTecnicoBackingBean.ticket}" />
 					</p:commandButton>
