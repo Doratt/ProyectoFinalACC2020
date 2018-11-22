@@ -79,14 +79,14 @@
 			</p:panel>
 			<br></br>
 			<br></br>
-			<p:commandButton value="Buscar" type="submit" actionListener="#{estadisticasBackingBean.buscar()}"
+			<p:commandButton value="Buscar" type="submit" actionListener="#{estadisticasBackingBean.buscar}"
 				update="opciones :estadistica-form"></p:commandButton>
 			<br></br>
 			<br></br>
 		</h:form>
 
 		<h:form id="estadistica-form">
-			<p:dataTable id="estadistica_tabla" var="t" value="#{estadisticaBackingBean.lista}"
+			<p:dataTable id="estadistica_tabla" var="t" value="#{estadisticasBackingBean.lista}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
 				paginator="true" rows="10" style="margin-bottom:20px" reflow="true" >
 				<f:facet name="{Exporters}">
@@ -135,14 +135,14 @@
 					<f:facet name="header">
 						<h:outputText value="Calificacion" />
 					</f:facet>
-					<h:outputText value="#{t.idRetroalimentacion.calificacion}" />
+					<h:outputText value="#{t.retroalimentacion.calificacion}" />
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Comentario" />
 					</f:facet>
-					<h:outputText value="#{t.idRetroalimentacion.comentario}" />
+					<h:outputText value="#{t.retroalimentacion.comentario}" />
 				</p:column>
 			</p:dataTable>
 		</h:form>
