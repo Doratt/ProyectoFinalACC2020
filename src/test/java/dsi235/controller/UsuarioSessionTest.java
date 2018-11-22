@@ -26,20 +26,20 @@ public class UsuarioSessionTest {
 	
 	
 	private UsuarioController usuarioController;
-	private LoginSessionBean sessionBean;
+//	private LoginSessionBean sessionBean;
 	private TicketController ticketController;
 	
 	@Test
 	public void iniciarSesionCorrecto() {
-		Usuario user = usuarioController.autenticar("daniel97molin@gmail.com", "dmdm");
-		assertEquals(user.getIdUsuario(), Long.valueOf(4));
+		Usuario user = usuarioController.autenticar("m@m.com", "1234");
+		assertEquals(user.getIdUsuario(), Long.valueOf(3));
 	}
 	
 	@Test
 	public void crearTicket() {
 		Ticket ticket = new Ticket(null, "Prueba de ticket (Prueba de integracion)", new Date(), true);
 		ticket.setIdEstado(new Estado(Short.valueOf("1")));
-		ticket.setIdUsuarioCreador(new Usuario(Long.valueOf(4)));
+		ticket.setIdUsuarioCreador(new Usuario(Long.valueOf(3)));
 		ticket = ticketController.save(ticket);
 		assertNotNull(ticket.getIdTicket());
 	}
@@ -47,9 +47,9 @@ public class UsuarioSessionTest {
 
 
 	
-	public LoginSessionBean getSessionBean() {
-		return sessionBean;
-	}
+//	public LoginSessionBean getSessionBean() {
+//		return sessionBean;
+//	}
 	
 	public TicketController getTicketController() {
 		return ticketController;
@@ -59,10 +59,10 @@ public class UsuarioSessionTest {
 		this.ticketController = ticketController;
 	}
 
-	@Autowired
-	public void setSessionBean(LoginSessionBean sessionBean) {
-		this.sessionBean = sessionBean;
-	}
+//	@Autowired
+//	public void setSessionBean(LoginSessionBean sessionBean) {
+//		this.sessionBean = sessionBean;
+//	}
 	public UsuarioController getUsuarioController() {
 		return usuarioController;
 	}
