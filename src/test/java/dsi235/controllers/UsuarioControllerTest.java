@@ -15,7 +15,6 @@
  */
 package dsi235.controllers;
 
-import dsi235.entities.Usuario;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -29,6 +28,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import dsi235.entities.Usuario;
 
 /**
  *
@@ -90,7 +91,7 @@ public class UsuarioControllerTest {
     /**
      * Test of findTecnicosBySucursal method, of class UsuarioController.
      */
-    @Test
+   /* @Test
     public void testFindTecnicosBySucursal_3args_2() {
         System.out.println("findTecnicosBySucursal");
         Short idSucursal = null;
@@ -102,7 +103,7 @@ public class UsuarioControllerTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     public class UsuarioControllerImpl implements UsuarioController {
 

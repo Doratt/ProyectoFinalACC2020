@@ -49,7 +49,9 @@
 				<p:menuitem value="  Reabrir ticket" icon="fa fa-refresh"
 					actionListener="#{historialUsuarioBackingBean.reabrirTicket}" />
 				<p:menuitem value="  Calificar Solucion" icon="fa fa-star"
-					oncomplete="PF('calificarTicket').show()"></p:menuitem>
+					oncomplete="PF('calificarTicket').show()" 
+					actionListener="#{historialUsuarioBackingBean.checkIfCalificado}"
+					update=":historial_usuario_form"></p:menuitem>
 			</p:contextMenu>
 			
 			<p:dialog header="Calificar solucion" widgetVar="calificarTicket"
@@ -58,12 +60,13 @@
 
 				<h:form id="frmCalificarTicket">
 					<p:rating stars="10" cancel="false" style="" 
-						value="#{historialUsuarioBackingBean.calificacion}"></p:rating><br></br>
+						value="#{historialUsuarioBackingBean.calificacion}"
+						readonly="#{historialUsuarioBackingBean.calificado}"></p:rating><br></br>
 					<p:outputLabel
 						value="Deja un breve comentario para describir tu experiencia: (Opcional)"></p:outputLabel><br></br><br></br>
-					<p:inputTextarea value="#{historialUsuarioBackingBean.comentario}" maxlength="2000" style="width:90%;"
+					<p:inputTextarea readonly="#{historialUsuarioBackingBean.calificado}" value="#{historialUsuarioBackingBean.comentario}" maxlength="2000" style="width:90%;"
 						autoResize="false"></p:inputTextarea><br></br><br></br>
-					<p:commandButton type="submit" value="Calificar"
+					<p:commandButton rendered="#{!historialUsuarioBackingBean.calificado}" type="submit" value="Calificar"
 						actionListener="#{historialUsuarioBackingBean.calificarTicket}"
 						update=":historial_usuario_form"></p:commandButton>
 				</h:form>
