@@ -5,8 +5,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-	
-		<f:view locale="#{loginSessionBean.locale}"/>
+
+<f:view locale="#{loginSessionBean.locale}" />
 <h:head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" />
@@ -28,31 +28,46 @@
 		</div>
 		<div class="contenedor-links">
 
-			<a href="dashboard.jsf"><i class="fa fa-home" /> <p:outputLabel value="#{trad['layout.dashboard']}"/></a> <a
-				href="historialUsuario.jsf"><i class="fa fa-history" /><p:outputLabel value="#{trad['layout.historial']}"/></a>
+			<a href="dashboard.jsf"><i class="fa fa-home" /> <p:outputLabel
+					value="#{trad['layout.dashboard']}" /></a> <a
+				href="historialUsuario.jsf"><i class="fa fa-history" />
+			<p:outputLabel value="#{trad['layout.historial']}" /></a>
 
 
 			<p:panelGrid rendered="#{loginSessionBean.isTecnico()}">
-				<h4><p:outputLabel value="#{trad['layout.tecnico']}"/></h4>
-				<a href="asignaciones.jsf"><i class="fa fa-list-alt" /><p:outputLabel value="#{trad['layout.asignacionespendientes']}"/></a>
-				<a href="historialTecnico.jsf"><i class="fa fa-history" /><p:outputLabel value="#{trad['layout.historialasignaciones']}"/></a>
+				<h4>
+					<p:outputLabel value="#{trad['layout.tecnico']}" />
+				</h4>
+				<a href="asignaciones.jsf"><i class="fa fa-list-alt" />
+				<p:outputLabel value="#{trad['layout.asignacionespendientes']}" /></a>
+				<a href="historialTecnico.jsf"><i class="fa fa-history" />
+				<p:outputLabel value="#{trad['layout.historialasignaciones']}" /></a>
 			</p:panelGrid>
 			<p:panelGrid rendered="#{loginSessionBean.isAdministrador()}">
-				<h4><p:outputLabel value="#{trad['layout.administrador']}"/></h4>
-				<a href="adminView.jsf"><i class="fa fa-list-alt" /><p:outputLabel value="#{trad['layout.asignaciontickets']}"/></a>
+				<h4>
+					<p:outputLabel value="#{trad['layout.administrador']}" />
+				</h4>
+				<a href="adminView.jsf"><i class="fa fa-list-alt" />
+				<p:outputLabel value="#{trad['layout.asignaciontickets']}" /></a>
 			</p:panelGrid>
 			<p:panelGrid rendered="#{loginSessionBean.isGerente()}">
-				<h4><p:outputLabel value="#{trad['layout.gerente']}"/></h4>
+				<h4>
+					<p:outputLabel value="#{trad['layout.gerente']}" />
+				</h4>
 				<a href="estadisticasNumeroTickets.xhtml"><i
-					class="fa fa-bar-chart" /><p:outputLabel value="#{trad['layout.numerotickets']}"/></a>
+					class="fa fa-bar-chart" />
+				<p:outputLabel value="#{trad['layout.numerotickets']}" /></a>
 				<a href="estadisticasRetroalimentacion.xhtml"><i
-					class="fa fa-bar-chart" /><p:outputLabel value="#{trad['layout.calificaciontickets']}"/></a>
-				<a href="estadisticasTiempo.xhtml"><i class="fa fa-bar-chart" /><p:outputLabel value="#{trad['layout.tiemporesolucion']}"/></a>
-				<a href="roles.jsf"><i class="fa fa-user-circle-o" /><p:outputLabel value="#{trad['layout.gestionarroles']}"/></a>
+					class="fa fa-bar-chart" />
+				<p:outputLabel value="#{trad['layout.calificaciontickets']}" /></a>
+				<a href="estadisticasTiempo.xhtml"><i class="fa fa-bar-chart" />
+				<p:outputLabel value="#{trad['layout.tiemporesolucion']}" /></a>
+				<a href="roles.jsf"><i class="fa fa-user-circle-o" />
+				<p:outputLabel value="#{trad['layout.gestionarroles']}" /></a>
 
 			</p:panelGrid>
 
-			
+
 			<h:form>
 				<div class="div-idiomas">
 					<h:commandButton value="Español"
