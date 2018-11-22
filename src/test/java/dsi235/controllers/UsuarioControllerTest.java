@@ -16,6 +16,7 @@
 package dsi235.controllers;
 
 import dsi235.entities.Usuario;
+import dsi235.utilities.PageParser;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -27,7 +28,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -39,22 +42,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class UsuarioControllerTest {
 
     public UsuarioControllerTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     private UsuarioController usuarioController;
@@ -78,10 +65,6 @@ public class UsuarioControllerTest {
         Short idSucursal = 1;
         Integer idDepartamento = 1;
         boolean activo = true;
-//        UsuarioController instance = new UsuarioControllerImpl();
-//        List<Usuario> expResult = null;
-//        List<Usuario> result = instance.findTecnicosBySucursal(idSucursal, idDepartamento, activo);
-//        assertEquals(expResult, result);
         List<Usuario> usuarios = usuarioController.findTecnicosBySucursal(idSucursal, idDepartamento, activo);
         assertEquals(usuarios.size(), 4);
 
@@ -93,15 +76,12 @@ public class UsuarioControllerTest {
     @Test
     public void testFindTecnicosBySucursal_3args_2() {
         System.out.println("findTecnicosBySucursal");
-        Short idSucursal = null;
-        boolean activo = false;
-        Pageable pg = null;
-        UsuarioController instance = new UsuarioControllerImpl();
-        Page<Usuario> expResult = null;
-        Page<Usuario> result = instance.findTecnicosBySucursal(idSucursal, activo, pg);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Short idSucursal = 1;
+        boolean activo = true;
+        Pageable pg = PageRequest.of(0,3);
+        Page<Usuario> usuarios = usuarioController.findTecnicosBySucursal(idSucursal, activo, pg);
+        assertEquals(usuarios.getSize(), 3);
+        
     }
 
     public class UsuarioControllerImpl implements UsuarioController {
