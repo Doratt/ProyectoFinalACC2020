@@ -10,7 +10,9 @@
 	<title>Historial</title>
 </h:head>
 <ui:composition template="layout.xhtml">
-	<ui:define name="title">Historial</ui:define>
+	<ui:define name="title">
+		<h:outputText value="#{trad['layout.historialUsuario']}" />
+	</ui:define>
 	<ui:define name="content">
 		<h:form id="historial_usuario_form">
 			
@@ -23,22 +25,22 @@
 				selectionMode="single">
 				
 				<f:facet name="header">
-            Historial de tickets completados por usuario
+				<h:outputText value="#{trad['historialt.tablaUsuario']}"/> 
             </f:facet>
             
-				<p:column headerText="Numero de Ticket">
+				<p:column headerText="#{trad['dashboard.id']}">
 					<h:outputText value="#{ticket.idTicket}" />
 					
 				</p:column>
-				<p:column headerText="Descripcion">
+				<p:column headerText="#{trad['dashboard.descripcion']}">
 					<h:outputText value="#{ticket.descripcion}" />
 				</p:column>
-				<p:column headerText="Fecha de solicitud">
+				<p:column headerText="#{trad['dashboard.fechasolicitud']}">
 					<h:outputText value="#{ticket.fechaCreacion}">
 						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 					</h:outputText>
 				</p:column>
-				<p:column headerText="Fecha completado">
+				<p:column headerText="#{trad['dashboard.fechacompletado']}">
 					<h:outputText value="#{ticket.fechaCompletado}">
 						<f:convertDateTime pattern="dd/MM/yyyy HH:mm"></f:convertDateTime>
 					</h:outputText>
@@ -46,13 +48,13 @@
 			</p:dataTable>
 			<p:contextMenu for="historial_usuario_table" event="click">
 				
-				<p:menuitem value="  Reabrir ticket" icon="fa fa-refresh"
+				<p:menuitem value="#{trad['historialt.reabrir']}" icon="fa fa-refresh"
 					actionListener="#{historialUsuarioBackingBean.reabrirTicket}" />
-				<p:menuitem value="  Calificar Solucion" icon="fa fa-star"
+				<p:menuitem value="#{trad['historialt.calificar']}" icon="fa fa-star"
 					oncomplete="PF('calificarTicket').show()"></p:menuitem>
 			</p:contextMenu>
 			
-			<p:dialog header="Calificar solucion" widgetVar="calificarTicket"
+			<p:dialog header="#{trad['historialt.calificar']}" widgetVar="calificarTicket"
 				modal="true" showEffect="fade" hideEffect="fade" resizable="false"
 				width="80%" height="80%">
 
@@ -60,10 +62,10 @@
 					<p:rating stars="10" cancel="false" style="" 
 						value="#{historialUsuarioBackingBean.calificacion}"></p:rating><br></br>
 					<p:outputLabel
-						value="Deja un breve comentario para describir tu experiencia: (Opcional)"></p:outputLabel><br></br><br></br>
+						value="#{trad['historialt.mensaje']}"></p:outputLabel><br></br><br></br>
 					<p:inputTextarea value="#{historialUsuarioBackingBean.comentario}" maxlength="2000" style="width:90%;"
 						autoResize="false"></p:inputTextarea><br></br><br></br>
-					<p:commandButton type="submit" value="Calificar"
+					<p:commandButton type="submit" value="#{trad['historialt.btnCalificar']}"
 						actionListener="#{historialUsuarioBackingBean.calificarTicket}"
 						update=":historial_usuario_form"></p:commandButton>
 				</h:form>

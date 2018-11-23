@@ -5,16 +5,18 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-	
+
 
 <ui:composition template="layout.xhtml">
 
-	<ui:define name="title"><h:outputText value="#{trad['layout.dashboard']}"/></ui:define>
+	<ui:define name="title">
+		<h:outputText value="#{trad['layout.dashboard']}" />
+	</ui:define>
 	<ui:define name="content">
-	
+
 
 		<h:form id="frmTicketsPendientes">
-		<p:growl id="growl" showDetail="true" sticky="false" />  
+			<p:growl id="growl" showDetail="true" sticky="false" />
 
 			<p:dataTable id="tickets_pendientes_table" var="ticket"
 				selectionMode="single"
@@ -25,8 +27,8 @@
 				sortBy="#{ticket.fechaCreacion}" reflow="true"
 				paginatorPosition="bottom">
 				<f:facet name="header">
-            	<p:outputLabel value="#{trad['dashboard.ticketsnocompletados']}"></p:outputLabel>
-            	</f:facet>
+					<p:outputLabel value="#{trad['dashboard.ticketsnocompletados']}"></p:outputLabel>
+				</f:facet>
 				<p:ajax event="rowSelect"
 					listener="#{dashboardBackingBean.cargarComentarios}"
 					oncomplete="PF('infoTicket').show();"
@@ -53,8 +55,8 @@
 		</h:form>
 
 		<h:form>
-			<p:commandButton value="#{trad['dashboard.crearticket']}" update=":frmCrearTicket"
-				onclick="PF('createTicket').show()"></p:commandButton>
+			<p:commandButton value="#{trad['dashboard.crearticket']}"
+				update=":frmCrearTicket" onclick="PF('createTicket').show()"></p:commandButton>
 		</h:form>
 
 
@@ -88,8 +90,7 @@
 						</div>
 						<p:commandButton value="#{trad['dashboard.cancelarticket']}"
 							oncomplete="PF('infoTicket').hide();">
-							<p:ajax
-								listener="#{dashboardBackingBean.cancelarTicket}"
+							<p:ajax listener="#{dashboardBackingBean.cancelarTicket}"
 								update=":frmTicketsPendientes">
 							</p:ajax>
 						</p:commandButton>
@@ -124,9 +125,9 @@
 		</p:dialog>
 
 
-		<p:dialog header="#{trad['dashboard.crearticket']}" widgetVar="createTicket"
-			modal="true" showEffect="fade" hideEffect="fade" resizable="false"
-			width="80%" height="80%">
+		<p:dialog header="#{trad['dashboard.crearticket']}"
+			widgetVar="createTicket" modal="true" showEffect="fade"
+			hideEffect="fade" resizable="false" width="80%" height="80%">
 
 			<h:form id="frmCrearTicket">
 				<div>
@@ -136,14 +137,15 @@
 				<div>
 					<p:inputTextarea rows="12" style="width:100%; margin:20px 0;"
 						id="txtDescripcion" value="#{dashboardBackingBean.descripcion}"
-						requiredMessage="#{trad['general.camporequerido']}" required="true"
-						maxlength="3000"
+						requiredMessage="#{trad['general.camporequerido']}"
+						required="true" maxlength="3000"
 						validatorMessage="#{trad['dashboard.descripcionmuycorta']}">
 						<f:validateLength minimum="25">
 						</f:validateLength>
 					</p:inputTextarea>
 				</div>
-				<p:commandButton type="submit" value="#{trad['dashboard.crearticket']}"
+				<p:commandButton type="submit"
+					value="#{trad['dashboard.crearticket']}"
 					actionListener="#{dashboardBackingBean.crearTicket()}"
 					update="frmTicketsPendientes :frmCrearTicket:messages"></p:commandButton>
 			</h:form>

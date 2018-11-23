@@ -37,6 +37,8 @@ public class DashboardBackingBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 2432906255201655180L;
 
+	
+	private NotificationController nc;
 	private Ticket ticket;
 	private Ticket ticketSeleccionado;
 	private String descripcion;
@@ -48,8 +50,8 @@ public class DashboardBackingBean implements Serializable {
 	private Comentario comentario;
 	private ComentarioController comentarioController;
 	private List<Comentario> comentarios;
-	private NotificationController nc;
 	private TicketEncargadoController tec;
+	
 
 
 	@PostConstruct
@@ -64,30 +66,26 @@ public class DashboardBackingBean implements Serializable {
 	}
 	
 	public void crearTicket() {
-		System.out.println("Llegue al metodo");
 		setTicket(new Ticket());
 		ticket.setIdUsuarioCreador(sessionBean.getUsuarioLogueado());
 		if (getDescripcion().length() <= 3000 && getDescripcion().length() > 25) {
-			System.out.println("Pase del if");
 			ticket.setDescripcion(getDescripcion());
 			ticket.setIdEstado(el.get(ESTADO.creado.value));
 			ticket.setActivo(true);
 			descripcion = null;
 			try {
-				System.out.println("Entre al try");
+				PrimeFaces current = PrimeFaces.current();
 				tc.save(getTicket());
+				current.executeScript("PF('createTicket').hide()");
+				FacesContext context = FacesContext.getCurrentInstance();
+		        context.addMessage(null, new FacesMessage("Exito",  "Ticket creado exitosamente") );
 				StringBuilder contenido = new StringBuilder().append("Saludos ")
 						.append(sessionBean.getUsuarioLogueado().getNombre())
 						.append(", su ticket ha sido creado y esta en espera de ser asignado"
 								+ ", le mantendremos al tanto del proceso.");
-				nc.enviarCorreo(sessionBean.getUsuarioLogueado(), contenido.toString());
-				init();
-				PrimeFaces current = PrimeFaces.current();
-				this.ticket = new Ticket();
-				current.executeScript("PF('createTicket').hide()");
-				 FacesContext context = FacesContext.getCurrentInstance();
-		         
-			        context.addMessage(null, new FacesMessage("Éxito",  "Ticket creado exitosamente") );
+				init();       
+			        this.ticket = new Ticket();
+			        nc.enviarCorreo(sessionBean.getUsuarioLogueado(), contenido.toString());
 			} catch (Exception e) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 						"Error!", "Parece que hubo un problema con la creación de tu ticket"));
@@ -249,6 +247,9 @@ public class DashboardBackingBean implements Serializable {
 	public void setTec(TicketEncargadoController tec) {
 		this.tec = tec;
 	}
+
+
+	
 	
 	
 

@@ -17,6 +17,8 @@ import dsi235.entities.Usuario;
  * @author doratt
  */
 public interface UsuarioController {
+	
+	public List<Usuario> findAll();
     
     public Usuario autenticar(String correo, String contrasena);
     
