@@ -36,7 +36,7 @@ public class DateParserTest {
 
     @Before
     public void setUp() {
-        dateParser = new dsi235.utilities.DateParserImpl();
+        dateParser = new DateParserImpl();
     }
 
     /**
@@ -71,16 +71,26 @@ public class DateParserTest {
         Long milisegundos = dateParser.getTiempoResolucion(fechaInicial, fechaFin);
         assertEquals(expected, milisegundos);
     }
-
-    public class DateParserImpl implements DateParser {
-
-        public Long getTiempoResolucion(Date fechaInicial, Date fechaFin) {
-            return null;
-        }
-
-        public String getTiempoConFormato(Date fechaInicial, Date fechaFin) {
-            return "";
-        }
+    
+    @Test
+    public void testGetTiempoFormato() {
+    	System.out.println("getTiempoFormato");
+    	Date fechaInicial = new Date(2018, 1, 1, 0, 0, 0);
+        Date fechaFin =     new Date(2018, 1, 5, 6, 7, 20);
+        String expected = "4d 6h 7m";
+        String resultado = dateParser.getTiempoConFormato(fechaInicial, fechaFin);
+        assertEquals(expected, resultado);
     }
+
+//    public class DateParserImpl implements DateParser {
+//
+//        public Long getTiempoResolucion(Date fechaInicial, Date fechaFin) {
+//            return null;
+//        }
+//
+//        public String getTiempoConFormato(Date fechaInicial, Date fechaFin) {
+//            return "";
+//        }
+//    }
 
 }

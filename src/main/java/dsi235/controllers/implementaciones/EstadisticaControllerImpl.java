@@ -11,11 +11,16 @@ import dsi235.entities.Ticket;
 import dsi235.entities.estadisticas.NumeroTickets;
 import dsi235.entities.estadisticas.TiempoResolucion;
 import dsi235.entities.repositories.TicketRepository;
+import dsi235.utilities.DateParser;
+import dsi235.utilities.DateParserImpl;
 
 @Controller
 public class EstadisticaControllerImpl implements EstadisticaController{
 
 	private TicketRepository ticketRepository;
+	
+	private DateParser parser = new DateParserImpl();
+		
 	
 	@Autowired
     public EstadisticaControllerImpl(TicketRepository ticketRepository) {
@@ -39,27 +44,6 @@ public class EstadisticaControllerImpl implements EstadisticaController{
     	return null;
     }
 
-	@Override
-	public List<TiempoResolucion> calcularTiempoResolucionSucursal(Date fechaInicio, Date fechaFin, Short idSucursal) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<TiempoResolucion> calcularTiempoResolucionDepto(Date fechaInicio, Date fechaFin, Short idSucursal,
-			Integer idDepartamento) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<TiempoResolucion> calcularTiempoResolucionTecnico(Date fechaInicio, Date fechaFin, Short idSucursal,
-			Integer idDepartamento, Long idTecnico) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 
 	@Override
 	public List<NumeroTickets> calcularNumTicketsDepto(Date fechaInicio, Date fechaFin, Integer idDepartamento) {
@@ -79,5 +63,55 @@ public class EstadisticaControllerImpl implements EstadisticaController{
 	public List<NumeroTickets> calcularNumTicketsTecnico(Date fechaInicio, Date fechaFin) {
 		return this.ticketRepository.numeroTicketsByTecnico(fechaInicio, fechaFin);
 	}
+
+
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public List<TiempoResolucion> calcularTiempoResolucionSucursal(Date fechaInicio, Date fechaFin, Short idSucursal) {
+		List<TiempoResolucion> lista = this.ticketRepository.calcularTiempoResolucionSucursal(fechaInicio, fechaFin, idSucursal);
+		
+		lista.forEach( (t)->{
+			
+			System.out.println("t:");
+			System.out.println(t.getTicket().getIdTicket());
+			System.out.println(t.getTiempo());
+			
+			t.setTiempo( this.parser.getTiempoResolucion(t.getTicket().getFechaCreacion(), t.getTicket().getFechaCompletado()) );
+			t.setTiempoFormato( parser.getTiempoConFormato(t.getTicket().getFechaCreacion(), t.getTicket().getFechaCompletado()) );
+		});
+		
+		return lista;
+	}
+
+	@Override
+	public List<TiempoResolucion> calcularTiempoResolucionDepto(Date fechaInicio, Date fechaFin, Integer idDepartamento) {
+		List<TiempoResolucion> lista =  this.ticketRepository.calcularTiempoResolucionDepto(fechaInicio, fechaFin, idDepartamento);
+		lista.forEach( (t)->{
+			System.out.println("parser es: "+parser.toString());
+			t.setTiempo( parser.getTiempoResolucion(t.getTicket().getFechaCreacion(), t.getTicket().getFechaCompletado()) );
+			t.setTiempoFormato( parser.getTiempoConFormato(t.getTicket().getFechaCreacion(), t.getTicket().getFechaCompletado()) );
+		});
+		return lista;
+	}
+
+	@Override
+	public List<TiempoResolucion> calcularTiempoResolucionTecnico(Date fechaInicio, Date fechaFin,Long idTecnico) {
+		List<TiempoResolucion> lista = this.ticketRepository.calcularTiempoResolucionTecnico(fechaInicio, fechaFin, idTecnico);
+		
+		lista.forEach( (t)->{
+			t.setTiempo( parser.getTiempoResolucion(t.getTicket().getFechaCreacion(), t.getTicket().getFechaCompletado()) );
+			t.setTiempoFormato( parser.getTiempoConFormato(t.getTicket().getFechaCreacion(), t.getTicket().getFechaCompletado()) );
+		});
+		
+		return lista;
+	}
+	
+	
 
 }

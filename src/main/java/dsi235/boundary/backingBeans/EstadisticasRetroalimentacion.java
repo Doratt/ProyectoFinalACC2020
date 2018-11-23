@@ -20,6 +20,7 @@ import dsi235.entities.Sucursal;
 import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
 import dsi235.entities.estadisticas.NumeroTickets;
+import dsi235.entities.estadisticas.TiempoResolucion;
 
 @ManagedBean(value = "estadisticasBackingBean")
 @ViewScoped
@@ -32,6 +33,7 @@ public class EstadisticasRetroalimentacion {
 	private Integer idDepartamento = 1;
 	private List<Ticket> lista;
 	private List<NumeroTickets> listaNumero;
+	private List<TiempoResolucion> listaTiempo;
 	private EstadisticaController ec;
 	private Usuario tecnico;
 	private List<Usuario> tecnicos;
@@ -95,6 +97,26 @@ public class EstadisticasRetroalimentacion {
 			}
 		}
 	}
+
+	
+	public void buscarTiempo() {
+
+		if (fechaInicio.getTime() > fechaFin.getTime()) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "La fecha de finalización debe ser mayor que la fecha de inicio"));
+		} else {
+
+			if (isSucursalSeleccionado()) {
+				listaTiempo = ec.calcularTiempoResolucionSucursal(fechaInicio, fechaFin, idSucursal);
+			} else if (isDepartamentoSeleccionado()) {
+				listaTiempo = ec.calcularTiempoResolucionDepto(fechaInicio, fechaFin, idDepartamento);
+			} else if (isTecnicoSeleccionado()) {
+				
+				listaTiempo = ec.calcularTiempoResolucionTecnico(fechaInicio, fechaFin, this.tecnico.getIdUsuario());
+			
+			}
+		}
+	}
+
 
 	@Autowired
 	public void setEc(EstadisticaController ec) {
@@ -181,5 +203,16 @@ public class EstadisticasRetroalimentacion {
 	public void setListaNumero(List<NumeroTickets> listaNumero) {
 		this.listaNumero = listaNumero;
 	}
+
+	public List<TiempoResolucion> getListaTiempo() {
+		return listaTiempo;
+	}
+
+	public void setListaTiempo(List<TiempoResolucion> listaTiempo) {
+		this.listaTiempo = listaTiempo;
+	}
+	
+	
+
 
 }
