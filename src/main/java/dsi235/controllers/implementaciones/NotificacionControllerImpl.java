@@ -19,6 +19,7 @@ import dsi235.entities.Usuario;
 @Singleton
 public class NotificacionControllerImpl implements NotificationController {
 
+
 	private Transport t;
 	private Session session;
 	final String username = "ticketsystemdsi235@gmail.com"; 
