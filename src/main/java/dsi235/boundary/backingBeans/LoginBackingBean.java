@@ -24,9 +24,6 @@ public class LoginBackingBean implements Serializable {
 	private final static String MAIN_URL = "dashboard.jsf?faces-redirect=true";
 	// Autowired
 	private LoginSessionBean sessionBean;
-	
-
-
 
 	public String login() {
 
@@ -47,7 +44,6 @@ public class LoginBackingBean implements Serializable {
 	@PostConstruct
 	public void redireccionarSiEstaLogueado() {
 		if (sessionBean.isLoggedIn()) {
-			System.out.println("Usuario esta logueado");
 			try {
 				FacesContext.getCurrentInstance().getExternalContext().redirect(MAIN_URL);
 			} catch (IOException e) {

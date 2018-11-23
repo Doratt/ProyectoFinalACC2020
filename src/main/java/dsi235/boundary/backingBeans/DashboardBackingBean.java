@@ -113,8 +113,8 @@ public class DashboardBackingBean implements Serializable {
 
 				List<TicketEncargado> encargados = tec.findByIdTicket_IdTicket(ticketSeleccionado.getIdTicket());
 				for (TicketEncargado ticketEncargado : encargados) {
-					StringBuilder contenido = new StringBuilder().append("Saludos estimado ").append("<!DOCTYPE html>\n"
-							+ "<html>\n" + "    <head>\n" + "        <title>Ticket System e-mail</title>\n"
+					StringBuilder contenido = new StringBuilder().append("<!DOCTYPE html>\n" + "<html>\n"
+							+ "    <head>\n" + "        <title>Ticket System e-mail</title>\n"
 							+ "        <p style=\"font-family: calibri, serif; font-size:20pt; color:#73ad41\"><b>Ticket System</b></p>\n"
 							+ "    </head>\n" + "    <body>\n"
 							+ "        <p style=\"font-family: calibri, serif; font-size:14pt; font-style:bold; color:black\"><i>Saludos</i>\n"
@@ -132,25 +132,20 @@ public class DashboardBackingBean implements Serializable {
 						"Error!", "Hubo un problema con la creación del comentario"));
 			}
 		} else {
-			System.out.println("contenido isempty");
 		}
 	}
 
 	public void cancelarTicket() {
-		System.out.println("Llegue al metodo");
 		ticketSeleccionado.setFechaCompletado(new Date());
 		ticketSeleccionado.setFechaModificacion(new Date());
 		ticketSeleccionado.setIdEstado(el.get(ESTADO.completado.value));
 		ticketSeleccionado.setIdUsuarioModificador(sessionBean.getUsuarioLogueado());
 		try {
 			List<TicketEncargado> encargados = tec.findByIdTicket_IdTicket(ticketSeleccionado.getIdTicket());
-			System.out.println("Lista de encargados:" + encargados);
 			if (encargados != null && !encargados.isEmpty()) {
-				System.out.println("encargados no es null ni esta vacio");
 				for (TicketEncargado ticketEncargado : encargados) {
-					StringBuilder contenido = new StringBuilder()
-							.append("Saludos estimado ").append("<!DOCTYPE html>\n"
-							+ "<html>\n" + "    <head>\n" + "        <title>Ticket System e-mail</title>\n"
+					StringBuilder contenido = new StringBuilder().append("<!DOCTYPE html>\n" + "<html>\n"
+							+ "    <head>\n" + "        <title>Ticket System e-mail</title>\n"
 							+ "        <p style=\"font-family: calibri, serif; font-size:20pt; color:#73ad41\"><b>Ticket System</b></p>\n"
 							+ "    </head>\n" + "    <body>\n"
 							+ "        <p style=\"font-family: calibri, serif; font-size:14pt; font-style:bold; color:black\"><i>Saludos</i>\n"
