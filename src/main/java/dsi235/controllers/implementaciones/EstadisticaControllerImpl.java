@@ -23,21 +23,7 @@ public class EstadisticaControllerImpl implements EstadisticaController{
 		this.ticketRepository = ticketRepository;
 	}
 
-    @Override
-    public NumeroTickets calcularNumTicketsDepto(Date fechaInicio, Date fechaFin, Short idSucursal) {
-        return null;
-    }
 
-    //Ordenar por numero de tickets
-    @Override
-    public NumeroTickets calcularNumTicketsUsuario(Date fechaInicio, Date fechaFin, Short idSucursal, Integer idDepartamento) {
-        return null;
-    }
-
-    @Override
-    public NumeroTickets calcularNumTicketsTecnico(Date fechaInicio, Date fechaFin, Short idSucursal, Integer idDepartamento) {
-        return null;
-    }
 
     @Override
     public List<Ticket> verRetroalimentacion(Date fechaInicio, Date fechaFin, Short idSucursal, Integer idDepartamento, Long idTecnico) {
@@ -71,6 +57,27 @@ public class EstadisticaControllerImpl implements EstadisticaController{
 			Integer idDepartamento, Long idTecnico) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+
+	@Override
+	public List<NumeroTickets> calcularNumTicketsDepto(Date fechaInicio, Date fechaFin, Integer idDepartamento) {
+		return this.ticketRepository.numeroTicketsByDepartamento(idDepartamento, fechaInicio, fechaFin);
+	}
+
+
+
+	@Override
+	public List<NumeroTickets> calcularNumTicketsSucursal(Date fechaInicio, Date fechaFin, Short idSucursal) {
+		return this.ticketRepository.numeroTicketsBySucursal(idSucursal, fechaInicio, fechaFin);
+	}
+
+
+
+	@Override
+	public List<NumeroTickets> calcularNumTicketsTecnico(Date fechaInicio, Date fechaFin) {
+		return this.ticketRepository.numeroTicketsByTecnico(fechaInicio, fechaFin);
 	}
 
 }

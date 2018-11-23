@@ -19,6 +19,7 @@ import dsi235.entities.Retroalimentacion;
 import dsi235.entities.Sucursal;
 import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
+import dsi235.entities.estadisticas.NumeroTickets;
 
 @ManagedBean(value = "estadisticasBackingBean")
 @ViewScoped
@@ -30,6 +31,7 @@ public class EstadisticasRetroalimentacion {
 	private Short idSucursal = Short.valueOf("1");
 	private Integer idDepartamento = 1;
 	private List<Ticket> lista;
+	private List<NumeroTickets> listaNumero;
 	private EstadisticaController ec;
 	private Usuario tecnico;
 	private List<Usuario> tecnicos;
@@ -55,7 +57,7 @@ public class EstadisticasRetroalimentacion {
 	public void buscar() {
 
 		if (fechaInicio.getTime() > fechaFin.getTime()) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error", "La fecha de finalización debe ser mayor que la fecha de inicio"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "La fecha de finalización debe ser mayor que la fecha de inicio"));
 		} else {
 
 			if (isSucursalSeleccionado()) {
@@ -73,6 +75,26 @@ public class EstadisticasRetroalimentacion {
 			}
 		}
 	}
+	
+	public void buscarNumero() {
+
+		if (fechaInicio.getTime() > fechaFin.getTime()) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "La fecha de finalización debe ser mayor que la fecha de inicio"));
+		} else {
+
+			if (isSucursalSeleccionado()) {
+				System.out.println(idSucursal);
+				listaNumero = ec.calcularNumTicketsSucursal(fechaInicio, fechaFin, idSucursal);
+			} else if (isDepartamentoSeleccionado()) {
+				listaNumero = ec.calcularNumTicketsDepto(fechaInicio, fechaFin, idDepartamento);
+			} else if (isTecnicoSeleccionado()) {
+				
+				listaNumero = ec.calcularNumTicketsTecnico(fechaInicio, fechaFin);
+			
+			}
+		}
+	}
+	
 
 	@Autowired
 	public void setEc(EstadisticaController ec) {
@@ -151,5 +173,15 @@ public class EstadisticasRetroalimentacion {
 	public void setUc(UsuarioController uc) {
 		this.uc = uc;
 	}
+
+	public List<NumeroTickets> getListaNumero() {
+		return listaNumero;
+	}
+
+	public void setListaNumero(List<NumeroTickets> listaNumero) {
+		this.listaNumero = listaNumero;
+	}
+	
+	
 
 }
