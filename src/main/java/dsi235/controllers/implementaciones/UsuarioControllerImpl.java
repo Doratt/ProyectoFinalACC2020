@@ -43,4 +43,9 @@ public class UsuarioControllerImpl extends AbstractCrudControllerImpl<Usuario, L
 		return this.usuarioRepository.findByIdSucursal_IdSucursalAndIdDepartamento_IdDepartamentoAndActivo(idSucursal, idDepartamento, activo);
 	}
 
+	@Override
+	public List<Usuario> findAll() {
+		return (List<Usuario>) this.usuarioRepository.findAll();
+	}
+
 }
