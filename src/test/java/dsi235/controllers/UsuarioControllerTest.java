@@ -97,6 +97,12 @@ public class UsuarioControllerTest {
         public Page<Usuario> findTecnicosBySucursal(Short idSucursal, boolean activo, Pageable pg) {
             return null;
         }
+
+		@Override
+		public List<Usuario> findAll() {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public UsuarioController getUsuarioController() {
