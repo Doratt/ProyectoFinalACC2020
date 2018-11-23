@@ -66,22 +66,19 @@ public class DashboardBackingBean implements Serializable {
 	}
 	
 	public void crearTicket() {
-		System.out.println("Llegue al metodo");
 		setTicket(new Ticket());
 		ticket.setIdUsuarioCreador(sessionBean.getUsuarioLogueado());
 		if (getDescripcion().length() <= 3000 && getDescripcion().length() > 25) {
-			System.out.println("Pase del if");
 			ticket.setDescripcion(getDescripcion());
 			ticket.setIdEstado(el.get(ESTADO.creado.value));
 			ticket.setActivo(true);
 			descripcion = null;
 			try {
 				PrimeFaces current = PrimeFaces.current();
-				System.out.println("Entre al try");
 				tc.save(getTicket());
 				current.executeScript("PF('createTicket').hide()");
 				FacesContext context = FacesContext.getCurrentInstance();
-		        context.addMessage(null, new FacesMessage("Éxito",  "Ticket creado exitosamente") );
+		        context.addMessage(null, new FacesMessage("Exito",  "Ticket creado exitosamente") );
 				StringBuilder contenido = new StringBuilder().append("Saludos ")
 						.append(sessionBean.getUsuarioLogueado().getNombre())
 						.append(", su ticket ha sido creado y esta en espera de ser asignado"

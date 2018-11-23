@@ -51,9 +51,9 @@ public class UsuarioControllerTest {
      */
     @Test
     public void testAutenticar() {
-      /*  System.out.println("autenticar");
+        System.out.println("autenticar");
         Usuario user = usuarioController.autenticar("m@m.com", "1234");
-        assertEquals(user.getIdUsuario(), Long.valueOf(3));*/
+        assertEquals(Long.valueOf(3), user.getIdUsuario());
     }
 
     /**
@@ -61,13 +61,12 @@ public class UsuarioControllerTest {
      */
     @Test
     public void testFindTecnicosBySucursal_3args_1() {
-        /*System.out.println("findTecnicosBySucursal");
+        System.out.println("findTecnicosBySucursal");
         Short idSucursal = 1;
         Integer idDepartamento = 1;
         boolean activo = true;
         List<Usuario> usuarios = usuarioController.findTecnicosBySucursal(idSucursal, idDepartamento, activo);
-        assertEquals(usuarios.size(), 4);
-*/
+        assertEquals(4, usuarios.size());
     }
 
     /**
@@ -75,13 +74,12 @@ public class UsuarioControllerTest {
      */
     @Test
     public void testFindTecnicosBySucursal_3args_2() {
-  /*      System.out.println("findTecnicosBySucursal");
+        System.out.println("findTecnicosBySucursal");
         Short idSucursal = 1;
         boolean activo = true;
-        Pageable pg = PageRequest.of(0,3);
+        Pageable pg = PageRequest.of(0, 3);
         Page<Usuario> usuarios = usuarioController.findTecnicosBySucursal(idSucursal, activo, pg);
-        assertEquals(usuarios.getSize(), 3);
-    */    
+        assertEquals(3, usuarios.getSize());
     }
 
     public class UsuarioControllerImpl implements UsuarioController {
@@ -98,11 +96,10 @@ public class UsuarioControllerTest {
             return null;
         }
 
-		@Override
-		public List<Usuario> findAll() {
-			// TODO Auto-generated method stub
-			return null;
-		}
+        public List<Usuario> findAll() {
+            // TODO Auto-generated method stub
+            return null;
+        }
     }
 
     public UsuarioController getUsuarioController() {

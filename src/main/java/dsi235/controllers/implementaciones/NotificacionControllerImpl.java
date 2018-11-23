@@ -20,15 +20,14 @@ public class NotificacionControllerImpl implements NotificationController {
 
 	private Transport t;
 	private Session session;
-	final String username = "herreraChristian1897@gmail.com";
-	final String password = "hahahahaha";
+	final String username = "ticketsystemdsi235@gmail.com"; 
+		final String password = "ticketsystem";
 
 	public void NotificationController() {
 		init();
 	}
 
 	// TODO
-
 	private void init() {
 		System.out.println("Pasando por el init");
 		Properties props = new Properties();
