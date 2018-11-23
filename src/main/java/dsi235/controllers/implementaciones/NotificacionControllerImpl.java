@@ -64,7 +64,6 @@ public class NotificacionControllerImpl implements NotificationController {
 			// Envia el mensaje
 			t.sendMessage(message, message.getAllRecipients());
 		} catch (Exception e) {
-			System.out.println("Fallo en enviarCorreo");
 			e.printStackTrace();
 			init();
 
