@@ -19,8 +19,8 @@ public class NotificacionControllerImpl implements NotificationController {
 	// TODO
 	@Override
 	public boolean enviarCorreo(Usuario usuario, String contenido) {
-		final String username = "herreraChristian1897@gmail.com"; 
-		final String password = "hahahahaha";
+		final String username = "ticketsystemdsi235@gmail.com"; 
+		final String password = "ticketsystem";
 
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");

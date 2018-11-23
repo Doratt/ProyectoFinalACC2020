@@ -16,6 +16,7 @@
 package dsi235.controllers;
 
 import dsi235.entities.Ticket;
+import dsi235.entities.Usuario;
 import java.util.List;
 import java.util.Optional;
 import org.junit.After;
@@ -25,8 +26,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -41,7 +44,17 @@ public class TicketControllerTest {
     public TicketControllerTest() {
     }
     
-    
+    private TicketController ticketController;
+
+    public TicketController getTicketController() {
+        return ticketController;
+    }
+
+    @Autowired
+    public void setTicketController(TicketController ticketController) {
+        this.ticketController = ticketController;
+    }
+        
 
     /**
      * Test of findCompletadosByEncargado method, of class TicketController.
@@ -49,14 +62,10 @@ public class TicketControllerTest {
     @Test
     public void testFindCompletadosByEncargado() {
         System.out.println("findCompletadosByEncargado");
-        Long idEncargado = null;
-        Pageable pg = null;
-        TicketController instance = new TicketControllerImpl();
-        Page<Ticket> expResult = null;
-        Page<Ticket> result = instance.findCompletadosByEncargado(idEncargado, pg);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Long idEncargado = Long.valueOf(1);
+        Pageable pg = PageRequest.of(0, 1000);
+        Page<Ticket> tickets = ticketController.findCompletadosByEncargado(idEncargado, pg);
+        assertEquals(1, tickets.getTotalElements());
     }
 
     /**
@@ -65,125 +74,122 @@ public class TicketControllerTest {
     @Test
     public void testFindNoCompletadosByEncargado() {
         System.out.println("findNoCompletadosByEncargado");
-        Long idEncargado = null;
-        TicketController instance = new TicketControllerImpl();
-        List<Ticket> expResult = null;
-        List<Ticket> result = instance.findNoCompletadosByEncargado(idEncargado);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Long idEncargado = Long.valueOf("1");
+        List<Ticket> tickets;
+        tickets = ticketController.findNoCompletadosByEncargado(idEncargado);
+        assertEquals(2, tickets.size());
     }
 
-    /**
-     * Test of findCompletadosByUsuario method, of class TicketController.
-     */
-    @Test
-    public void testFindCompletadosByUsuario() {
-        System.out.println("findCompletadosByUsuario");
-        Long idUsuario = null;
-        Pageable pg = null;
-        TicketController instance = new TicketControllerImpl();
-        Page<Ticket> expResult = null;
-        Page<Ticket> result = instance.findCompletadosByUsuario(idUsuario, pg);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of findNoCompletadosByUsuario method, of class TicketController.
-     */
-    @Test
-    public void testFindNoCompletadosByUsuario() {
-        System.out.println("findNoCompletadosByUsuario");
-        Long idUsuario = null;
-        TicketController instance = new TicketControllerImpl();
-        List<Ticket> expResult = null;
-        List<Ticket> result = instance.findNoCompletadosByUsuario(idUsuario);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of findNoAsignados method, of class TicketController.
-     */
-    @Test
-    public void testFindNoAsignados() {
-        System.out.println("findNoAsignados");
-        Short idSucursal = null;
-        int first = 0;
-        int pageSize = 0;
-        TicketController instance = new TicketControllerImpl();
-        List<Ticket> expResult = null;
-        List<Ticket> result = instance.findNoAsignados(idSucursal, first, pageSize);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of reabrirTicket method, of class TicketController.
-     */
-    @Test
-    public void testReabrirTicket() {
-        System.out.println("reabrirTicket");
-        int idTicket = 0;
-        TicketController instance = new TicketControllerImpl();
-        Ticket expResult = null;
-        Ticket result = instance.reabrirTicket(idTicket);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of marcarMalAsignado method, of class TicketController.
-     */
-    @Test
-    public void testMarcarMalAsignado() {
-        System.out.println("marcarMalAsignado");
-        int idTicket = 0;
-        TicketController instance = new TicketControllerImpl();
-        Ticket expResult = null;
-        Ticket result = instance.marcarMalAsignado(idTicket);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of gestionarEstadoTicket method, of class TicketController.
-     */
-    @Test
-    public void testGestionarEstadoTicket() {
-        System.out.println("gestionarEstadoTicket");
-        int idTicket = 0;
-        int idEstado = 0;
-        TicketController instance = new TicketControllerImpl();
-        Ticket expResult = null;
-        Ticket result = instance.gestionarEstadoTicket(idTicket, idEstado);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of findNoasignadosBySucursal method, of class TicketController.
-     */
-    @Test
-    public void testFindNoasignadosBySucursal() {
-        System.out.println("findNoasignadosBySucursal");
-        Short idSucursal = null;
-        Short idEstado = null;
-        Pageable pg = null;
-        TicketController instance = new TicketControllerImpl();
-        Page<Ticket> expResult = null;
-        Page<Ticket> result = instance.findNoasignadosBySucursal(idSucursal, idEstado, pg);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+//    /**
+//     * Test of findCompletadosByUsuario method, of class TicketController.
+//     */
+//    @Test
+//    public void testFindCompletadosByUsuario() {
+//        System.out.println("findCompletadosByUsuario");
+//        Long idUsuario = null;
+//        Pageable pg = null;
+//        TicketController instance = new TicketControllerImpl();
+//        Page<Ticket> expResult = null;
+//        Page<Ticket> result = instance.findCompletadosByUsuario(idUsuario, pg);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of findNoCompletadosByUsuario method, of class TicketController.
+//     */
+//    @Test
+//    public void testFindNoCompletadosByUsuario() {
+//        System.out.println("findNoCompletadosByUsuario");
+//        Long idUsuario = null;
+//        TicketController instance = new TicketControllerImpl();
+//        List<Ticket> expResult = null;
+//        List<Ticket> result = instance.findNoCompletadosByUsuario(idUsuario);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of findNoAsignados method, of class TicketController.
+//     */
+//    @Test
+//    public void testFindNoAsignados() {
+//        System.out.println("findNoAsignados");
+//        Short idSucursal = null;
+//        int first = 0;
+//        int pageSize = 0;
+//        TicketController instance = new TicketControllerImpl();
+//        List<Ticket> expResult = null;
+//        List<Ticket> result = instance.findNoAsignados(idSucursal, first, pageSize);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of reabrirTicket method, of class TicketController.
+//     */
+//    @Test
+//    public void testReabrirTicket() {
+//        System.out.println("reabrirTicket");
+//        int idTicket = 0;
+//        TicketController instance = new TicketControllerImpl();
+//        Ticket expResult = null;
+//        Ticket result = instance.reabrirTicket(idTicket);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of marcarMalAsignado method, of class TicketController.
+//     */
+//    @Test
+//    public void testMarcarMalAsignado() {
+//        System.out.println("marcarMalAsignado");
+//        int idTicket = 0;
+//        TicketController instance = new TicketControllerImpl();
+//        Ticket expResult = null;
+//        Ticket result = instance.marcarMalAsignado(idTicket);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of gestionarEstadoTicket method, of class TicketController.
+//     */
+//    @Test
+//    public void testGestionarEstadoTicket() {
+//        System.out.println("gestionarEstadoTicket");
+//        int idTicket = 0;
+//        int idEstado = 0;
+//        TicketController instance = new TicketControllerImpl();
+//        Ticket expResult = null;
+//        Ticket result = instance.gestionarEstadoTicket(idTicket, idEstado);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of findNoasignadosBySucursal method, of class TicketController.
+//     */
+//    @Test
+//    public void testFindNoasignadosBySucursal() {
+//        System.out.println("findNoasignadosBySucursal");
+//        Short idSucursal = null;
+//        Short idEstado = null;
+//        Pageable pg = null;
+//        TicketController instance = new TicketControllerImpl();
+//        Page<Ticket> expResult = null;
+//        Page<Ticket> result = instance.findNoasignadosBySucursal(idSucursal, idEstado, pg);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
 
     public class TicketControllerImpl implements TicketController {
 

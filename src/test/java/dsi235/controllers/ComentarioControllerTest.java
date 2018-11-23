@@ -52,7 +52,7 @@ public class ComentarioControllerTest {
         System.out.println("findByIdTicket");
         Ticket idTicket = new Ticket(Long.valueOf(8));
         List<Comentario> comentarios = comentarioController.findByIdTicket(idTicket);
-        assertEquals(comentarios.size(), 3);
+        assertEquals(3, comentarios.size());
     }
 
     public class ComentarioControllerImpl implements ComentarioController {

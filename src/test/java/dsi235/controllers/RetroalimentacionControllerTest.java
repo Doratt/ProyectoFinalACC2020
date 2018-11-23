@@ -48,18 +48,18 @@ public class RetroalimentacionControllerTest {
     /**
      * Test of calificarTicket method, of class RetroalimentacionController.
      */
-    @Test
-    public void testCalificarTicket() {
-        System.out.println("calificarTicket");
-        int calificacion = 7;
-        Optional<Ticket> ticket= ticketController.findById(Long.valueOf(6));
-        String comentario = "Comentario realizado por prueba";
-        retroalimentacionController.calificarTicket(calificacion, ticket.get(), comentario);
-        
-        assertEquals(ticket.get().getRetroalimentacion().getCalificacion(), calificacion);
-        assertEquals(ticket.get().getRetroalimentacion().getComentario(), comentario);
-       
-    }
+//    @Test
+//    public void testCalificarTicket() {
+//        System.out.println("calificarTicket");
+//        int calificacion = 7;
+//        Optional<Ticket> ticket= ticketController.findById(Long.valueOf(6));
+//        String comentario = "Comentario realizado por prueba";
+//        retroalimentacionController.calificarTicket(calificacion, ticket.get(), comentario);
+//        
+//        assertEquals(calificacion, ticket.get().getRetroalimentacion().getCalificacion());
+//        assertEquals(comentario, ticket.get().getRetroalimentacion().getComentario());
+//       
+//    }
 
     public class RetroalimentacionControllerImpl implements RetroalimentacionController {
 

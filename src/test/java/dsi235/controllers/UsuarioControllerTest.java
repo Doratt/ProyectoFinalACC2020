@@ -53,7 +53,7 @@ public class UsuarioControllerTest {
     public void testAutenticar() {
         System.out.println("autenticar");
         Usuario user = usuarioController.autenticar("m@m.com", "1234");
-        assertEquals(user.getIdUsuario(), Long.valueOf(3));
+        assertEquals(Long.valueOf(3), user.getIdUsuario());
     }
 
     /**
@@ -66,7 +66,7 @@ public class UsuarioControllerTest {
         Integer idDepartamento = 1;
         boolean activo = true;
         List<Usuario> usuarios = usuarioController.findTecnicosBySucursal(idSucursal, idDepartamento, activo);
-        assertEquals(usuarios.size(), 4);
+        assertEquals(4, usuarios.size());
     }
 
     /**
@@ -79,7 +79,7 @@ public class UsuarioControllerTest {
         boolean activo = true;
         Pageable pg = PageRequest.of(0, 3);
         Page<Usuario> usuarios = usuarioController.findTecnicosBySucursal(idSucursal, activo, pg);
-        assertEquals(usuarios.getSize(), 3);
+        assertEquals(3, usuarios.getSize());
     }
 
     public class UsuarioControllerImpl implements UsuarioController {

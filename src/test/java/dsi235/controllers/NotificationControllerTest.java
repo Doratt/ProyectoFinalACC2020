@@ -49,7 +49,7 @@ public class NotificationControllerTest {
         Usuario usuario = new Usuario(Long.valueOf(1), "Luis Doratt", "luisdoratt@hotmail.com", "1234", true);
         String contenido = "Prueba de envio de correo.";
         boolean enviado = notificationController.enviarCorreo(usuario, contenido);
-        assertEquals(enviado, true);
+        assertEquals(true, enviado);
     }
 
     public class NotificationControllerImpl implements NotificationController {
