@@ -26,14 +26,12 @@ public interface EstadisticaController {
 	public List<TiempoResolucion> calcularTiempoResolucionTecnico(Date fechaInicio, Date fechaFin, Short idSucursal,
 			Integer idDepartamento, Long idTecnico);
 
-	public NumeroTickets calcularNumTicketsDepto(Date fechaInicio, Date fechaFin, Short idSucursal);
+	public List<NumeroTickets> calcularNumTicketsDepto(Date fechaInicio, Date fechaFin, Integer idDepartamento);
 
 	// Ordenar por numero de tickets
-	public NumeroTickets calcularNumTicketsUsuario(Date fechaInicio, Date fechaFin, Short idSucursal,
-			Integer idDepartamento);
+	public List<NumeroTickets> calcularNumTicketsSucursal(Date fechaInicio, Date fechaFin, Short idSucursal);
 
-	public NumeroTickets calcularNumTicketsTecnico(Date fechaInicio, Date fechaFin, Short idSucursal,
-			Integer idDepartamento);
+	public List<NumeroTickets> calcularNumTicketsTecnico(Date fechaInicio, Date fechaFin);
 
 	public List<Ticket> verRetroalimentacion(Date fechaInicio, Date fechaFin, Short idSucursal, Integer idDepartamento,
 			Long idTecnico);

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import dsi235.entities.Ticket;
+import dsi235.entities.estadisticas.NumeroTickets;
 import dsi235.entities.estadisticas.TiempoResolucion;
 
 public interface TicketRepository extends CrudRepository<Ticket, Long> {
@@ -50,6 +51,8 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	// nuevo
 	// Page<Ticket> findAll(Pageable pageable);
 
+	
+	// ESTADISTICAS RETROALIMENTACION
 	@Query(value = "SELECT t FROM Ticket t JOIN FETCH t.retroalimentacion r WHERE t.idUsuarioCreador.idSucursal.idSucursal = ?1 AND (t.fechaCompletado BETWEEN ?2 AND ?3) AND t.idEstado.idEstado = 5")
 	List<Ticket> retroalimentarionBySucursal(Short idSucursal, Date fecha1, Date fecha2);
 	
@@ -58,6 +61,22 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	
 	@Query(value = "SELECT t FROM Ticket t JOIN FETCH t.retroalimentacion r WHERE t.idUsuarioCreador.idDepartamento.idDepartamento= ?1 AND (t.fechaCompletado BETWEEN ?2 AND ?3) AND t.idEstado.idEstado = 5")
 	List<Ticket> retroalimentarionByDepartamento(Integer idDepartamento, Date fecha1, Date fecha2);
+	
+	
+	// NUMERO DE TICKETS
+	@Query(value = "SELECT new dsi235.entities.estadisticas.NumeroTickets(u,COUNT(t) ) FROM Ticket t JOIN t.idUsuarioCreador u WHERE u.idSucursal.idSucursal = ?1 AND (t.fechaCompletado BETWEEN ?2 AND ?3) AND t.idEstado.idEstado = 5 GROUP BY u")
+	List<NumeroTickets> numeroTicketsBySucursal(Short idSucursal, Date fecha1, Date fecha2);
+	
+	@Query(value = "SELECT new dsi235.entities.estadisticas.NumeroTickets(u,COUNT(t) ) FROM Ticket t JOIN t.idUsuarioCreador u WHERE u.idDepartamento.idDepartamento = ?1 AND (t.fechaCompletado BETWEEN ?2 AND ?3) AND t.idEstado.idEstado = 5 GROUP BY u")
+	List<NumeroTickets> numeroTicketsByDepartamento(Integer idDepartamento, Date fecha1, Date fecha2);
+	
+	@Query(value = "SELECT new dsi235.entities.estadisticas.NumeroTickets(u,COUNT(t) ) FROM Ticket t JOIN t.ticketEncargadoList te JOIN te.idUsuario u WHERE (t.fechaCompletado BETWEEN ?1 AND ?2) AND t.idEstado.idEstado = 5 GROUP BY u")
+	List<NumeroTickets> numeroTicketsByTecnico(Date fecha1, Date fecha2);
+	
+	
+	
+	
+	
 	
 	
 }
