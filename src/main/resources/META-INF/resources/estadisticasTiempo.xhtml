@@ -7,124 +7,181 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
-	<title>TiempoTicket</title>
+	<title>Tiempo de Resolucion</title>
 </h:head>
 <ui:composition template="layout.xhtml">
-	<ui:define name="title">TIEMPO DE RESOLUCION DE TICKETS</ui:define>
+	<ui:define name="title">
+		<h:outputText value="Tiempo de Resolucion" />
+	</ui:define>
 	<ui:define name="content">
 
-		<h4 style="margin-top: 0">Elija el rango de fechas</h4>
-		<h:panelGrid columns="2" cellpadding="5">
-			<p:outputLabel value="Seleccione la fecha inicial:" />
-			<p:calendar id="fechaInicial" value="#{calendarView.date2}" />
-			<p:outputLabel value="Seleccione la fecha final:" />
-			<p:calendar id="fechaFinal" value="#{calendarView.date2}" />
-		</h:panelGrid>
+		<h:form id="opciones">
+			<p:growl showDetail="true"></p:growl>
 
-		<h4 style="margin-top: 0">Elija su parametro de busqueda</h4>
-		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-			<p:selectOneRadio id="parametro" value="#{radioView.console}">
-				<f:selectItem itemLabel="Sucursal" itemValue="sucursal" />
-				<f:selectItem itemLabel="Departamento" itemValue="depto" />
-				<f:selectItem itemLabel="Tecnico" itemValue="tecnico" />
-			</p:selectOneRadio>
-		</h:panelGrid>
+			<p:messages></p:messages>
+			<h4 style="margin-top: 0">Elija el rango de fechas</h4>
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:outputLabel value="Seleccione la fecha inicial:" />
+				<p:calendar id="fechaInicial"
+					value="#{estadisticasBackingBean.fechaInicio}" required="true"
+					requiredMessage="Ingrese la fecha de inicio" />
+				<p:outputLabel value="Seleccione la fecha final:" />
+				<p:calendar id="fechaFinal"
+					value="#{estadisticasBackingBean.fechaFin}" required="true"
+					requiredMessage="Ingrese la fecha final" />
+			</h:panelGrid>
 
-		<div id="sucursal-div">
-			<h4 style="margin-top: 0">Elija la sucursal</h4>
+			<h4 style="margin-top: 15px">Elija su parametro de busqueda</h4>
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-				<p:selectOneRadio id="sucursal" value="#{radioView.console}">
-					<f:selectItem itemLabel="Sucursal 1" itemValue="s2" />
-					<f:selectItem itemLabel="Sucursal 2" itemValue="s1" />
+				<p:selectOneRadio id="parametro"
+					value="#{estadisticasBackingBean.parametro}">
+					<p:ajax event="valueChange" update="opciones" />
+					<f:selectItem itemLabel="Sucursal" itemValue="Sucursal" />
+					<f:selectItem itemLabel="Departamento" itemValue="Departamento" />
+					<f:selectItem itemLabel="Técnico" itemValue="Tecnico" />
 				</p:selectOneRadio>
 			</h:panelGrid>
-		</div>
 
-		<div id="depto-div">
-			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-				<h4 style="margin-top: 0">Elija el departamento</h4>
-				<p:selectOneMenu id="departamento"
-					value="#{selectOneMenuView.console}" style="width:125px">
-					<f:selectItem itemLabel="Seleccione" itemValue="item1" />
-					<f:selectItem itemLabel="IT" itemValue="it" />
-					<f:selectItem itemLabel="Mantenimiento" itemValue="mante" />
-					<f:selectItem itemLabel="Recursos Humanos" itemValue="rrhh" />
-					<f:selectItem itemLabel="Contabilidad" itemValue="conta" />
-					<f:selectItem itemLabel="Atencion al cliente" itemValue="aten" />
-				</p:selectOneMenu>
-			</h:panelGrid>
-		</div>
+			<p:panel header="Elija la sucursal"
+				rendered="#{estadisticasBackingBean.sucursalSeleccionado}">
+				<div id="sucursal-div">
+					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+						<p:selectOneRadio id="sucursal"
+							value="#{estadisticasBackingBean.idSucursal}">
+							<p:ajax event="change" update="@this"></p:ajax>
+							<f:selectItem itemLabel="Sucursal 1" itemValue="1" />
+							<f:selectItem itemLabel="Sucursal 2" itemValue="2" />
+						</p:selectOneRadio>
+					</h:panelGrid>
+				</div>
+			</p:panel>
 
-		<div id="div-solicitante">
-			<h4 style="margin-top: 0">Ingrese id del tecnico</h4>
-			<p:inputText placeholder="000"
-				requiredMessage="Ingrese id del técnico"
-				validatorMessage="Ingrese un id válido" id="txtIdUsuario"
-				type="text" required="true" maxlength="100">
-			</p:inputText>
-		</div>
-		<br></br>
-		<br></br>
-		<p:commandButton value="Buscar" type="submit"
-			update="estadistica-form"></p:commandButton>
-		<br></br>
-		<br></br>
+			<p:panel header="Elija el Departamento"
+				rendered="#{estadisticasBackingBean.departamentoSeleccionado}">
+				<div id="depto-div">
+					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+						<p:selectOneMenu id="departamento"
+							value="#{estadisticasBackingBean.idDepartamento}"
+							style="width:125px">
+							<f:selectItem itemLabel="IT" itemValue="1" />
+							<f:selectItem itemLabel="Mantenimiento" itemValue="2" />
+							<f:selectItem itemLabel="Recursos Humanos" itemValue="3" />
+							<f:selectItem itemLabel="Contabilidad" itemValue="4" />
+							<f:selectItem itemLabel="Atencion al cliente" itemValue="5" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+				</div>
+			</p:panel>
+
+			<p:panel header="Seleccione el tecnico"
+				rendered="#{estadisticasBackingBean.tecnicoSeleccionado}">
+				<div id="div-solicitante">
+					<p:inputText disabled="true"
+						value="#{estadisticasBackingBean.tecnico.nombre}"
+						id="txtIdUsuario" maxlength="100">
+					</p:inputText>
+				</div>
+				<p:commandButton value="Seleccionar"
+					oncomplete="PF('dialogoTecnico').show();"></p:commandButton>
+			</p:panel>
+			<br></br>
+			<br></br>
+			<p:commandButton value="Buscar" type="submit"
+				actionListener="#{estadisticasBackingBean.buscarTiempo()}"
+				update="opciones :estadistica-form"></p:commandButton>
+			<br></br>
+			<br></br>
+		</h:form>
 
 		<h:form id="estadistica-form">
-			<p:dataTable id="estadistica_tabla" var="estadistica"
+			<p:dataTable id="estadistica_tabla" var="t"
+				value="#{estadisticasBackingBean.listaTiempo}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-				paginator="true" rows="10" style="margin-bottom:20px">
-				<f:facet name="{Exporters}">
-					<h:commandLink>
-						<p:graphicImage name="images/excel.png" width="24" />
-						<p:dataExporter type="xls" target="tbl" fileName="datos" />
-					</h:commandLink>
+				paginator="true" rows="10" style="margin-bottom:20px" reflow="true">
+				<!-- 				<f:facet name="{Exporters}"> -->
+				<!-- 					<h:commandLink> -->
+				<!-- 						<p:graphicImage name="images/excel.png" width="24" /> -->
+				<!-- 						<p:dataExporter type="xls" target="estadistica_tabla" fileName="datos" /> -->
+				<!-- 					</h:commandLink> -->
 
-					<h:commandLink>
-						<p:graphicImage name="images/pdf.png" width="24" />
-						<p:dataExporter type="pdf" target="tbl" fileName="datos" />
-					</h:commandLink>
+				<!-- 					<h:commandLink> -->
+				<!-- 						<p:graphicImage name="images/pdf.png" width="24" /> -->
+				<!-- 						<p:dataExporter type="pdf" target="estadistica_tabla" fileName="datos" /> -->
+				<!-- 					</h:commandLink> -->
 
-					<h:commandLink>
-						<p:graphicImage name="images/csv.png" width="24" />
-						<p:dataExporter type="csv" target="tbl" fileName="datos" />
-					</h:commandLink>
+				<!-- 					<h:commandLink> -->
+				<!-- 						<p:graphicImage name="images/csv.png" width="24" /> -->
+				<!-- 						<p:dataExporter type="csv" target="estadistica_tabla" fileName="datos" /> -->
+				<!-- 					</h:commandLink> -->
 
-					<h:commandLink>
-						<p:graphicImage name="images/xml.png" width="24" />
-						<p:dataExporter type="xml" target="tbl" fileName="datos" />
-					</h:commandLink>
-				</f:facet>
+				<!-- 					<h:commandLink> -->
+				<!-- 						<p:graphicImage name="images/xml.png" width="24" /> -->
+				<!-- 						<p:dataExporter type="xml" target="estadistica_tabla" fileName="datos" /> -->
+				<!-- 					</h:commandLink> -->
+				<!-- 				</f:facet> -->
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Id Ticket" />
 					</f:facet>
-					<h:outputText value="#{car.id}" />
+					<h:outputText value="#{t.ticket.idTicket}" />
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Descripcion" />
 					</f:facet>
-					<h:outputText value="#{car.year}" />
+					<h:outputText value="#{t.ticket.descripcion}" />
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="Usuario el solicitante" />
+						<h:outputText value="Usuario solicitante" />
 					</f:facet>
-					<h:outputText value="#{car.year}" />
+					<h:outputText value="#{t.ticket.idUsuarioCreador.nombre}" />
 				</p:column>
-
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="Tiempo de resolucion" />
+						<h:outputText value="Tiempo de Resolucion" />
 					</f:facet>
-					<h:outputText value="#{car.year}" />
+					<h:outputText value="#{t.tiempoFormato}" />
 				</p:column>
-
 			</p:dataTable>
 		</h:form>
+
+
+
+		<p:dialog widgetVar="dialogoTecnico" modal="true" resizable="false"
+			width="60%">
+
+
+			<h:form id="table">
+				<p:outputLabel value="#{trad['asignar.filtrartecnicos']}" />
+
+				<p:dataTable id="encargados" var="enc"
+					value="#{estadisticasBackingBean.tecnicos}" reflow="true"
+					selection="#{estadisticasBackingBean.tecnico}"
+					rowKey="#{enc.idUsuario}" scrollable="true" scrollHeight="100">
+					<f:facet name="header">
+						<h:outputText value="#{trad['asignar.empleadosdisponibles']}" />
+					</f:facet>
+					<p:column selectionMode="single"
+						style="width:100px;text-align:center" />
+					<p:column headerText="ID">
+						<h:outputText value="#{enc.idUsuario}" />
+					</p:column>
+					<p:column headerText="#{trad['asignar.nombre']}">
+						<h:outputText value="#{enc.nombre}" />
+					</p:column>
+
+				</p:dataTable>
+				<p:commandButton type="submit" value="Seleccionarrrrrrr"
+					onclick="PF('seleccionarTecnico').hide();" style="margin-top:5px;"
+					update=":estadistica-form"></p:commandButton>
+			</h:form>
+
+
+
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

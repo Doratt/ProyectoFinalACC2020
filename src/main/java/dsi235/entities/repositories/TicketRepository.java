@@ -14,25 +14,13 @@ import dsi235.entities.estadisticas.TiempoResolucion;
 
 public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	// TODO
-	
-	// Calcular tiempo de resolucion por sucursal
-	@Query(value = "SELECT * FROM ticket t JOIN usuario as te ON t.id_usuario_creador=te.id_usuario WHERE te.id_sucursal = ?3 AND t.id_estado = ?4 AND (t.fecha_completado BETWEEN ?1 AND ?2)", nativeQuery = true)
-	List<TiempoResolucion> calcularTiempoResolucionSucursal(Date fechaInicio, Date fechaFin, Short idSucursal, Short idEstado);
 
-	// Calcular tiempo de resolucion por Departamento
-	@Query(value = "SELECT * FROM ticket t JOIN usuario as te ON t.id_usuario_creador=te.id_usuario WHERE te.id_sucursal = ?3 AND te.id_departamento = ?4 AND t.id_estado = ?5 AND (t.fecha_completado BETWEEN ?1 AND ?2)", nativeQuery = true)
-	List<TiempoResolucion> calcularTiempoResolucionDepto(Date fechaInicio, Date fechaFin, Short idSucursal, int idDepartamento, Short idEstado);
-	
-	// Calcular tiempo de resolucion por Tecnico
-	@Query(value = "SELECT * FROM ticket t JOIN ticket_encargado as te ON t.id_ticket = te.id_ticket WHERE te.id_usuario = ?3 AND t.id_estado = ?4 AND (t.fecha_completado BETWEEN ?1 AND ?2)", nativeQuery = true)
-	List<TiempoResolucion> calcularTiempoResolucionTecnico(Date fechaInicio, Date fechaFin, Long idTecnico, Short idEstado);
-	
 	// completado por encargado para parametros = ?1 donde 1 es el primer parametro
 	@Query(value = "SELECT * FROM ticket_encargado te JOIN ticket as t ON te.id_ticket = t.id_ticket WHERE te.id_usuario = ?1 AND t.id_estado = ?2", countQuery = "SELECT count(*) FROM ticket_encargado te JOIN ticket as t ON te.id_ticket = t.id_ticket WHERE te.id_usuario = 3 AND t.id_estado = 5", nativeQuery = true)
 	Page<Ticket> findCompletadosByEncargado(Long idUsuario, Short idEstado, Pageable pageable);
 
 	// No completado por encargado
-	@Query("select t from TicketEncargado te JOIN te.idTicket t WHERE te.idUsuario.idUsuario = ?1 AND t.idEstado.idEstado != ?2 AND te.activo = true" )
+	@Query("select t from TicketEncargado te JOIN te.idTicket t WHERE te.idUsuario.idUsuario = ?1 AND t.idEstado.idEstado != ?2 AND te.activo = true")
 	List<Ticket> findNoCompletadosByEncargado(Long idUsuario, Short idEstado);
 
 	// completado por usuario creador
@@ -55,28 +43,35 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	// ESTADISTICAS RETROALIMENTACION
 	@Query(value = "SELECT t FROM Ticket t JOIN FETCH t.retroalimentacion r WHERE t.idUsuarioCreador.idSucursal.idSucursal = ?1 AND (t.fechaCompletado BETWEEN ?2 AND ?3) AND t.idEstado.idEstado = 5")
 	List<Ticket> retroalimentarionBySucursal(Short idSucursal, Date fecha1, Date fecha2);
-	
+
 	@Query(value = "SELECT t FROM Ticket t JOIN FETCH t.retroalimentacion r JOIN t.ticketEncargadoList te WHERE te.idUsuario.idUsuario = ?1 AND (t.fechaCompletado BETWEEN ?2 AND ?3) AND t.idEstado.idEstado = 5")
 	List<Ticket> retroalimentarionByTecnico(Long idUsuario, Date fecha1, Date fecha2);
-	
+
 	@Query(value = "SELECT t FROM Ticket t JOIN FETCH t.retroalimentacion r WHERE t.idUsuarioCreador.idDepartamento.idDepartamento= ?1 AND (t.fechaCompletado BETWEEN ?2 AND ?3) AND t.idEstado.idEstado = 5")
 	List<Ticket> retroalimentarionByDepartamento(Integer idDepartamento, Date fecha1, Date fecha2);
-	
-	
+
 	// NUMERO DE TICKETS
 	@Query(value = "SELECT new dsi235.entities.estadisticas.NumeroTickets(u,COUNT(t) ) FROM Ticket t JOIN t.idUsuarioCreador u WHERE u.idSucursal.idSucursal = ?1 AND (t.fechaCompletado BETWEEN ?2 AND ?3) AND t.idEstado.idEstado = 5 GROUP BY u")
 	List<NumeroTickets> numeroTicketsBySucursal(Short idSucursal, Date fecha1, Date fecha2);
-	
+
 	@Query(value = "SELECT new dsi235.entities.estadisticas.NumeroTickets(u,COUNT(t) ) FROM Ticket t JOIN t.idUsuarioCreador u WHERE u.idDepartamento.idDepartamento = ?1 AND (t.fechaCompletado BETWEEN ?2 AND ?3) AND t.idEstado.idEstado = 5 GROUP BY u")
 	List<NumeroTickets> numeroTicketsByDepartamento(Integer idDepartamento, Date fecha1, Date fecha2);
-	
+
 	@Query(value = "SELECT new dsi235.entities.estadisticas.NumeroTickets(u,COUNT(t) ) FROM Ticket t JOIN t.ticketEncargadoList te JOIN te.idUsuario u WHERE (t.fechaCompletado BETWEEN ?1 AND ?2) AND t.idEstado.idEstado = 5 GROUP BY u")
 	List<NumeroTickets> numeroTicketsByTecnico(Date fecha1, Date fecha2);
+
 	
-	
-	
-	
-	
-	
-	
+	// TIEMPOS DE RESOLUCION
+	// Calcular tiempo de resolucion por sucursal
+	@Query(value = "SELECT new dsi235.entities.estadisticas.TiempoResolucion( t) FROM Ticket t WHERE (t.fechaCompletado BETWEEN ?1 AND ?2) AND t.idUsuarioCreador.idSucursal.idSucursal = ?3")
+	List<TiempoResolucion> calcularTiempoResolucionSucursal(Date fechaInicio, Date fechaFin, Short idSucursal);
+
+	// Calcular tiempo de resolucion por Departamento
+	@Query(value = "SELECT new dsi235.entities.estadisticas.TiempoResolucion( t) FROM Ticket t WHERE (t.fechaCompletado BETWEEN ?1 AND ?2) AND t.idUsuarioCreador.idDepartamento.idDepartamento = ?3")
+	List<TiempoResolucion> calcularTiempoResolucionDepto(Date fechaInicio, Date fechaFin, Integer idDepartamento);
+
+	// Calcular tiempo de resolucion por Tecnico
+	@Query(value = "SELECT new dsi235.entities.estadisticas.TiempoResolucion( t) FROM Ticket t JOIN t.ticketEncargadoList te WHERE (t.fechaCompletado BETWEEN ?1 AND ?2) AND te.idUsuario.idUsuario = ?3")
+	List<TiempoResolucion> calcularTiempoResolucionTecnico(Date fechaInicio, Date fechaFin, Long idTecnico);
+
 }
