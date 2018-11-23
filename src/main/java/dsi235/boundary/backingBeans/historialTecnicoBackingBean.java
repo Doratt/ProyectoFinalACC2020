@@ -127,7 +127,6 @@ public class historialTecnicoBackingBean implements Serializable {
 						PageRequest.of(PageParser.parsePage(first, pageSize), pageSize));
 				salida = page.getContent();
 				if (this.model != null) {
-					System.out.println(page.getTotalElements());
 					this.model.setRowCount((Integer.valueOf(String.valueOf(page.getTotalElements()))));
 				}
 			}
