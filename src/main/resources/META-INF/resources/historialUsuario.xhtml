@@ -51,7 +51,9 @@
 				<p:menuitem value="#{trad['historialt.reabrir']}" icon="fa fa-refresh"
 					actionListener="#{historialUsuarioBackingBean.reabrirTicket}" />
 				<p:menuitem value="#{trad['historialt.calificar']}" icon="fa fa-star"
-					oncomplete="PF('calificarTicket').show()"></p:menuitem>
+					oncomplete="PF('calificarTicket').show()"
+					actionListener="#{historialUsuarioBackingBean.checkIfCalificado}"
+					update=":historial_usuario_form"/>
 			</p:contextMenu>
 			
 			<p:dialog header="#{trad['historialt.calificar']}" widgetVar="calificarTicket"
@@ -60,14 +62,15 @@
 
 				<h:form id="frmCalificarTicket">
 					<p:rating stars="10" cancel="false" style="" 
-						value="#{historialUsuarioBackingBean.calificacion}"></p:rating><br></br>
+						value="#{historialUsuarioBackingBean.calificacion}"
+						readonly="#{historialUsuarioBackingBean.calificado}"></p:rating><br></br>
 					<p:outputLabel
 						value="#{trad['historialt.mensaje']}"></p:outputLabel><br></br><br></br>
 					<p:inputTextarea value="#{historialUsuarioBackingBean.comentario}" maxlength="2000" style="width:90%;"
-						autoResize="false"></p:inputTextarea><br></br><br></br>
+						autoResize="false" readonly="#{historialUsuarioBackingBean.calificado}"></p:inputTextarea><br></br><br></br>
 					<p:commandButton type="submit" value="#{trad['historialt.btnCalificar']}"
 						actionListener="#{historialUsuarioBackingBean.calificarTicket}"
-						update=":historial_usuario_form"></p:commandButton>
+						update=":historial_usuario_form" rendered="#{!historialUsuarioBackingBean.calificado}"></p:commandButton>
 				</h:form>
 			</p:dialog>
 		</h:form>

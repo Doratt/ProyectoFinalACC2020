@@ -98,6 +98,7 @@
 									update=":formAsignaciones :frmInfoTicket">
 								</p:ajax>
 							</p:commandButton>
+							<p:messages id="comentsMessages" for="txtContenidoComentario"></p:messages>
 						</div>
 					</div>
 					<p:outputLabel value="#{trad['dashboard.comentarios']}"></p:outputLabel>
@@ -118,8 +119,14 @@
 						</div>
 						<div class="agregar-comentario" style="margin-top: 10px;">
 							<p:inputTextarea
+							id="txtContenidoComentario"
+								requiredMessage="Por favor ingrese un comentario" required="true"
 								value="#{asignacionesBackingBean.comentario.contenido}"
-								autoResize="false"></p:inputTextarea>
+								autoResize="false"
+								validatorMessage="#{trad['dashboard.descripcionmuycorta']}">
+						<f:validateLength minimum="20">
+						</f:validateLength>
+							</p:inputTextarea>
 							<p:commandButton icon="fa fa-comments-o"
 								actionListener="#{asignacionesBackingBean.crearComentario()}"
 								update=":frmInfoTicket">
