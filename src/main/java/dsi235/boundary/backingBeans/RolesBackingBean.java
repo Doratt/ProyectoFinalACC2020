@@ -110,8 +110,8 @@ public class RolesBackingBean implements Serializable {
 		checked.clear();
 		try {
 			usuarioBindeado.getUsuarioRolList().forEach(r -> {
-				if(r.getActivo())
-				checked.add(String.valueOf(r.getIdRol().getIdRol()));
+				if (r.getActivo())
+					checked.add(String.valueOf(r.getIdRol().getIdRol()));
 			});
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -119,7 +119,6 @@ public class RolesBackingBean implements Serializable {
 	}
 
 	public void guardar() {
-		System.out.println(checked);
 		List<UsuarioRol> ur = usuarioBindeado.getUsuarioRolList();
 		List<Short> rolesDeUser = new ArrayList<>();
 		for (UsuarioRol usuarioRol : ur) {
@@ -127,25 +126,22 @@ public class RolesBackingBean implements Serializable {
 		}
 
 		for (int i = 1; i <= 3; i++) {
-			System.out.println("Estoy en for");
 			// En caso de que este seleccionado el check y este en la base, sera activo si
 // no es activo
 			if (rolesDeUser.contains(Short.valueOf(String.valueOf(i))) && checked.contains(String.valueOf(i))) {
-				System.out.println("Estoy en la base y en el check");
 				for (UsuarioRol usuarioRol : ur) {
 					if (usuarioRol.getIdRol().getIdRol() == i) {
 						if (!usuarioRol.getActivo()) {
 							usuarioRol.setActivo(true);
 							urc.save(usuarioRol);
 							inicializarModelo();
-							
+
 						}
 					}
 				}
 				// En caso de que no este seleccionado el check y este en la base, sera no
 				// activo si es activo
 			} else if (rolesDeUser.contains(Short.valueOf(String.valueOf(i))) && !checked.contains(String.valueOf(i))) {
-				System.out.println("Estoy en la base y NO en el check");
 				for (UsuarioRol usuarioRol : ur) {
 					if (usuarioRol.getIdRol().getIdRol() == i) {
 						if (usuarioRol.getActivo()) {
@@ -158,7 +154,6 @@ public class RolesBackingBean implements Serializable {
 				// En caso de que este seleccionado el check y no este en la base, crea un nuevo
 				// registro
 			} else if (!rolesDeUser.contains(Short.valueOf(String.valueOf(i))) && checked.contains(String.valueOf(i))) {
-				System.out.println("NO estoy en la base y si en el check");
 				UsuarioRol nuevoRol = new UsuarioRol();
 				nuevoRol.setActivo(true);
 				nuevoRol.setFechaCreacion(new Date());
@@ -183,7 +178,7 @@ public class RolesBackingBean implements Serializable {
 			if (this.uc != null) {
 				page = this.uc.findTecnicosBySucursal(sucursal, true,
 						PageRequest.of(PageParser.parsePage(first, pageSize), pageSize));
-				salida = page.getContent();	
+				salida = page.getContent();
 				if (this.model != null) {
 					this.model.setRowCount((Integer.valueOf(String.valueOf(page.getTotalElements()))));
 

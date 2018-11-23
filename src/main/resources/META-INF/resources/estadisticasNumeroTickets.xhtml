@@ -6,12 +6,9 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<h:head>
-	<title>Numero de Tickets</title>
-</h:head>
 <ui:composition template="layout.xhtml">
 	<ui:define name="title">
-		<h:outputText value="Numero de Tickets" />
+		<h:outputText value="#{trad['estadisticas.estadisticasNum']}" />
 	</ui:define>
 	<ui:define name="content">
 
@@ -19,60 +16,60 @@
 			<p:growl showDetail="true"></p:growl>
 
 			<p:messages></p:messages>
-			<h4 style="margin-top: 0">Elija el rango de fechas</h4>
+			<h4 style="margin-top: 0"><h:outputText value="#{trad['estadisticas.elegirFecha']}" /></h4>
 			<h:panelGrid columns="2" cellpadding="5">
-				<p:outputLabel value="Seleccione la fecha inicial:" />
+				<p:outputLabel value="#{trad['estadisticas.fechaInicial']}" />
 				<p:calendar id="fechaInicial"
 					value="#{estadisticasBackingBean.fechaInicio}" required="true"
-					requiredMessage="Ingrese la fecha de inicio" />
-				<p:outputLabel value="Seleccione la fecha final:" />
+					requiredMessage="#{trad['estadisticas.fechaInicioReq ']}" />
+				<p:outputLabel value="#{trad['estadisticas.fechaFinal']}"/>
 				<p:calendar id="fechaFinal"
 					value="#{estadisticasBackingBean.fechaFin}" required="true"
-					requiredMessage="Ingrese la fecha final" />
+					requiredMessage="#{trad['estadisticas.fechaFinalReq ']}"  />
 			</h:panelGrid>
 
-			<h4 style="margin-top: 15px">Elija su parametro de busqueda</h4>
+			<h4 style="margin-top: 15px"><h:outputText value="#{trad['estadisticas.parametroBusqueda']}" /></h4>
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 				<p:selectOneRadio id="parametro"
 					value="#{estadisticasBackingBean.parametro}">
 					<p:ajax event="valueChange" update="opciones" />
-					<f:selectItem itemLabel="Sucursal" itemValue="Sucursal" />
-					<f:selectItem itemLabel="Departamento" itemValue="Departamento" />
-					<f:selectItem itemLabel="Técnico" itemValue="Tecnico" />
+					<f:selectItem itemLabel="#{trad['estadisticas.sucursal']}" itemValue="Sucursal" />
+					<f:selectItem itemLabel="#{trad['estadisticas.departamento']}" itemValue="Departamento" />
+					<f:selectItem itemLabel="#{trad['estadisticas.tecnico']}" itemValue="Tecnico" />
 				</p:selectOneRadio>
 			</h:panelGrid>
 
-			<p:panel header="Elija la sucursal"
+			<p:panel header="#{trad['estadisticas.elegirSucursal']}"
 				rendered="#{estadisticasBackingBean.sucursalSeleccionado}">
 				<div id="sucursal-div">
 					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 						<p:selectOneRadio id="sucursal"
 							value="#{estadisticasBackingBean.idSucursal}">
 							<p:ajax event="change" update="@this"></p:ajax>
-							<f:selectItem itemLabel="Sucursal 1" itemValue="1" />
-							<f:selectItem itemLabel="Sucursal 2" itemValue="2" />
+							<f:selectItem itemLabel="#{trad['estadisticas.sucursal1']}" itemValue="1" />
+							<f:selectItem itemLabel="#{trad['estadisticas.sucursal2']}" itemValue="2" />
 						</p:selectOneRadio>
 					</h:panelGrid>
 				</div>
 			</p:panel>
 
-			<p:panel header="Elija el Departamento"
+			<p:panel header="#{trad['estadisticas.elegirDepto']}"
 				rendered="#{estadisticasBackingBean.departamentoSeleccionado}">
 				<div id="depto-div">
 					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 						<p:selectOneMenu id="departamento"
 							value="#{estadisticasBackingBean.idDepartamento}"
 							style="width:125px">
-							<f:selectItem itemLabel="IT" itemValue="1" />
-							<f:selectItem itemLabel="Mantenimiento" itemValue="2" />
-							<f:selectItem itemLabel="Recursos Humanos" itemValue="3" />
-							<f:selectItem itemLabel="Contabilidad" itemValue="4" />
-							<f:selectItem itemLabel="Atencion al cliente" itemValue="5" />
+							<f:selectItem itemLabel="#{trad['estadisticas.it']}" itemValue="1" />
+							<f:selectItem itemLabel="#{trad['estadisticas.mantenimiento']}" itemValue="2" />
+							<f:selectItem itemLabel="#{trad['estadisticas.rrhh']}" itemValue="3" />
+							<f:selectItem itemLabel="#{trad['estadisticas.contabilidad']}" itemValue="4" />
+							<f:selectItem itemLabel="#{trad['estadisticas.atencionCliente']}" itemValue="5" />
 						</p:selectOneMenu>
 					</h:panelGrid>
 				</div>
 			</p:panel>
-			<p:commandButton value="Buscar" type="submit"
+			<p:commandButton value="#{trad['estadisticas.buscar']}"  type="submit"
 				actionListener="#{estadisticasBackingBean.buscarNumero()}"
 				update="opciones :estadistica-form"></p:commandButton>
 			<br></br>
@@ -107,14 +104,14 @@
 				<!-- 				</f:facet> -->
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="Id Tecnico" />
+						<h:outputText value="#{trad['estadisticas.idTecnico']}" />
 					</f:facet>
 					<h:outputText value="#{t.usuario.idUsuario}" />
 				</p:column>
-				<p:column headerText="Nombre">
+				<p:column headerText="#{trad['estadisticas.name']}" >
 					<h:outputText value="#{t.usuario.nombre}"></h:outputText>
 				</p:column>
-				<p:column headerText="Cantidad">
+				<p:column headerText="#{trad['estadisticas.cantidad']}" >
 					<h:outputText value="#{t.numerotickets}"></h:outputText>
 				</p:column>
 			</p:dataTable>

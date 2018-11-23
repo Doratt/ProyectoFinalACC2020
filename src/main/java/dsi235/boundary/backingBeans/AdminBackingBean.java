@@ -72,13 +72,11 @@ public class AdminBackingBean implements Serializable {
 
 	public void asignacion() {
 		try {
-			System.out.println(selectedPersons);
 			if (!selectedPersons.isEmpty()) {
 
 				selectedPersons.forEach(item -> {
 					StringBuilder contenido = new StringBuilder().append("Saludos estimado ").append(item.getNombre())
 							.append("\nSe le ha asignado un nuevo ticket:\n").append(ticket.getDescripcion());
-
 					TicketEncargado ticketasignado = new TicketEncargado();
 					ticketasignado.setIdUsuarioCreador(usuarioLogueado);
 					ticketasignado.setFechaCreacion(new Date());
@@ -97,9 +95,17 @@ public class AdminBackingBean implements Serializable {
 				ticket.setIdEstado(el.get(ESTADO.asignado.value));
 				ticket.setActivo(true);
 				tc.save(ticket);
-				StringBuilder contenido = new StringBuilder().append("Saludos estimado ")
-						.append(ticket.getIdUsuarioCreador().getNombre())
-						.append(", su solicitud ha sido asignada exitosamente a un tecnico capacitado, le mantendremos al tanto del proceso.");
+				StringBuilder contenido = new StringBuilder().append("<!DOCTYPE html>\n" + "<html>\n" + "    <head>\n"
+						+ "        <title>Ticket System e-mail</title>\n"
+						+ "        <p style=\"font-family: calibri, serif; font-size:20pt; color:#73ad41\"><b>Ticket System</b></p>\n"
+						+ "    </head>\n" + "    <body>\n"
+						+ "        <p style=\"font-family: calibri, serif; font-size:14pt; font-style:bold; color:black\"><i>Saludos</i>\n"
+						+ ticket.getIdUsuarioCreador().getNombre()
+						+ "        <br>Le informamos que su su solicitud ha sido asignada exitosamente a un tecnico capacitado, le mantendremos al tanto del proceso\n"
+						+ "        <br>Puede ver el estado de su solicitud desde la aplicacion.\n" + "        </p>\n"
+						+ "    </body>\n"
+						+ "    <footer><p  style=\"font-family: calibri, serif; font-size:12pt; color: black\"><b>Muchas gracias por utilizar nuestros servicios</b></p></footer>\n"
+						+ "</html>");
 				nc.enviarCorreo(ticket.getIdUsuarioCreador(), contenido.toString());
 			}
 		} catch (Exception e) {
@@ -162,12 +168,10 @@ public class AdminBackingBean implements Serializable {
 		Page<Ticket> page = null;
 		try {
 			if (this.tc != null) {
-				System.out.println(first);
 				page = this.tc.findNoasignadosBySucursal(usuarioLogueado.getIdSucursal().getIdSucursal(),
 						this.estado.getIdEstado(), PageRequest.of(PageParser.parsePage(first, pageSize), pageSize));
 				salida = page.getContent();
 				if (this.model != null) {
-					System.out.println(page.getTotalElements());
 					this.model.setRowCount((Integer.valueOf(String.valueOf(page.getTotalElements()))));
 
 				}

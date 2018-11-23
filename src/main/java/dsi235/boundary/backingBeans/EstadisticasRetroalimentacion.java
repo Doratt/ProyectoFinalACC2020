@@ -20,6 +20,7 @@ import dsi235.entities.Sucursal;
 import dsi235.entities.Ticket;
 import dsi235.entities.Usuario;
 import dsi235.entities.estadisticas.NumeroTickets;
+import dsi235.entities.estadisticas.TiempoResolucion;
 
 @ManagedBean(value = "estadisticasBackingBean")
 @ViewScoped
@@ -32,6 +33,7 @@ public class EstadisticasRetroalimentacion {
 	private Integer idDepartamento = 1;
 	private List<Ticket> lista;
 	private List<NumeroTickets> listaNumero;
+	private List<TiempoResolucion> listaTiempo;
 	private EstadisticaController ec;
 	private Usuario tecnico;
 	private List<Usuario> tecnicos;
@@ -57,44 +59,64 @@ public class EstadisticasRetroalimentacion {
 	public void buscar() {
 
 		if (fechaInicio.getTime() > fechaFin.getTime()) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "La fecha de finalización debe ser mayor que la fecha de inicio"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+					"La fecha de finalización debe ser mayor que la fecha de inicio"));
 		} else {
 
 			if (isSucursalSeleccionado()) {
-				System.out.println(idSucursal);
 				lista = ec.verRetroalimentacion(fechaInicio, fechaFin, idSucursal, null, null);
 			} else if (isDepartamentoSeleccionado()) {
 				lista = ec.verRetroalimentacion(fechaInicio, fechaFin, null, idDepartamento, null);
 			} else if (isTecnicoSeleccionado()) {
-				if(tecnico == null) {
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "Seleccione el Técnico"));
-				}else {
-				lista = ec.verRetroalimentacion(fechaInicio, fechaFin, null, null, this.tecnico.getIdUsuario());
-			
+				if (tecnico == null) {
+					FacesContext.getCurrentInstance().addMessage(null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Seleccione el Técnico"));
+				} else {
+					lista = ec.verRetroalimentacion(fechaInicio, fechaFin, null, null, this.tecnico.getIdUsuario());
+
 				}
 			}
 		}
 	}
-	
+
 	public void buscarNumero() {
+
+		if (fechaInicio.getTime() > fechaFin.getTime()) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+					"La fecha de finalización debe ser mayor que la fecha de inicio"));
+		} else {
+
+			if (isSucursalSeleccionado()) {
+				listaNumero = ec.calcularNumTicketsSucursal(fechaInicio, fechaFin, idSucursal);
+			} else if (isDepartamentoSeleccionado()) {
+				listaNumero = ec.calcularNumTicketsDepto(fechaInicio, fechaFin, idDepartamento);
+			} else if (isTecnicoSeleccionado()) {
+
+				listaNumero = ec.calcularNumTicketsTecnico(fechaInicio, fechaFin);
+
+			}
+		}
+	}
+
+	
+	public void buscarTiempo() {
 
 		if (fechaInicio.getTime() > fechaFin.getTime()) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "La fecha de finalización debe ser mayor que la fecha de inicio"));
 		} else {
 
 			if (isSucursalSeleccionado()) {
-				System.out.println(idSucursal);
-				listaNumero = ec.calcularNumTicketsSucursal(fechaInicio, fechaFin, idSucursal);
+				listaTiempo = ec.calcularTiempoResolucionSucursal(fechaInicio, fechaFin, idSucursal);
 			} else if (isDepartamentoSeleccionado()) {
-				listaNumero = ec.calcularNumTicketsDepto(fechaInicio, fechaFin, idDepartamento);
+				listaTiempo = ec.calcularTiempoResolucionDepto(fechaInicio, fechaFin, idDepartamento);
 			} else if (isTecnicoSeleccionado()) {
 				
-				listaNumero = ec.calcularNumTicketsTecnico(fechaInicio, fechaFin);
+				listaTiempo = ec.calcularTiempoResolucionTecnico(fechaInicio, fechaFin, this.tecnico.getIdUsuario());
 			
 			}
 		}
 	}
-	
+
 
 	@Autowired
 	public void setEc(EstadisticaController ec) {
@@ -181,7 +203,16 @@ public class EstadisticasRetroalimentacion {
 	public void setListaNumero(List<NumeroTickets> listaNumero) {
 		this.listaNumero = listaNumero;
 	}
+
+	public List<TiempoResolucion> getListaTiempo() {
+		return listaTiempo;
+	}
+
+	public void setListaTiempo(List<TiempoResolucion> listaTiempo) {
+		this.listaTiempo = listaTiempo;
+	}
 	
 	
+
 
 }

@@ -7,6 +7,7 @@ import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.stereotype.Controller;
@@ -53,19 +54,17 @@ public class NotificacionControllerImpl implements NotificationController {
 		if(t==null || !t.isConnected()) {
 			init();
 		}
-		
 		try {
-					
+			
 			// Define message
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(username));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(usuario.getCorreo()));
 			message.setSubject("Notificacion");
-			message.setText(contenido);
+			message.setText(contenido, "ISO-8859-1","html");
 			// Envia el mensaje
 			t.sendMessage(message, message.getAllRecipients());
 		} catch (Exception e) {
-			System.out.println("Fallo en enviarCorreo");
 			e.printStackTrace();
 			init();
 

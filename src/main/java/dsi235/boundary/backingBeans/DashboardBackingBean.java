@@ -37,7 +37,6 @@ public class DashboardBackingBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 2432906255201655180L;
 
-	
 	private NotificationController nc;
 	private Ticket ticket;
 	private Ticket ticketSeleccionado;
@@ -51,8 +50,6 @@ public class DashboardBackingBean implements Serializable {
 	private ComentarioController comentarioController;
 	private List<Comentario> comentarios;
 	private TicketEncargadoController tec;
-	
-
 
 	@PostConstruct
 	public void init() {
@@ -60,11 +57,10 @@ public class DashboardBackingBean implements Serializable {
 		setComentario(new Comentario());
 	}
 
-	
 	public void reload() {
 		init();
 	}
-	
+
 	public void crearTicket() {
 		setTicket(new Ticket());
 		ticket.setIdUsuarioCreador(sessionBean.getUsuarioLogueado());
@@ -78,27 +74,23 @@ public class DashboardBackingBean implements Serializable {
 				tc.save(getTicket());
 				current.executeScript("PF('createTicket').hide()");
 				FacesContext context = FacesContext.getCurrentInstance();
-		        context.addMessage(null, new FacesMessage("Exito",  "Ticket creado exitosamente") );
+				context.addMessage(null, new FacesMessage("Exito", "Ticket creado exitosamente"));
 				StringBuilder contenido = new StringBuilder()
-						
-						.append(sessionBean.getUsuarioLogueado().getNombre())
-						.append("<!DOCTYPE html>\n" + 
-								"<html>\n" + 
-								"    <head>\n" + 
-								"        <title>Ticket System e-mail</title>\n" + 
-								"        <p style=\"font-family: calibri, serif; font-size:20pt; color:green\"><b>Ticket System</b></p>\n" + 
-								"    </head>\n" + 
-								"    <body>\n" + 
-								"        <p style=\"font-family: calibri, serif; font-size:14pt; font-style:bold\"><i>Saludos</i>\n" + 
-								"        <br>Queremos informarle que su ticket fue exitosamente creado y esta en espera a ser asignado.\n" + 
-								"        <br>Le mantendremos informado sobre el proceso\n" + 
-								"        </p>\n" + 
-								"    </body>\n" + 
-								"    <footer><p  style=\"font-family: calibri, serif; font-size:12pt\"><b>Muchas gracias por utilizar nuestros servicios</b></p></footer>\n" + 
-								"</html>");
-				init();       
-			        this.ticket = new Ticket();
-			        nc.enviarCorreo(sessionBean.getUsuarioLogueado(), contenido.toString());
+
+						.append("<!DOCTYPE html>\n" + "<html>\n" + "    <head>\n"
+								+ "        <title>Ticket System e-mail</title>\n"
+								+ "        <p style=\"font-family: calibri, serif; font-size:20pt; color:#73ad41\"><b>Ticket System</b></p>\n"
+								+ "    </head>\n" + "    <body>\n"
+								+ "        <p style=\"font-family: calibri, serif; font-size:14pt; font-style:bold; color:black\"><i>Saludos</i>\n"
+								+ sessionBean.getUsuarioLogueado().getNombre()
+								+ "        <br>Queremos informarle que su ticket fue exitosamente creado y esta en espera a ser asignado.\n"
+								+ "        <br>Le mantendremos informado sobre el proceso\n" + "        </p>\n"
+								+ "    </body>\n"
+								+ "    <footer><p  style=\"font-family: calibri, serif; font-size:12pt; color: black\"><b>Muchas gracias por utilizar nuestros servicios</b></p></footer>\n"
+								+ "</html>\n" + "");
+				init();
+				this.ticket = new Ticket();
+				nc.enviarCorreo(sessionBean.getUsuarioLogueado(), contenido.toString());
 			} catch (Exception e) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 						"Error!", "Parece que hubo un problema con la creación de tu ticket"));
@@ -118,12 +110,20 @@ public class DashboardBackingBean implements Serializable {
 				comentarioController.save(comentario);
 				this.comentario = new Comentario();
 				cargarComentarios();
-				
+
 				List<TicketEncargado> encargados = tec.findByIdTicket_IdTicket(ticketSeleccionado.getIdTicket());
 				for (TicketEncargado ticketEncargado : encargados) {
-					StringBuilder contenido = new StringBuilder().append("Saludos estimado ")
-							.append(ticketEncargado.getIdUsuario().getNombre())
-							.append(", le informamos que hay un nuevo comentario en uno de sus tickets asignados");
+					StringBuilder contenido = new StringBuilder().append("<!DOCTYPE html>\n" + "<html>\n"
+							+ "    <head>\n" + "        <title>Ticket System e-mail</title>\n"
+							+ "        <p style=\"font-family: calibri, serif; font-size:20pt; color:#73ad41\"><b>Ticket System</b></p>\n"
+							+ "    </head>\n" + "    <body>\n"
+							+ "        <p style=\"font-family: calibri, serif; font-size:14pt; font-style:bold; color:black\"><i>Saludos</i>\n"
+							+ ticketEncargado.getIdUsuario().getNombre()
+							+ "        <br>Le informamos que hay un nuevo comentario en uno de sus tickets asignados\n"
+							+ "        <br>Puede revisar todos los comentarios en la aplicacion\n" + "        </p>\n"
+							+ "    </body>\n"
+							+ "    <footer><p  style=\"font-family: calibri, serif; font-size:12pt; color: black\"><b>Muchas gracias por utilizar nuestros servicios</b></p></footer>\n"
+							+ "</html>\n" + "");
 					nc.enviarCorreo(ticketEncargado.getIdUsuario(), contenido.toString());
 				}
 			} catch (Exception e) {
@@ -132,41 +132,43 @@ public class DashboardBackingBean implements Serializable {
 						"Error!", "Hubo un problema con la creación del comentario"));
 			}
 		} else {
-			System.out.println("contenido isempty");
 		}
 	}
-	
+
 	public void cancelarTicket() {
-		System.out.println("Llegue al metodo");
 		ticketSeleccionado.setFechaCompletado(new Date());
 		ticketSeleccionado.setFechaModificacion(new Date());
 		ticketSeleccionado.setIdEstado(el.get(ESTADO.completado.value));
 		ticketSeleccionado.setIdUsuarioModificador(sessionBean.getUsuarioLogueado());
 		try {
 			List<TicketEncargado> encargados = tec.findByIdTicket_IdTicket(ticketSeleccionado.getIdTicket());
-			System.out.println("Lista de encargados:"+encargados);
-			if(encargados!=null && !encargados.isEmpty()) {
-				System.out.println("encargados no es null ni esta vacio");
+			if (encargados != null && !encargados.isEmpty()) {
 				for (TicketEncargado ticketEncargado : encargados) {
-					StringBuilder contenido = new StringBuilder().append("Saludos estimado ")
-							.append(ticketEncargado.getIdUsuario().getNombre())
-							.append(", le informamos que el ticket #")
-							.append(ticketSeleccionado.getIdTicket())
-							.append("\n que estaba asignado a usted, ha sido cancelado por su solicitante");
+					StringBuilder contenido = new StringBuilder().append("<!DOCTYPE html>\n" + "<html>\n"
+							+ "    <head>\n" + "        <title>Ticket System e-mail</title>\n"
+							+ "        <p style=\"font-family: calibri, serif; font-size:20pt; color:#73ad41\"><b>Ticket System</b></p>\n"
+							+ "    </head>\n" + "    <body>\n"
+							+ "        <p style=\"font-family: calibri, serif; font-size:14pt; font-style:bold; color:black\"><i>Saludos</i>\n"
+							+ ticketEncargado.getIdUsuario().getNombre() + "        <br>Le informamos que el ticket "
+							+ ticketSeleccionado.getIdTicket() + "ha sido cancelado por el solicitante.\n"
+							+ "        <br>Ya no aparecera asignado a usted. Puede verificar en el sistema.\n"
+							+ "        </p>\n" + "    </body>\n"
+							+ "    <footer><p  style=\"font-family: calibri, serif; font-size:12pt; color: black\"><b>Muchas gracias por utilizar nuestros servicios</b></p></footer>\n"
+							+ "</html>");
 					nc.enviarCorreo(ticketEncargado.getIdUsuario(), contenido.toString());
 				}
 			}
 			tc.save(ticketSeleccionado);
 			init();
 			FacesContext context = FacesContext.getCurrentInstance();
-	        context.addMessage(null, new FacesMessage("Cancelado",  "Ticket cancelado") );
+			context.addMessage(null, new FacesMessage("Cancelado", "Ticket cancelado"));
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Error!", "Hubo un problema al cancelar su ticket"));
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Hubo un problema al cancelar su ticket"));
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void cargarComentarios() {
 		setComentarios(comentarioController.findByIdTicket(ticketSeleccionado));
 	}
@@ -260,10 +262,5 @@ public class DashboardBackingBean implements Serializable {
 	public void setTec(TicketEncargadoController tec) {
 		this.tec = tec;
 	}
-
-
-	
-	
-	
 
 }
