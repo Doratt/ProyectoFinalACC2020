@@ -67,7 +67,6 @@ public class UsuarioControllerTest {
         boolean activo = true;
         List<Usuario> usuarios = usuarioController.findTecnicosBySucursal(idSucursal, idDepartamento, activo);
         assertEquals(usuarios.size(), 4);
-
     }
 
     /**
@@ -78,10 +77,9 @@ public class UsuarioControllerTest {
         System.out.println("findTecnicosBySucursal");
         Short idSucursal = 1;
         boolean activo = true;
-        Pageable pg = PageRequest.of(0,3);
+        Pageable pg = PageRequest.of(0, 3);
         Page<Usuario> usuarios = usuarioController.findTecnicosBySucursal(idSucursal, activo, pg);
         assertEquals(usuarios.getSize(), 3);
-        
     }
 
     public class UsuarioControllerImpl implements UsuarioController {

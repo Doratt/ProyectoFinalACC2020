@@ -15,7 +15,9 @@
  */
 package dsi235.controllers;
 
-import dsi235.entities.TicketEncargado;
+import dsi235.entities.Comentario;
+import dsi235.entities.Ticket;
+import dsi235.entities.Usuario;
 import java.util.List;
 import java.util.Optional;
 import org.junit.After;
@@ -35,43 +37,42 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TicketEncargadoControllerTest {
+public class ComentarioControllerTest {
 
-    public TicketEncargadoControllerTest() {
+    public ComentarioControllerTest() {
     }
 
-    private TicketEncargadoController ticketEncargadoController;
+    private ComentarioController comentarioController;
 
     /**
-     * Test of findByIdTicket_IdTicket method, of class
-     * TicketEncargadoController.
+     * Test of findByIdTicket method, of class ComentarioController.
      */
     @Test
-    public void testFindByIdTicket_IdTicket() {
-        System.out.println("findByIdTicket_IdTicket");
-        Long idTicket = Long.valueOf(9);
-        List<TicketEncargado> encargados = ticketEncargadoController.findByIdTicket_IdTicket(idTicket);
-        assertEquals(encargados.size(), 3);
+    public void testFindByIdTicket() {
+        System.out.println("findByIdTicket");
+        Ticket idTicket = new Ticket(Long.valueOf(8));
+        List<Comentario> comentarios = comentarioController.findByIdTicket(idTicket);
+        assertEquals(comentarios.size(), 3);
     }
 
-    public class TicketEncargadoControllerImpl implements TicketEncargadoController {
+    public class ComentarioControllerImpl implements ComentarioController {
 
-        public List<TicketEncargado> findByIdTicket_IdTicket(Long idTicket) {
+        public List<Comentario> findByIdTicket(Ticket idTicket) {
             return null;
         }
 
         @Override
-        public Optional<TicketEncargado> findById(Long id) {
+        public Optional<Comentario> findById(Long id) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
-        public List<TicketEncargado> findAll() {
+        public List<Comentario> findAll() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
-        public TicketEncargado save(TicketEncargado entity) {
+        public Comentario save(Comentario entity) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
@@ -81,18 +82,18 @@ public class TicketEncargadoControllerTest {
         }
 
         @Override
-        public void delete(TicketEncargado entity) {
+        public void delete(Comentario entity) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
 
-    public TicketEncargadoController getTicketEncargadoController() {
-        return ticketEncargadoController;
+    public ComentarioController getComentarioController() {
+        return comentarioController;
     }
 
     @Autowired
-    public void setTicketEncargadoController(TicketEncargadoController ticketEncargadoController) {
-        this.ticketEncargadoController = ticketEncargadoController;
+    public void setComentarioController(ComentarioController comentarioController) {
+        this.comentarioController = comentarioController;
     }
 
 }

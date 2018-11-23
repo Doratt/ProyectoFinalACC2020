@@ -15,7 +15,9 @@
  */
 package dsi235.controllers;
 
-import dsi235.entities.TicketEncargado;
+import dsi235.entities.Comentario;
+import dsi235.entities.Retroalimentacion;
+import dsi235.entities.Ticket;
 import java.util.List;
 import java.util.Optional;
 import org.junit.After;
@@ -35,43 +37,47 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TicketEncargadoControllerTest {
+public class RetroalimentacionControllerTest {
 
-    public TicketEncargadoControllerTest() {
+    public RetroalimentacionControllerTest() {
     }
 
-    private TicketEncargadoController ticketEncargadoController;
+    private RetroalimentacionController retroalimentacionController;
+    private TicketController ticketController;
 
     /**
-     * Test of findByIdTicket_IdTicket method, of class
-     * TicketEncargadoController.
+     * Test of calificarTicket method, of class RetroalimentacionController.
      */
     @Test
-    public void testFindByIdTicket_IdTicket() {
-        System.out.println("findByIdTicket_IdTicket");
-        Long idTicket = Long.valueOf(9);
-        List<TicketEncargado> encargados = ticketEncargadoController.findByIdTicket_IdTicket(idTicket);
-        assertEquals(encargados.size(), 3);
+    public void testCalificarTicket() {
+        System.out.println("calificarTicket");
+        int calificacion = 7;
+        Optional<Ticket> ticket= ticketController.findById(Long.valueOf(6));
+        String comentario = "Comentario realizado por prueba";
+        retroalimentacionController.calificarTicket(calificacion, ticket.get(), comentario);
+        
+        assertEquals(ticket.get().getRetroalimentacion().getCalificacion(), calificacion);
+        assertEquals(ticket.get().getRetroalimentacion().getComentario(), comentario);
+       
     }
 
-    public class TicketEncargadoControllerImpl implements TicketEncargadoController {
+    public class RetroalimentacionControllerImpl implements RetroalimentacionController {
 
-        public List<TicketEncargado> findByIdTicket_IdTicket(Long idTicket) {
-            return null;
+        public void calificarTicket(int calificacion, Ticket ticket, String comentario) {
         }
 
         @Override
-        public Optional<TicketEncargado> findById(Long id) {
+        public Optional<Retroalimentacion> findById(Long id) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
-        public List<TicketEncargado> findAll() {
+        public List<Retroalimentacion> findAll() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
-        public TicketEncargado save(TicketEncargado entity) {
+        public Retroalimentacion save(Retroalimentacion entity) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
@@ -81,18 +87,28 @@ public class TicketEncargadoControllerTest {
         }
 
         @Override
-        public void delete(TicketEncargado entity) {
+        public void delete(Retroalimentacion entity) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
 
-    public TicketEncargadoController getTicketEncargadoController() {
-        return ticketEncargadoController;
+    public RetroalimentacionController getRetroalimentacionController() {
+        return retroalimentacionController;
     }
 
     @Autowired
-    public void setTicketEncargadoController(TicketEncargadoController ticketEncargadoController) {
-        this.ticketEncargadoController = ticketEncargadoController;
+    public void setRetroalimentacionController(RetroalimentacionController retroalimentacionController) {
+        this.retroalimentacionController = retroalimentacionController;
     }
 
+    public TicketController getTicketController() {
+        return ticketController;
+    }
+
+    @Autowired
+    public void setTicketController(TicketController ticketController) {
+        this.ticketController = ticketController;
+    }
+
+    
 }
