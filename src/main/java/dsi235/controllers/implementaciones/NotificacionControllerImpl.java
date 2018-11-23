@@ -18,62 +18,60 @@ import dsi235.entities.Usuario;
 @Singleton
 public class NotificacionControllerImpl implements NotificationController {
 
-    private Transport t;
-    private Session session;
-    final String username = "ticketsystemdsi235@gmail.com";
-    final String password = "ticketsystem";
 
-    public void NotificationController() {
-        init();
-    }
+	private Transport t;
+	private Session session;
+	final String username = "ticketsystemdsi235@gmail.com"; 
+		final String password = "ticketsystem";
 
-    // TODO
-    private void init() {
-        System.out.println("Pasando por el init");
-        Properties props = new Properties();
+	public void NotificationController() {
+		init();
+	}
 
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.user", username);
-        props.put("mail.smtp.auth", "true");
+	// TODO
+	private void init() {
+		Properties props = new Properties();
 
-        session = Session.getDefaultInstance(props, null);
-        try {
-            t = session.getTransport("smtp");
-            t.connect(username, password);
-        } catch (Exception e) {
-            System.out.println("Estoy fallando en init");
-            e.printStackTrace();
-        }
-    }
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.user", username);
+		props.put("mail.smtp.auth", "true");
 
-    @Override
-    public boolean enviarCorreo(Usuario usuario, String contenido) {
+		session = Session.getDefaultInstance(props, null);
+		try {
+			t = session.getTransport("smtp");
+			t.connect(username, password);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-        if (t == null || !t.isConnected()) {
-            init();
-        }
+	@Override
+	public boolean enviarCorreo(Usuario usuario, String contenido) {
 
-        try {
+		if(t==null || !t.isConnected()) {
+			init();
+		}
+		
+		try {
+					
+			// Define message
+			MimeMessage message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(username));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(usuario.getCorreo()));
+			message.setSubject("Notificacion");
+			message.setText(contenido);
+			// Envia el mensaje
+			t.sendMessage(message, message.getAllRecipients());
+		} catch (Exception e) {
+			System.out.println("Fallo en enviarCorreo");
+			e.printStackTrace();
+			init();
 
-            // Define message
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(usuario.getCorreo()));
+		}
+		return true;
 
-            message.setSubject("Notificacion");
-            message.setText(contenido);
-            // Envia el mensaje
-            t.sendMessage(message, message.getAllRecipients());
-        } catch (Exception e) {
-            System.out.println("Fallo en enviarCorreo");
-            e.printStackTrace();
-            init();
-
-        }
-        return true;
-
-    }
+	}
 
 }
