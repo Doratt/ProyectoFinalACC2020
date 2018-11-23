@@ -79,10 +79,23 @@ public class DashboardBackingBean implements Serializable {
 				current.executeScript("PF('createTicket').hide()");
 				FacesContext context = FacesContext.getCurrentInstance();
 		        context.addMessage(null, new FacesMessage("Exito",  "Ticket creado exitosamente") );
-				StringBuilder contenido = new StringBuilder().append("Saludos ")
+				StringBuilder contenido = new StringBuilder()
+						
 						.append(sessionBean.getUsuarioLogueado().getNombre())
-						.append(", su ticket ha sido creado y esta en espera de ser asignado"
-								+ ", le mantendremos al tanto del proceso.");
+						.append("<!DOCTYPE html>\n" + 
+								"<html>\n" + 
+								"    <head>\n" + 
+								"        <title>Ticket System e-mail</title>\n" + 
+								"        <p style=\"font-family: calibri, serif; font-size:20pt; color:green\"><b>Ticket System</b></p>\n" + 
+								"    </head>\n" + 
+								"    <body>\n" + 
+								"        <p style=\"font-family: calibri, serif; font-size:14pt; font-style:bold\"><i>Saludos</i>\n" + 
+								"        <br>Queremos informarle que su ticket fue exitosamente creado y esta en espera a ser asignado.\n" + 
+								"        <br>Le mantendremos informado sobre el proceso\n" + 
+								"        </p>\n" + 
+								"    </body>\n" + 
+								"    <footer><p  style=\"font-family: calibri, serif; font-size:12pt\"><b>Muchas gracias por utilizar nuestros servicios</b></p></footer>\n" + 
+								"</html>");
 				init();       
 			        this.ticket = new Ticket();
 			        nc.enviarCorreo(sessionBean.getUsuarioLogueado(), contenido.toString());

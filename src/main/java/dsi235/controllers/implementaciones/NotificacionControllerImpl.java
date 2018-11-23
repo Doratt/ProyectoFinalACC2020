@@ -30,7 +30,6 @@ public class NotificacionControllerImpl implements NotificationController {
 	// TODO
 
 	private void init() {
-		System.out.println("Pasando por el init");
 		Properties props = new Properties();
 
 		props.put("mail.smtp.host", "smtp.gmail.com");
@@ -44,7 +43,6 @@ public class NotificacionControllerImpl implements NotificationController {
 			t = session.getTransport("smtp");
 			t.connect(username, password);
 		} catch (Exception e) {
-			System.out.println("Estoy fallando en init");
 			e.printStackTrace();
 		}
 	}
@@ -57,12 +55,11 @@ public class NotificacionControllerImpl implements NotificationController {
 		}
 		
 		try {
-
+					
 			// Define message
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(username));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(usuario.getCorreo()));
-
 			message.setSubject("Notificacion");
 			message.setText(contenido);
 			// Envia el mensaje
