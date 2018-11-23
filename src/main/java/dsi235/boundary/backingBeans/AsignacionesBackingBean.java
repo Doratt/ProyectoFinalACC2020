@@ -70,13 +70,11 @@ public class AsignacionesBackingBean implements Serializable {
 						"Error!", "Hubo un problema con la creación del comentario"));
 			}
 		} else {
-			System.out.println("contenido isempty");
 		}
 	}
 
 	public void cargarComentarios() {
 		setEstadoSeleccionado(Short.valueOf(String.valueOf(ticketSeleccionado.getIdEstado().getIdEstado() - 1)));
-		System.out.println(estadoSeleccionado);
 		setComentarios(comentarioController.findByIdTicket(ticketSeleccionado));
 	}
 
@@ -86,11 +84,19 @@ public class AsignacionesBackingBean implements Serializable {
 		asignados = tec.findByIdTicket_IdTicket(ticketSeleccionado.getIdTicket());
 		for (TicketEncargado ticketEncargado : asignados) {
 			ticketEncargado.setActivo(false);
-			StringBuilder contenido = new StringBuilder().append("Saludos estimado ")
-					.append(ticketEncargado.getIdUsuarioCreador().getNombre())
-					.append(", uno de los tecnicos a quien usted asigno el ticket con descripcion: \n"
-							+ ticketEncargado.getIdTicket().getDescripcion())
-					.append("\n Ha marcado el ticket como mal asignado, por lo tanto ha vuelto a las asignaciones pendientes");
+			StringBuilder contenido = new StringBuilder().append("<!DOCTYPE html>\n" + "<html>\n" + "    <head>\n"
+					+ "        <title>Ticket System e-mail</title>\n"
+					+ "        <p style=\"font-family: calibri, serif; font-size:20pt; color:#73ad41\"><b>Ticket System</b></p>\n"
+					+ "    </head>\n" + "    <body>\n"
+					+ "        <p style=\"font-family: calibri, serif; font-size:14pt; font-style:bold; color:black\"><i>Saludos</i>\n"
+					+ "        <br>Le informamos que " + ticketEncargado.getIdUsuarioCreador().getNombre()
+					+ " uno de los tecnicos a quien usted asigno el ticket con la descripcion:\n"
+					+ ticketEncargado.getIdTicket().getDescripcion()
+					+ "\n ha marcado el ticket como mal asignado. Ha vuelto a las asignaciones pendientes.\n"
+					+ "        <br>Por favor asignar a un tecnico/s lo mas antes posible.\n" + "        </p>\n"
+					+ "    </body>\n"
+					+ "    <footer><p  style=\"font-family: calibri, serif; font-size:12pt; color: black\"><b>Muchas gracias por utilizar nuestros servicios</b></p></footer>\n"
+					+ "</html>\n" + "");
 			nc.enviarCorreo(ticketEncargado.getIdUsuarioCreador(), contenido.toString());
 			try {
 				tec.save(ticketEncargado);
@@ -129,9 +135,17 @@ public class AsignacionesBackingBean implements Serializable {
 							e.printStackTrace();
 						}
 					}
-					StringBuilder contenido = new StringBuilder().append("Saludos estimado ")
-							.append(ticketSeleccionado.getIdUsuarioCreador().getNombre())
-							.append(", su problema ha sido resuelto exitosamente");
+					StringBuilder contenido = new StringBuilder().append("<!DOCTYPE html>\n" + "<html>\n"
+							+ "    <head>\n" + "        <title>Ticket System e-mail</title>\n"
+							+ "        <p style=\"font-family: calibri, serif; font-size:20pt; color:#73ad41\"><b>Ticket System</b></p>\n"
+							+ "    </head>\n" + "    <body>\n"
+							+ "        <p style=\"font-family: calibri, serif; font-size:14pt; font-style:bold; color:black\"><i>Saludos</i>\n"
+							+ ticketSeleccionado.getIdUsuarioCreador().getNombre()
+							+ "        <br>Le informamos que su problema ha sido resuelto exitosamente\n"
+							+ "        <br>Lo invitamos a asignar una calificacion a la solucion del problema desde su aplicacion, puede dejar un comentario para mejorar el servicio para usted.\n"
+							+ "        </p>\n" + "    </body>\n"
+							+ "    <footer><p  style=\"font-family: calibri, serif; font-size:12pt; color: black\"><b>Muchas gracias por utilizar nuestros servicios</b></p></footer>\n"
+							+ "</html>\n" + "");
 					nc.enviarCorreo(ticketSeleccionado.getIdUsuarioCreador(), contenido.toString());
 				}
 				ticketSeleccionado.setIdEstado(el.get(estadoSeleccionado));
@@ -144,7 +158,6 @@ public class AsignacionesBackingBean implements Serializable {
 				PrimeFaces current = PrimeFaces.current();
 				current.executeScript("PF('infoTicket').hide()");
 			}
-			System.out.println("El estado seleccionado es el mismo");
 		}
 	}
 

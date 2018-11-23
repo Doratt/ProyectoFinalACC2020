@@ -30,8 +30,6 @@ public class LoginSessionBean implements Serializable {
 
 	private Locale locale;
 
-
-
 	@PostConstruct
 	public void init() {
 		locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
@@ -42,22 +40,18 @@ public class LoginSessionBean implements Serializable {
 	}
 
 	public void changeLanguageUS() {
-		System.out.println("cambiando a ingles");
 		try {
 			locale = new Locale("eng");
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
-			System.out.println(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void changeLanguageES() {
-		System.out.println("cambiando a espanol");
 		try {
 			locale = new Locale("spa");
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
-			System.out.println(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -105,7 +99,7 @@ public class LoginSessionBean implements Serializable {
 	public Usuario getUsuarioLogueado() {
 		return usuarioLogueado;
 	}
-	
+
 	public Locale getLocale() {
 		return locale;
 	}

@@ -59,7 +59,8 @@ public class EstadisticasRetroalimentacion {
 	public void buscar() {
 
 		if (fechaInicio.getTime() > fechaFin.getTime()) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "La fecha de finalización debe ser mayor que la fecha de inicio"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+					"La fecha de finalización debe ser mayor que la fecha de inicio"));
 		} else {
 
 			if (isSucursalSeleccionado()) {
@@ -67,20 +68,22 @@ public class EstadisticasRetroalimentacion {
 			} else if (isDepartamentoSeleccionado()) {
 				lista = ec.verRetroalimentacion(fechaInicio, fechaFin, null, idDepartamento, null);
 			} else if (isTecnicoSeleccionado()) {
-				if(tecnico == null) {
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "Seleccione el Técnico"));
-				}else {
-				lista = ec.verRetroalimentacion(fechaInicio, fechaFin, null, null, this.tecnico.getIdUsuario());
-			
+				if (tecnico == null) {
+					FacesContext.getCurrentInstance().addMessage(null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Seleccione el Técnico"));
+				} else {
+					lista = ec.verRetroalimentacion(fechaInicio, fechaFin, null, null, this.tecnico.getIdUsuario());
+
 				}
 			}
 		}
 	}
-	
+
 	public void buscarNumero() {
 
 		if (fechaInicio.getTime() > fechaFin.getTime()) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "La fecha de finalización debe ser mayor que la fecha de inicio"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+					"La fecha de finalización debe ser mayor que la fecha de inicio"));
 		} else {
 
 			if (isSucursalSeleccionado()) {
@@ -88,12 +91,13 @@ public class EstadisticasRetroalimentacion {
 			} else if (isDepartamentoSeleccionado()) {
 				listaNumero = ec.calcularNumTicketsDepto(fechaInicio, fechaFin, idDepartamento);
 			} else if (isTecnicoSeleccionado()) {
-				
+
 				listaNumero = ec.calcularNumTicketsTecnico(fechaInicio, fechaFin);
-			
+
 			}
 		}
 	}
+
 	
 	public void buscarTiempo() {
 
@@ -112,6 +116,7 @@ public class EstadisticasRetroalimentacion {
 			}
 		}
 	}
+
 
 	@Autowired
 	public void setEc(EstadisticaController ec) {
@@ -208,5 +213,6 @@ public class EstadisticasRetroalimentacion {
 	}
 	
 	
+
 
 }
