@@ -65,7 +65,7 @@ public class TicketControllerTest {
         Long idEncargado = Long.valueOf(1);
         Pageable pg = PageRequest.of(0, 1000);
         Page<Ticket> tickets = ticketController.findCompletadosByEncargado(idEncargado, pg);
-        assertEquals(0, tickets.getTotalElements());
+        assertEquals(1, tickets.getTotalElements());
     }
 
     /**
@@ -77,7 +77,7 @@ public class TicketControllerTest {
         Long idEncargado = Long.valueOf("1");
         List<Ticket> tickets;
         tickets = ticketController.findNoCompletadosByEncargado(idEncargado);
-        assertEquals(1, tickets.size());
+        assertEquals(2, tickets.size());
     }
 
 //    /**
