@@ -51,7 +51,7 @@ public class TicketEncargadoControllerTest {
         System.out.println("findByIdTicket_IdTicket");
         Long idTicket = Long.valueOf(9);
         List<TicketEncargado> encargados = ticketEncargadoController.findByIdTicket_IdTicket(idTicket);
-        assertEquals(3, encargados.size());
+        assertEquals(4, encargados.size());
     }
 
     public class TicketEncargadoControllerImpl implements TicketEncargadoController {
