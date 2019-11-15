@@ -84,12 +84,18 @@ public class Ticket implements Serializable {
     private boolean activo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTicket")
     private List<TicketEncargado> ticketEncargadoList;
+    @JoinColumn(name = "correlativo", referencedColumnName = "correlativo")
+    @ManyToOne
+    private Correlativo correlativo;
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado")
     @ManyToOne(optional = false)
     private Estado idEstado;
     @JoinColumn(name = "id_prioridad", referencedColumnName = "id_prioridad")
     @ManyToOne
     private Prioridad idPrioridad;
+    @JoinColumn(name = "id_tipo_mantenimiento", referencedColumnName = "id_tipo_mantenimiento")
+    @ManyToOne
+    private TipoMantenimiento idTipoMantenimiento;
     @JoinColumn(name = "id_usuario_creador", referencedColumnName = "id_usuario")
     @ManyToOne(optional = false)
     private Usuario idUsuarioCreador;
@@ -114,6 +120,24 @@ public class Ticket implements Serializable {
         this.fechaCreacion = fechaCreacion;
         this.activo = activo;
     }
+
+    public Correlativo getCorrelativo() {
+        return correlativo;
+    }
+
+    public void setCorrelativo(Correlativo correlativo) {
+        this.correlativo = correlativo;
+    }
+
+    public TipoMantenimiento getIdTipoMantenimiento() {
+        return idTipoMantenimiento;
+    }
+
+    public void setIdTipoMantenimiento(TipoMantenimiento idTipoMantenimiento) {
+        this.idTipoMantenimiento = idTipoMantenimiento;
+    }
+    
+    
 
     public Long getIdTicket() {
         return idTicket;
