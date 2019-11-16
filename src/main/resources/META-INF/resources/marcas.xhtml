@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+
+<ui:composition template="layout.xhtml">
+
+	<ui:define name="title">
+		<h:outputText value="Marcas" />
+	</ui:define>
+	<ui:define name="content">
+
+
+		<h:form id="frmMarcas">
+			<p:growl id="growl" showDetail="true" sticky="false" />
+
+			<p:dataTable id="marcas_table" var="marca" selectionMode="single"
+				value="#{marcaBackingBean.marcas}" paginator="true" rows="10"
+				selection="#{marcaBackingBean.marca}"
+				rowKey="#{marca.idMarca}"
+				paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
+				sortBy="#{marca.nombre}" reflow="true" paginatorPosition="bottom">
+				<f:facet name="header">
+					<p:outputLabel value="Marcas"></p:outputLabel>
+				</f:facet>
+				<p:ajax event="rowSelect" listener="#{marcaBackingBean.setEditandoTrue}"
+					oncomplete="PF('createMarca').show();"
+					update=":crearMarca" />
+				<p:column headerText="ID">
+					<h:outputText value="#{marca.idMarca}" />
+				</p:column>
+				<p:column headerText="nombre">
+					<h:outputText value="#{marca.nombre}" />
+				</p:column>
+				<p:column headerText="Descripcion">
+					<h:outputText value="#{marca.descripcion}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+
+		<h:form>
+			<p:commandButton value="Crear Marca" actionListener="#{marcaBackingBean.setEditandoFalse}" update=":crearMarca"
+				oncomplete="PF('createMarca').show()"  ></p:commandButton>
+		</h:form>
+
+
+
+		<p:dialog header="#{marcaBackingBean.editando?'Editar Marca':'Crear Marca'}" widgetVar="createMarca" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="false" width="600px" id="crearMarca" 
+			height="80%">
+
+			<h:form id="frmCrearmarca">
+				<div>
+					<p:outputLabel value="Nombre:"></p:outputLabel>
+				</div>
+				<p:messages id="messages"></p:messages>
+				<div>
+					<p:inputText rows="12" style="width:100%; margin:20px 0;"
+						id="txtNombre" value="#{marcaBackingBean.marca.nombre}"
+						requiredMessage="Campo requerido" required="true" maxlength="200">
+
+					</p:inputText>
+				</div>
+				<div>
+					<p:outputLabel value="Descripción:"></p:outputLabel>
+				</div>
+				
+				<div>
+					<p:inputTextarea rows="6" autoResize="false" style="width:100%; margin:20px 0;"
+						id="txtDescripcion" value="#{marcaBackingBean.marca.descripcion}"
+						requiredMessage="Campo requerido" maxlength="500">
+
+					</p:inputTextarea>
+				</div>
+				<p:commandButton type="submit" value="#{marcaBackingBean.editando?'Editar Marca':'Crear Marca'}"
+					actionListener="#{marcaBackingBean.crearMarca()}"
+					update="frmMarcas :frmCrearmarca:messages"></p:commandButton>
+					<p:commandButton value="Eliminar Marca" type="submit" rendered="#{marcaBackingBean.editando}"
+					actionListener="#{marcaBackingBean.eliminarMarca}"
+					update="frmMarcas :frmCrearmarca:messages" style="background-color: red !important" ></p:commandButton>
+			</h:form>
+
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>
+</html>
