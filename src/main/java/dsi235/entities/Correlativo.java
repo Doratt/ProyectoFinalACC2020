@@ -62,13 +62,13 @@ public class Correlativo implements Serializable {
     private boolean activo;
     @Column(name = "fecha_ultimo_mto_asignado")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaUltimoMtoAsignado;
+    private Date fechaUltimoMtoAsignado;////////
     @Column(name = "cada_cuanto")
-    private Integer cadaCuanto;
+    private Integer cadaCuanto;///////////
     @Column(name = "modelo")
     private String modelo;
     @OneToMany(mappedBy = "correlativo")
-    private List<Ticket> ticketList;
+    private List<Ticket> ticketList;/////////
     @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria")
     @ManyToOne(optional = false)
     private Categoria idCategoria;

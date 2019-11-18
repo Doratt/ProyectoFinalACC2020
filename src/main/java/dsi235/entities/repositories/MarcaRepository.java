@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import dsi235.entities.Correlativo;
+
 import dsi235.entities.Marca;
 import dsi235.entities.Parte;
 

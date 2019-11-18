@@ -28,7 +28,6 @@ public class MarcaControllerImpl extends AbstractCrudControllerImpl<Marca, Integ
 	CrudRepository<Marca, Integer> getRepository() {
 		return this.marcaRepository;
 	}
-	
 	@Override
 	public List<Correlativo> correlativosPorMarca(Integer id){
 		return marcaRepository.correlativosPorMarca(id);
@@ -38,4 +37,5 @@ public class MarcaControllerImpl extends AbstractCrudControllerImpl<Marca, Integ
 	public List<Parte> partesPorMarca(Integer id){
 		return marcaRepository.partesPorMarca(id);
 	}
+
 }

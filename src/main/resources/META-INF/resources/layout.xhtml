@@ -49,6 +49,9 @@
 				</h4>
 				<a href="adminView.jsf"><i class="fa fa-list-alt" /> <p:outputLabel
 						value="#{trad['layout.asignaciontickets']}" /></a>
+				<a href="correlativo.jsf"><i class="fa fa-list-alt" /> <p:outputLabel
+						value="#{trad['layout.inventario']}" /></a>
+
 			</p:panelGrid>
 			<p:panelGrid rendered="#{loginSessionBean.isGerente()}">
 				<h4>
@@ -58,6 +61,7 @@
 						value="Marcas" /></a>
 				<a href="procedimientos.jsf"><i class="fa fa-briefcase" /> <p:outputLabel
 						value="Procedimientos" /></a>
+
 				<a href="estadisticasNumeroTickets.jsf"><i
 					class="fa fa-bar-chart" /> <p:outputLabel
 						value="#{trad['layout.numerotickets']}" /></a>
@@ -66,9 +70,9 @@
 						value="#{trad['layout.calificaciontickets']}" /></a>
 				<a href="estadisticasTiempo.jsf"><i class="fa fa-bar-chart" />
 					<p:outputLabel value="#{trad['layout.tiemporesolucion']}" /></a>
-
-				<a href="roles.jsf"><i class="fa fa-user-circle-o" /> <p:outputLabel
+					<a href="roles.jsf"><i class="fa fa-user-circle-o" /> <p:outputLabel
 						value="#{trad['layout.gestionarroles']}" /></a>
+
 
 				<h5 style="padding-left: 20px; margin-bottom: 0">Reportes</h5>
 				<a href="historialPorCorrelativo.jsf"><i class="fa fa-bar-chart" />
@@ -79,6 +83,9 @@
 					<p:outputLabel value="Mantenimientos por Estado" /></a>
 				<a href="costos.jsf"><i class="fa fa-bar-chart" />
 					<p:outputLabel value="Costos de Mantenimientos" /></a>
+
+				
+
 
 			</p:panelGrid>
 

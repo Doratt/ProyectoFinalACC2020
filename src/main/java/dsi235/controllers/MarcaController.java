@@ -6,7 +6,8 @@ import dsi235.entities.Correlativo;
 import dsi235.entities.Marca;
 import dsi235.entities.Parte;
 
-public interface MarcaController extends AbstractCrudController<Marca, Integer> {
+public interface MarcaController extends AbstractCrudController<Marca, Integer>{
+
 
 	List<Correlativo> correlativosPorMarca(Integer id); 
 	
