@@ -22,8 +22,11 @@ import dsi235.controllers.NotificationController;
 import dsi235.controllers.TicketController;
 import dsi235.controllers.TicketEncargadoController;
 import dsi235.entities.Comentario;
+import dsi235.entities.Correlativo;
+import dsi235.entities.Prioridad;
 import dsi235.entities.Ticket;
 import dsi235.entities.TicketEncargado;
+import dsi235.entities.TipoMantenimiento;
 import dsi235.entities.Usuario;
 import dsi235.utilities.ESTADO;
 import dsi235.utilities.EstadosLoader;
@@ -50,11 +53,13 @@ public class DashboardBackingBean implements Serializable {
 	private ComentarioController comentarioController;
 	private List<Comentario> comentarios;
 	private TicketEncargadoController tec;
-
+	private Correlativo correlativo = new Correlativo();
+	
 	@PostConstruct
 	public void init() {
 		setTicketsPendientes(tc.findNoCompletadosByUsuario(sessionBean.getUsuarioLogueado().getIdUsuario()));
 		setComentario(new Comentario());
+		correlativo = new Correlativo();
 	}
 
 	public void reload() {
@@ -64,11 +69,15 @@ public class DashboardBackingBean implements Serializable {
 	public void crearTicket() {
 		setTicket(new Ticket());
 		ticket.setIdUsuarioCreador(sessionBean.getUsuarioLogueado());
+		
 		if (getDescripcion().length() <= 3000 && getDescripcion().length() > 25) {
 			ticket.setDescripcion(getDescripcion());
 			ticket.setIdEstado(el.get(ESTADO.creado.value));
 			ticket.setActivo(true);
 			descripcion = null;
+			ticket.setCorrelativo(correlativo);
+			ticket.setIdTipoMantenimiento(new TipoMantenimiento(3));
+			ticket.setIdPrioridad(new Prioridad( (short) 3 ));
 			try {
 				PrimeFaces current = PrimeFaces.current();
 				tc.save(getTicket());
@@ -264,5 +273,15 @@ public class DashboardBackingBean implements Serializable {
 	public void setTec(TicketEncargadoController tec) {
 		this.tec = tec;
 	}
+
+	public Correlativo getCorrelativo() {
+		return correlativo;
+	}
+
+	public void setCorrelativo(Correlativo correlativo) {
+		this.correlativo = correlativo;
+	}
+	
+	
 
 }

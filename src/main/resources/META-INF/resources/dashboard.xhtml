@@ -118,8 +118,8 @@
 								value="#{dashboardBackingBean.comentario.contenido}"
 								autoResize="false"
 								validatorMessage="#{trad['dashboard.descripcionmuycorta']}">
-						<f:validateLength minimum="20">
-						</f:validateLength>
+								<f:validateLength minimum="20">
+								</f:validateLength>
 							</p:inputTextarea>
 							<p:commandButton icon="fa fa-comments-o"
 								actionListener="#{dashboardBackingBean.crearComentario()}"
@@ -150,6 +150,19 @@
 						<f:validateLength minimum="25">
 						</f:validateLength>
 					</p:inputTextarea>
+				</div>
+				<div>
+					<p:outputLabel value="Correlativo"></p:outputLabel>
+				</div>
+				
+				<div>
+					<p:inputText rows="12" style="width:100%; margin:20px 0;"
+						value="#{dashboardBackingBean.correlativo.correlativo}"
+						requiredMessage="#{trad['general.camporequerido']}"
+						required="true" maxlength="3000">
+
+
+					</p:inputText>
 				</div>
 				<p:commandButton type="submit"
 					value="#{trad['dashboard.crearticket']}"
