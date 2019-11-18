@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+
+<ui:composition template="layout.xhtml">
+
+	<ui:define name="title">
+		<h:outputText value="Procedimientos" />
+	</ui:define>
+	<ui:define name="content">
+
+
+		<h:form id="frmProcedimientos">
+			<p:growl id="growl" showDetail="true" sticky="false" />
+
+			<p:dataTable id="procedimientos_table" var="proc"
+				selectionMode="single"
+				value="#{procedimientoBackingBean.procedimientos}" paginator="true"
+				rows="10" selection="#{procedimientoBackingBean.procedimiento}"
+				rowKey="#{proc.idProcedimiento}"
+				paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
+				sortBy="#{proc.nombre}" reflow="true" paginatorPosition="bottom">
+				<f:facet name="header">
+					<p:outputLabel value="Procedimientos"></p:outputLabel>
+				</f:facet>
+				<p:ajax event="rowSelect"
+					listener="#{procedimientoBackingBean.setEditandoTrue}"
+					oncomplete="PF('createProcedimiento').show();"
+					update=":crearProcedimiento" />
+				<p:column headerText="ID" style="width: 80px">
+					<h:outputText value="#{proc.idProcedimiento}" />
+				</p:column>
+				<p:column headerText="nombre">
+					<h:outputText value="#{proc.nombre}" />
+				</p:column>
+				<p:column headerText="Pasos">
+					<h:outputText value="#{proc.pasos.length() > 100 ? proc.pasos.substring(0,100).concat('...') : proc.pasos }" />
+				</p:column>
+				<p:column headerText="Costo Materiales" style="width: 100px">
+					<h:outputText value="#{'$'.concat(proc.costoMaterialesConsumibles)}" />
+				</p:column>
+				<p:column headerText="Costo RH" style="width: 100px">
+					<h:outputText value="#{'$'.concat(proc.costoRrhh)}" />
+				</p:column>
+				<p:column headerText="Herramientas y materiales">
+					<h:outputText value="#{proc.herramientasMateriales}" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+
+
+		<h:form>
+			<p:commandButton value="Crear Procedimiento"
+				actionListener="#{procedimientoBackingBean.setEditandoFalse}"
+				update=":crearProcedimiento"
+				oncomplete="PF('createProcedimiento').show()"></p:commandButton>
+		</h:form>
+
+
+
+		<p:dialog
+			header="#{procedimientoBackingBean.editando?'Editar Procedimiento':'Crear Procedimiento'}"
+			widgetVar="createProcedimiento" modal="true" showEffect="fade"
+			hideEffect="fade" resizable="false" width="600px"
+			id="crearProcedimiento" height="80%" style="max-height: 100%; overflow: auto">
+			<h:form id="frmCrearProcedimiento">
+				<p:messages id="messages"></p:messages>
+				<div>
+					<p:outputLabel value="Nombre:"></p:outputLabel>
+				</div>
+				<div>
+					<p:inputText style="width:100%; margin:20px 0;"
+						id="txtNombre" value="#{procedimientoBackingBean.procedimiento.nombre}"
+						requiredMessage="Campo requerido" required="true" maxlength="200">
+
+					</p:inputText>
+				</div>
+				<div>
+					<p:outputLabel value="Pasos:"></p:outputLabel>
+				</div>
+				<div>
+					<p:inputTextarea rows="6" autoResize="false"
+						style="width:100%; margin:20px 0;"
+						value="#{procedimientoBackingBean.procedimiento.pasos}"
+						requiredMessage="Campo requerido" maxlength="5000">
+
+					</p:inputTextarea>
+				</div>
+				<div>
+					<p:outputLabel value="Costo de materiales:"></p:outputLabel>
+				</div>
+				<div>
+					<p:inputText rows="12" style="width:100%; margin:20px 0;"
+						value="#{procedimientoBackingBean.procedimiento.costoMaterialesConsumibles}"
+						requiredMessage="Campo requerido" required="true" maxlength="200"
+						type="number">
+					</p:inputText>
+				</div>
+				<div>
+					<p:outputLabel value="Costo de Recurso Humano:"></p:outputLabel>
+				</div>
+				<div>
+					<p:inputText rows="12" style="width:100%; margin:20px 0;"
+						value="#{procedimientoBackingBean.procedimiento.costoRrhh}"
+						requiredMessage="Campo requerido" required="true" maxlength="200"
+						type="number">
+					</p:inputText>
+				</div>
+				<div>
+					<p:outputLabel value="Herramientas y materiales necesarios:"></p:outputLabel>
+				</div>
+				<div>
+					<p:inputTextarea rows="4" autoResize="false"
+						style="width:100%; margin:20px 0;"
+						value="#{procedimientoBackingBean.procedimiento.herramientasMateriales}"
+						requiredMessage="Campo requerido" maxlength="5000">
+
+					</p:inputTextarea>
+				</div>
+
+				<p:commandButton type="submit"
+					value="#{procedimientoBackingBean.editando?'Editar Procedimiento':'Crear Procedimiento'}"
+					actionListener="#{procedimientoBackingBean.crearProcedimiento}"
+					update="frmProcedimientos :frmCrearProcedimiento:messages"></p:commandButton>
+				<p:commandButton value="Eliminar Procedimiento" type="submit"
+					rendered="#{procedimientoBackingBean.editando}"
+					actionListener="#{procedimientoBackingBean.eliminarProcedimiento}"
+					update="frmProcedimientos :frmCrearProcedimiento:messages"
+					style="background-color: red !important"></p:commandButton>
+			</h:form>
+
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>
+</html>

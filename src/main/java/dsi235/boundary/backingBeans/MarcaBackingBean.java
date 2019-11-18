@@ -1,7 +1,6 @@
 package dsi235.boundary.backingBeans;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.ManagedBean;
@@ -15,7 +14,9 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import dsi235.controllers.MarcaController;
 import dsi235.controllers.NotificationController;
+import dsi235.entities.Correlativo;
 import dsi235.entities.Marca;
+import dsi235.entities.Parte;
 import dsi235.entities.Usuario;
 
 @ManagedBean(value = "marcaBackingBean")
@@ -30,7 +31,7 @@ public class MarcaBackingBean implements Serializable {
 	@Autowired
 	private NotificationController nc;
 	private Marca marca;
-	//private Marca marcaSeleccionada;
+	// private Marca marcaSeleccionada;
 	private Usuario usuarioLogeado;
 	@Autowired
 	private MarcaController controller;
@@ -49,11 +50,11 @@ public class MarcaBackingBean implements Serializable {
 	public void reload() {
 		init();
 	}
-	
+
 	public void setEditandoTrue() {
 		setEditando(true);
 	}
-	
+
 	public void setEditandoFalse() {
 		setEditando(false);
 		marca = new Marca();
@@ -73,7 +74,6 @@ public class MarcaBackingBean implements Serializable {
 			context.addMessage(null, new FacesMessage("Exito", "Marca creada exitosamente"));
 
 			init();
-			//this.marca = new Marca();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
 					"Parece que hubo un problema con la creación de la marca"));
@@ -81,7 +81,7 @@ public class MarcaBackingBean implements Serializable {
 		}
 
 	}
-	
+
 	public void eliminarMarca() {
 		System.out.println("MARCA a eliminar:");
 		System.out.println(marca);
@@ -89,12 +89,22 @@ public class MarcaBackingBean implements Serializable {
 		System.out.println(marca.getNombre());
 
 		try {
-			PrimeFaces current = PrimeFaces.current();
-			controller.delete(marca);
-			current.executeScript("PF('createMarca').hide()");
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage("Exito", "Marca eliminada exitosamente"));
+			List<Correlativo> correlativos = controller.correlativosPorMarca(marca.getIdMarca());
+			List<Parte> partes = controller.partesPorMarca(marca.getIdMarca());
 
+			if (correlativos.isEmpty() && partes.isEmpty()) {
+
+				PrimeFaces current = PrimeFaces.current();
+				controller.delete(marca);
+				current.executeScript("PF('createMarca').hide()");
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage("Exito", "Marca eliminada exitosamente"));
+
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+								"No se puede eliminar la Marca porque hay correlativos o partes que dependen de ella"));
+			}
 			init();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
@@ -103,8 +113,6 @@ public class MarcaBackingBean implements Serializable {
 		}
 
 	}
-	
-	
 
 	public boolean isEditando() {
 		return editando;

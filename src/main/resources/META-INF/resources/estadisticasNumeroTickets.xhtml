@@ -33,21 +33,21 @@
 				<p:selectOneRadio id="parametro"
 					value="#{estadisticasBackingBean.parametro}">
 					<p:ajax event="valueChange" update="opciones" />
-					<f:selectItem itemLabel="#{trad['estadisticas.sucursal']}" itemValue="Sucursal" />
+					<f:selectItem itemLabel="Centro de cómputo" itemValue="Sucursal" />
 					<f:selectItem itemLabel="#{trad['estadisticas.departamento']}" itemValue="Departamento" />
 					<f:selectItem itemLabel="#{trad['estadisticas.tecnico']}" itemValue="Tecnico" />
 				</p:selectOneRadio>
 			</h:panelGrid>
 
-			<p:panel header="#{trad['estadisticas.elegirSucursal']}"
+			<p:panel header="Elegir Centro de cómputo"
 				rendered="#{estadisticasBackingBean.sucursalSeleccionado}">
 				<div id="sucursal-div">
 					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 						<p:selectOneRadio id="sucursal"
 							value="#{estadisticasBackingBean.idSucursal}">
 							<p:ajax event="change" update="@this"></p:ajax>
-							<f:selectItem itemLabel="#{trad['estadisticas.sucursal1']}" itemValue="1" />
-							<f:selectItem itemLabel="#{trad['estadisticas.sucursal2']}" itemValue="2" />
+							<f:selectItem itemLabel="Centro de cómputo 1" itemValue="1" />
+							<f:selectItem itemLabel="Centro de cómputo 2" itemValue="2" />
 						</p:selectOneRadio>
 					</h:panelGrid>
 				</div>
