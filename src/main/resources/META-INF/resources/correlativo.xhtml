@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="layout.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{trad['layout.inventario']}" />
+	</ui:define>
+	<ui:define name="content">
+		<p:tabView id="view">
+			<p:tab id="tab1" title="#{trad['layout.correlativo']}">
+				<div align="right" style="margin-bottom: 1em">
+					<p:commandButton value="#{trad['cor.nuevo']}"
+						onclick="PF('create_dialog').show();" update="createForm"
+						actionListener="#{correlativo.nuevo}" />
+				</div>
+				<h:form id="corr_form">
+					<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true"/>
+
+					<p:dataTable id="correlativo_table" var="corr"
+						selectionMode="single" value="#{correlativo.model}"
+						paginator="true" reflow="true" lazy="true" rows="8"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink}  {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						rowKey="#{corr.correlativo}"
+						selection="#{correlativo.correlativo}"
+						sortBy="#{corr.fechaIngreso}" paginatorPosition="bottom"
+						emptyMessage="No hay elementos">
+						<f:facet name="header">
+							<h:outputText value="#{trad['cor.tabla']}" />
+						</f:facet>
+						<p:ajax event="rowSelect" listener="#{correlativo.select}"
+							oncomplete="PF('edit_dialog').show();"
+							update="view:edit view:editForm" />
+						<p:column headerText="ID">
+							<h:outputText value="#{corr.correlativo}" />
+						</p:column>
+						<p:column headerText="#{trad['cor.marca']}">
+							<h:outputText value="#{corr.idMarca.nombre}" />
+						</p:column>
+						<p:column headerText="#{trad['cor.modelo']}">
+							<h:outputText value="#{corr.modelo}" />
+						</p:column>
+						<p:column headerText="#{trad['cor.precio']}">
+							<h:outputText value="#{corr.precioCompra}" />
+						</p:column>
+						<p:column headerText="#{trad['cor.ingreso']}">
+							<h:outputText value="#{corr.fechaIngreso}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{trad['cor.garantia']}">
+							<h:outputText value="#{corr.garantia?trad['cor.si']:'No'}" />
+						</p:column>
+
+						<!-- 				<p:column headerText="#{trad['dashboard.fechacompletado']}"> -->
+						<!-- 					<h:outputText value="#{ticket.fechaCompletado}"> -->
+						<!-- 						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime> -->
+						<!-- 					</h:outputText> -->
+						<!-- 				</p:column> -->
+						<p:column headerText="#{trad['cor.del']}"
+							style="text-align:center;">
+							<p:commandButton icon="fa fa-close" id="delete"
+								actionListener="#{correlativo.delete(corr)}"
+								update="view:corr_form" />
+							<p:tooltip for="delete" value="#{trad['cor.delete']}" />
+						</p:column>
+					</p:dataTable>
+
+				</h:form>
+				<p:dialog id="assurance" widgetVar="info" 
+					header="#{trad['cor.gardes']}" position="center">
+					<p:inputTextarea
+						value="#{correlativo.correlativo.descripcionGarantia}"
+						readonly="true" />
+				</p:dialog>
+				<p:dialog id="edit" widgetVar="edit_dialog" modal="true"
+					header="#{trad['cor.corr']}: #{correlativo.correlativo.correlativo}"
+					position="center" resizable="false" width="40%">
+					<h:form id="editForm" style="margin:1em">
+						<h:panelGrid columns="3" id="grid" style="margin-bottom:10px"
+							cellpadding="5">
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.marca']}" />
+							<p:selectOneMenu value="#{correlativo.correlativo.idMarca}"
+								required="true" converter="marcaC">
+								<f:selectItems value="#{correlativo.marcas}" var="marca"
+									itemLabel="#{marca.nombre}" itemValue="#{marca}" />
+							</p:selectOneMenu>
+							<span></span>
+
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.modelo']}" />
+							<h:inputText value="#{correlativo.correlativo.modelo}" />
+							<span></span>
+
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.precio']}" />
+							<p:inputNumber id="edit-precio" minValue="1" 
+								value="#{correlativo.correlativo.precioCompra}" required="true" />
+							<p:message for="edit-precio" display="icon" />
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.ingreso']}" />
+							<p:calendar id="edit-calendar"
+								value="#{correlativo.correlativo.fechaIngreso}" required="true" />
+							<p:message for="edit-calendar" display="icon" />
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.garantia']}" />
+							<p:selectOneRadio value="#{correlativo.correlativo.garantia}"
+								required="true">
+								<p:ajax event="valueChange" update="editForm @this"
+									listener="#{correlativo.print()}" />
+								<f:selectItem itemLabel="#{trad['cor.si']}" itemValue="true" />
+								<f:selectItem itemLabel="No" itemValue="false" />
+							</p:selectOneRadio>
+							<span></span>
+
+						</h:panelGrid>
+
+						<h:outputLabel styleClass="label_bold"
+							value="#{trad['cor.gardes']}" />
+						<br />
+						<p:inputTextarea style="width:100%" autoResize="false"
+							rendered="#{correlativo.correlativo.garantia}"
+							value="#{correlativo.correlativo.descripcionGarantia}" />
+						<br />
+						<p:commandButton value="#{trad['roles.guardar']}" 
+						oncomplete="if (args &amp;&amp; !args.validationFailed) PF('edit_dialog').hide();"
+							update="editForm view:corr_form"
+							actionListener="#{correlativo.edit}" />
+					</h:form>
+				</p:dialog>
+				<p:dialog id="create" widgetVar="create_dialog" modal="true"
+					position="center" resizable="false" width="40%">
+					<h:form id="createForm" style="margin:1em">
+						<h:panelGrid columns="3" id="create-grid"
+							style="margin-bottom:10px" cellpadding="5">
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.corr']}" />
+							<p:inputNumber id="correl"
+								value="#{correlativo.correlativo.correlativo}" decimalPlaces="0"
+								required="true" requiredMessage="Llene todos los campos" />
+							<p:message for="correl" display="icon" />
+							<h:outputLabel styleClass="label_bold" value="#{trad['cor.cat']}" />
+							<p:selectOneMenu value="#{correlativo.correlativo.idCategoria}"
+								required="true" converter="catC">
+								<f:selectItems value="#{correlativo.categorias}" var="cat"
+									itemLabel="#{cat.nombre}" itemValue="#{cat}" />
+							</p:selectOneMenu>
+							<span></span>
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.marca']}" />
+							<p:selectOneMenu value="#{correlativo.correlativo.idMarca}"
+								required="true" converter="marcaC">
+								<f:selectItems value="#{correlativo.marcas}" var="marca"
+									itemLabel="#{marca.nombre}" itemValue="#{marca}" />
+							</p:selectOneMenu>
+							<span></span>
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.modelo']}" />
+							<h:inputText value="#{correlativo.correlativo.modelo}" />
+							<span></span>
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.precio']}" />
+							<p:inputNumber id="create-precio" minValue="1" 
+								value="#{correlativo.correlativo.precioCompra}" required="true"/>
+							<p:message for="create-precio" display="icon"/>
+
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.ingreso']}" />
+							<p:calendar id="create-calendar"
+								value="#{correlativo.correlativo.fechaIngreso}" required="true" />
+							<p:message for="create-calendar" display="icon" />
+
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.garantia']}" />
+							<p:selectOneRadio value="#{correlativo.correlativo.garantia}"
+								required="true">
+								<p:ajax event="valueChange" update="createForm" />
+								<f:selectItem itemLabel="#{trad['cor.si']}" itemValue="true" />
+								<f:selectItem itemLabel="No" itemValue="false" />
+							</p:selectOneRadio>
+							<span></span>
+						</h:panelGrid>
+
+						<h:outputLabel styleClass="label_bold"
+							value="#{trad['cor.gardes']}" />
+						<br />
+						<p:inputTextarea id="assure" style="width:100%" autoResize="false"
+							rendered="#{correlativo.correlativo.garantia}"
+							value="#{correlativo.correlativo.descripcionGarantia}" />
+						<br />
+
+						<p:commandButton value="#{trad['roles.guardar']}" type="submit"
+						oncomplete="if (args &amp;&amp; !args.validationFailed) PF('create_dialog').hide();"
+							update="createForm view:corr_form"
+							actionListener="#{correlativo.save}" />
+					</h:form>
+				</p:dialog>
+			</p:tab>
+			<p:tab title="#{trad['cor.partes']}">
+			</p:tab>
+		</p:tabView>
+	</ui:define>
+</ui:composition>
+
+</html>

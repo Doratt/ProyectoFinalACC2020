@@ -15,7 +15,7 @@ public class FilterConfig {
     
     registration.addUrlPatterns("/dashboard.jsf", "/adminView.jsf", "/asignaciones.jsf", "/historialTecnico.jsf", 
     		"/historialUsuario.jsf","/roles.jsf", "/estadisticasNumeroTickets.jsf", 
-    		"/estadisticasRetroalimentacion.jsf", "/estadisticasTiempo.jsf");
+    		"/estadisticasRetroalimentacion.jsf", "/estadisticasTiempo.jsf", "/correlativo.jsf");
     return registration;
   }
 }

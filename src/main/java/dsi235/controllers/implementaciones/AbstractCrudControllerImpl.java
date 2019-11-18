@@ -17,6 +17,7 @@ import org.springframework.data.repository.CrudRepository;
 public abstract class AbstractCrudControllerImpl<T, ID> {
 
 	abstract CrudRepository<T, ID> getRepository();
+	
 
 	public Optional<T> findById(ID id) {
 		return getRepository().findById(id);
