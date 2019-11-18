@@ -43,9 +43,9 @@ public class Marca implements Serializable {
     private String nombre;
     @Column(name = "descripcion")
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMarca")
+    @OneToMany(mappedBy = "idMarca")
     private List<Correlativo> correlativoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMarca")
+    @OneToMany(mappedBy = "idMarca")
     private List<Parte> parteList;
 
     public Marca() {

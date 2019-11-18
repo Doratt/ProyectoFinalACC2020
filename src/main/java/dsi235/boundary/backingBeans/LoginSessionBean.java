@@ -32,7 +32,8 @@ public class LoginSessionBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+		//locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+		locale = new Locale("spa");
 	}
 
 	public void login(String correo, String contrasena) {

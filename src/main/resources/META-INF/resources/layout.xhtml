@@ -51,11 +51,14 @@
 						value="#{trad['layout.asignaciontickets']}" /></a>
 				<a href="correlativo.jsf"><i class="fa fa-list-alt" /> <p:outputLabel
 						value="#{trad['layout.inventario']}" /></a>
+
 			</p:panelGrid>
 			<p:panelGrid rendered="#{loginSessionBean.isGerente()}">
 				<h4>
 					<p:outputLabel value="#{trad['layout.gerente']}" />
 				</h4>
+				<a href="marcas.jsf"><i class="fa fa-apple" /> <p:outputLabel
+						value="Marcas" /></a>
 				<a href="estadisticasNumeroTickets.jsf"><i
 					class="fa fa-bar-chart" /> <p:outputLabel
 						value="#{trad['layout.numerotickets']}" /></a>
@@ -66,7 +69,6 @@
 					<p:outputLabel value="#{trad['layout.tiemporesolucion']}" /></a>
 				<a href="roles.jsf"><i class="fa fa-user-circle-o" /> <p:outputLabel
 						value="#{trad['layout.gestionarroles']}" /></a>
-
 
 			</p:panelGrid>
 

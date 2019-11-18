@@ -141,6 +141,11 @@ public class DashboardBackingBean implements Serializable {
 		ticketSeleccionado.setIdEstado(el.get(ESTADO.completado.value));
 		ticketSeleccionado.setIdUsuarioModificador(sessionBean.getUsuarioLogueado());
 		try {
+			tc.save(ticketSeleccionado);
+			init();
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage("Cancelado", "Ticket cancelado"));
+			
 			List<TicketEncargado> encargados = tec.findByIdTicket_IdTicket(ticketSeleccionado.getIdTicket());
 			if (encargados != null && !encargados.isEmpty()) {
 				for (TicketEncargado ticketEncargado : encargados) {
@@ -158,10 +163,7 @@ public class DashboardBackingBean implements Serializable {
 					nc.enviarCorreo(ticketEncargado.getIdUsuario(), contenido.toString());
 				}
 			}
-			tc.save(ticketSeleccionado);
-			init();
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage("Cancelado", "Ticket cancelado"));
+			
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Hubo un problema al cancelar su ticket"));

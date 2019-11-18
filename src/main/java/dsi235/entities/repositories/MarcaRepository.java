@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import dsi235.entities.Marca;
 
-public interface MarcaRepository extends CrudRepository<Marca, Integer>{
+public interface MarcaRepository extends CrudRepository<Marca, Integer> {
 
 }
