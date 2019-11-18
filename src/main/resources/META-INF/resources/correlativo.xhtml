@@ -11,6 +11,7 @@
 		<h:outputText value="#{trad['layout.inventario']}" />
 	</ui:define>
 	<ui:define name="content">
+
 		<p:tabView id="view">
 			<p:tab id="tab1" title="#{trad['layout.correlativo']}">
 				<div align="right" style="margin-bottom: 1em">
@@ -19,7 +20,8 @@
 						actionListener="#{correlativo.nuevo}" />
 				</div>
 				<h:form id="corr_form">
-					<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true"/>
+					<p:growl id="growl" showDetail="true" sticky="false"
+						globalOnly="true" />
 
 					<p:dataTable id="correlativo_table" var="corr"
 						selectionMode="single" value="#{correlativo.model}"
@@ -37,6 +39,9 @@
 							update="view:edit view:editForm" />
 						<p:column headerText="ID">
 							<h:outputText value="#{corr.correlativo}" />
+						</p:column>
+						<p:column headerText="Categoría">
+							<h:outputText value="#{corr.idCategoria.nombre}" />
 						</p:column>
 						<p:column headerText="#{trad['cor.marca']}">
 							<h:outputText value="#{corr.idMarca.nombre}" />
@@ -65,13 +70,13 @@
 							style="text-align:center;">
 							<p:commandButton icon="fa fa-close" id="delete"
 								actionListener="#{correlativo.delete(corr)}"
-								update="view:corr_form" />
+								update="view:corr_form" style="background-color: red !important" />
 							<p:tooltip for="delete" value="#{trad['cor.delete']}" />
 						</p:column>
 					</p:dataTable>
 
 				</h:form>
-				<p:dialog id="assurance" widgetVar="info" 
+				<p:dialog id="assurance" widgetVar="info"
 					header="#{trad['cor.gardes']}" position="center">
 					<p:inputTextarea
 						value="#{correlativo.correlativo.descripcionGarantia}"
@@ -99,7 +104,7 @@
 
 							<h:outputLabel styleClass="label_bold"
 								value="#{trad['cor.precio']}" />
-							<p:inputNumber id="edit-precio" minValue="1" 
+							<p:inputNumber id="edit-precio" minValue="1"
 								value="#{correlativo.correlativo.precioCompra}" required="true" />
 							<p:message for="edit-precio" display="icon" />
 							<h:outputLabel styleClass="label_bold"
@@ -111,7 +116,7 @@
 								value="#{trad['cor.garantia']}" />
 							<p:selectOneRadio value="#{correlativo.correlativo.garantia}"
 								required="true">
-								<p:ajax event="valueChange" update="editForm @this"
+								<p:ajax event="valueChange" update=" @this"
 									listener="#{correlativo.print()}" />
 								<f:selectItem itemLabel="#{trad['cor.si']}" itemValue="true" />
 								<f:selectItem itemLabel="No" itemValue="false" />
@@ -127,10 +132,9 @@
 							rendered="#{correlativo.correlativo.garantia}"
 							value="#{correlativo.correlativo.descripcionGarantia}" />
 						<br />
-						<p:commandButton value="#{trad['roles.guardar']}" 
-						oncomplete="if (args &amp;&amp; !args.validationFailed) PF('edit_dialog').hide();"
-							update="editForm view:corr_form"
-							actionListener="#{correlativo.edit}" />
+						<p:commandButton value="#{trad['roles.guardar']}"
+							oncomplete="if (args &amp;&amp; !args.validationFailed) PF('edit_dialog').hide();"
+							update=" view:corr_form" actionListener="#{correlativo.edit}" />
 					</h:form>
 				</p:dialog>
 				<p:dialog id="create" widgetVar="create_dialog" modal="true"
@@ -165,9 +169,9 @@
 							<span></span>
 							<h:outputLabel styleClass="label_bold"
 								value="#{trad['cor.precio']}" />
-							<p:inputNumber id="create-precio" minValue="1" 
-								value="#{correlativo.correlativo.precioCompra}" required="true"/>
-							<p:message for="create-precio" display="icon"/>
+							<p:inputNumber id="create-precio" minValue="1"
+								value="#{correlativo.correlativo.precioCompra}" required="true" />
+							<p:message for="create-precio" display="icon" />
 
 							<h:outputLabel styleClass="label_bold"
 								value="#{trad['cor.ingreso']}" />
@@ -195,13 +199,310 @@
 						<br />
 
 						<p:commandButton value="#{trad['roles.guardar']}" type="submit"
-						oncomplete="if (args &amp;&amp; !args.validationFailed) PF('create_dialog').hide();"
+							oncomplete="if (args &amp;&amp; !args.validationFailed) PF('create_dialog').hide();"
 							update="createForm view:corr_form"
 							actionListener="#{correlativo.save}" />
 					</h:form>
 				</p:dialog>
 			</p:tab>
 			<p:tab title="#{trad['cor.partes']}">
+				<div align="right" style="margin-bottom: 1em">
+					<p:commandButton value="#{trad['cor.nuevo']}"
+						onclick="PF('createP_dialog').show();" update="create_parte_Form"
+						actionListener="#{partes_bb.nuevo}" />
+				</div>
+				<h:form id="parte_form">
+					<p:growl id="growl" showDetail="true" sticky="false"
+						globalOnly="true" />
+					<p:dataTable id="parte_table" var="par" selectionMode="single"
+						value="#{partes_bb.model}" paginator="true" reflow="true"
+						lazy="true" rows="8"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink}  {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						rowKey="#{par.numeroSerie}" selection="#{partes_bb.parte}"
+						sortBy="#{par.fechaIngreso}" paginatorPosition="bottom"
+						emptyMessage="No hay elementos">
+						<f:facet name="header">
+							<h:outputText value="Inventario de partes" />
+						</f:facet>
+						<p:ajax event="rowSelect" listener="#{partes_bb.select}"
+							oncomplete="PF('editP_dialog').show();"
+							update="view:edit_parte view:edit_parte_Form" />
+						<p:column headerText="ID">
+							<h:outputText value="#{par.numeroSerie}" />
+						</p:column>
+						<p:column headerText="Categoría">
+							<h:outputText value="#{par.idCategoria.nombre}" />
+						</p:column>
+						<p:column headerText="#{trad['cor.marca']}">
+							<h:outputText value="#{par.idMarca.nombre}" />
+						</p:column>
+						<p:column headerText="#{trad['cor.modelo']}">
+							<h:outputText value="#{par.modelo}" />
+						</p:column>
+						<p:column headerText="#{trad['cor.precio']}">
+							<h:outputText value="#{par.precioCompra}" />
+						</p:column>
+						<p:column headerText="#{trad['cor.ingreso']}">
+							<h:outputText value="#{par.fechaIngreso}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{trad['cor.garantia']}">
+							<h:outputText value="#{par.garantia?trad['cor.si']:'No'}" />
+						</p:column>
+
+						<!-- 				<p:column headerText="#{trad['dashboard.fechacompletado']}"> -->
+						<!-- 					<h:outputText value="#{ticket.fechaCompletado}"> -->
+						<!-- 						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime> -->
+						<!-- 					</h:outputText> -->
+						<!-- 				</p:column> -->
+						<p:column headerText="#{trad['cor.del']}"
+							style="text-align:center;">
+							<p:commandButton icon="fa fa-close" id="delete"
+								actionListener="#{partes_bb.delete(par)}"
+								update="view:corr_form" style="background-color: red !important" />
+							<p:tooltip for="delete" value="#{trad['cor.delete']}" />
+						</p:column>
+					</p:dataTable>
+
+				</h:form>
+				<p:dialog id="edit_parte" widgetVar="editP_dialog" modal="true"
+					header="Parte: #{partes_bb.parte.numeroSerie}" position="center"
+					resizable="false" width="60%">
+					<h:form id="edit_parte_Form" style="margin:1em">
+						<h:panelGrid columns="3" style="margin-bottom:10px"
+							cellpadding="5">
+							<h:outputLabel styleClass="label_bold"
+								value="Correlativo al que pertenece" />
+							<h:outputLabel value="#{partes_bb.parte.correlativo.correlativo}" />
+
+
+							<p:commandButton value="Editar"
+								actionListener="#{partes_bb.toogle}" update="edit_parte_Form:" />
+
+						</h:panelGrid>
+
+						<p:dataTable id="parte_edit_table" var="corr"
+							rendered="#{partes_bb.editando}" selectionMode="single"
+							value="#{correlativo.model}" paginator="true" reflow="true"
+							lazy="true" rows="3"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink}  {CurrentPageReport} {NextPageLink} {LastPageLink}"
+							rowKey="#{corr.correlativo}"
+							selection="#{partes_bb.parte.correlativo}"
+							sortBy="#{corr.fechaIngreso}" paginatorPosition="bottom"
+							emptyMessage="No hay elementos">
+							<f:facet name="header">
+								<h:outputText value="#{trad['cor.tabla']}" />
+							</f:facet>
+							<p:ajax event="rowSelect" listener="#{partes_bb.innerSelect}"
+								update="view:edit_parte_Form" />
+							<p:column headerText="ID">
+								<h:outputText value="#{corr.correlativo}" />
+							</p:column>
+							<p:column headerText="Categoría">
+								<h:outputText value="#{corr.idCategoria.nombre}" />
+							</p:column>
+							<p:column headerText="#{trad['cor.marca']}">
+								<h:outputText value="#{corr.idMarca.nombre}" />
+							</p:column>
+							<p:column headerText="#{trad['cor.modelo']}">
+								<h:outputText value="#{corr.modelo}" />
+							</p:column>
+							<p:column headerText="#{trad['cor.precio']}">
+								<h:outputText value="#{corr.precioCompra}" />
+							</p:column>
+							<p:column headerText="#{trad['cor.ingreso']}">
+								<h:outputText value="#{corr.fechaIngreso}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{trad['cor.garantia']}">
+								<h:outputText value="#{corr.garantia?trad['cor.si']:'No'}" />
+							</p:column>
+
+							<!-- 				<p:column headerText="#{trad['dashboard.fechacompletado']}"> -->
+							<!-- 					<h:outputText value="#{ticket.fechaCompletado}"> -->
+							<!-- 						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime> -->
+							<!-- 					</h:outputText> -->
+							<!-- 				</p:column> -->
+
+						</p:dataTable>
+
+
+
+						<h:panelGrid columns="3" style="margin-bottom:10px"
+							cellpadding="5">
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.marca']}" />
+							<p:selectOneMenu value="#{partes_bb.parte.idMarca}"
+								required="true" converter="marcaC">
+								<f:selectItems value="#{partes_bb.marcas}" var="marca"
+									itemLabel="#{marca.nombre}" itemValue="#{marca}" />
+							</p:selectOneMenu>
+							<span></span>
+
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.modelo']}" />
+							<h:inputText value="#{partes_bb.parte.modelo}" />
+							<span></span>
+
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.precio']}" />
+							<p:inputNumber id="edit-precio" minValue="1"
+								value="#{partes_bb.parte.precioCompra}" required="true" />
+							<p:message for="edit-precio" display="icon" />
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.ingreso']}" />
+							<p:calendar id="edit-calendar"
+								value="#{partes_bb.parte.fechaIngreso}" required="true" />
+							<p:message for="edit-calendar" display="icon" />
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.garantia']}" />
+							<p:selectOneRadio value="#{partes_bb.parte.garantia}"
+								required="true">
+								<p:ajax event="valueChange" update="edit_parte_Form @this" />
+								<f:selectItem itemLabel="#{trad['cor.si']}" itemValue="true" />
+								<f:selectItem itemLabel="No" itemValue="false" />
+							</p:selectOneRadio>
+							<span></span>
+
+						</h:panelGrid>
+
+						<h:outputLabel styleClass="label_bold"
+							value="#{trad['cor.gardes']}" />
+						<br />
+						<p:inputTextarea style="width:100%" autoResize="false"
+							rendered="#{partes_bb.parte.garantia}"
+							value="#{partes_bb.parte.descripcionGarantia}" />
+						<br />
+						<p:commandButton value="#{trad['roles.guardar']}"
+							oncomplete="if (args &amp;&amp; !args.validationFailed) PF('editP_dialog').hide();"
+							update="edit_parte_Form view:parte_form"
+							actionListener="#{partes_bb.edit}" />
+					</h:form>
+				</p:dialog>
+				<p:dialog id="create_parte" widgetVar="createP_dialog" modal="true"
+					header="Nueva parte" position="center" resizable="false"
+					width="60%">
+					<h:form id="create_parte_Form" style="margin:1em">
+						<h:panelGrid columns="3" style="margin-bottom:10px"
+							cellpadding="5">
+							<h:outputLabel styleClass="label_bold" value="Numero de serie" />
+							<p:inputNumber id="parr" value="#{partes_bb.parte.correlativo}"
+								decimalPlaces="0" required="true"
+								requiredMessage="Llene todos los campos" />
+							<p:message for="parr" display="icon" />
+							<h:outputLabel styleClass="label_bold" value="#{trad['cor.cat']}" />
+							<p:selectOneMenu value="#{correlativo.correlativo.idCategoria}"
+								required="true" converter="catC">
+								<f:selectItems value="#{correlativo.categorias}" var="cat"
+									itemLabel="#{cat.nombre}" itemValue="#{cat}" />
+							</p:selectOneMenu>
+							<span></span>
+							<h:outputLabel styleClass="label_bold"
+								value="Correlativo al que pertenece" />
+							<h:outputLabel value="#{partes_bb.parte.correlativo.correlativo}" />
+
+							<p:commandButton value="Editar"
+								actionListener="#{partes_bb.toogle}" update="create_parte_Form:" />
+
+						</h:panelGrid>
+
+						<p:dataTable id="parte_create_table" var="corr"
+							rendered="#{partes_bb.editando}" selectionMode="single"
+							value="#{correlativo.model}" paginator="true" reflow="true"
+							lazy="true" rows="3"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink}  {CurrentPageReport} {NextPageLink} {LastPageLink}"
+							rowKey="#{corr.correlativo}"
+							selection="#{partes_bb.parte.correlativo}"
+							sortBy="#{corr.fechaIngreso}" paginatorPosition="bottom"
+							emptyMessage="No hay elementos">
+							<f:facet name="header">
+								<h:outputText value="#{trad['cor.tabla']}" />
+							</f:facet>
+							<p:ajax event="rowSelect" listener="#{partes_bb.innerSelect}"
+								update="view:create_parte_Form" />
+							<p:column headerText="ID">
+								<h:outputText value="#{corr.correlativo}" />
+							</p:column>
+							<p:column headerText="Categoría">
+								<h:outputText value="#{corr.idCategoria.nombre}" />
+							</p:column>
+							<p:column headerText="#{trad['cor.marca']}">
+								<h:outputText value="#{corr.idMarca.nombre}" />
+							</p:column>
+							<p:column headerText="#{trad['cor.modelo']}">
+								<h:outputText value="#{corr.modelo}" />
+							</p:column>
+							<p:column headerText="#{trad['cor.precio']}">
+								<h:outputText value="#{corr.precioCompra}" />
+							</p:column>
+							<p:column headerText="#{trad['cor.ingreso']}">
+								<h:outputText value="#{corr.fechaIngreso}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{trad['cor.garantia']}">
+								<h:outputText value="#{corr.garantia?trad['cor.si']:'No'}" />
+							</p:column>
+
+						</p:dataTable>
+
+
+
+						<h:panelGrid columns="3" style="margin-bottom:10px"
+							cellpadding="5">
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.marca']}" />
+							<p:selectOneMenu value="#{partes_bb.parte.idMarca}"
+								required="true" converter="marcaC">
+								<f:selectItems value="#{partes_bb.marcas}" var="marca"
+									itemLabel="#{marca.nombre}" itemValue="#{marca}" />
+							</p:selectOneMenu>
+							<span></span>
+
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.modelo']}" />
+							<h:inputText value="#{partes_bb.parte.modelo}" />
+							<span></span>
+
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.precio']}" />
+							<p:inputNumber id="edit-precio" minValue="1"
+								value="#{partes_bb.parte.precioCompra}" required="true" />
+							<p:message for="edit-precio" display="icon" />
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.ingreso']}" />
+							<p:calendar id="edit-calendar"
+								value="#{partes_bb.parte.fechaIngreso}" required="true" />
+							<p:message for="edit-calendar" display="icon" />
+							<h:outputLabel styleClass="label_bold"
+								value="#{trad['cor.garantia']}" />
+							<p:selectOneRadio value="#{partes_bb.parte.garantia}"
+								required="true">
+								<p:ajax event="valueChange" update="create_parte_Form @this" />
+								<f:selectItem itemLabel="#{trad['cor.si']}" itemValue="true" />
+								<f:selectItem itemLabel="No" itemValue="false" />
+							</p:selectOneRadio>
+							<span></span>
+
+						</h:panelGrid>
+
+						<h:outputLabel styleClass="label_bold"
+							value="#{trad['cor.gardes']}" />
+						<br />
+						<p:inputTextarea style="width:100%" autoResize="false"
+							rendered="#{partes_bb.parte.garantia}"
+							value="#{partes_bb.parte.descripcionGarantia}" />
+						<br />
+						<p:commandButton value="#{trad['roles.guardar']}"
+							oncomplete="if (args &amp;&amp; !args.validationFailed) PF('createP_dialog').hide();"
+							update="create_parte_Form view:parte_form"
+							actionListener="#{partes_bb.edit}" />
+					</h:form>
+				</p:dialog>
+			</p:tab>
+			<p:tab title="Mantenimiento por cuentas">
 			</p:tab>
 		</p:tabView>
 	</ui:define>
