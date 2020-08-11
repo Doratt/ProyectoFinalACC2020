@@ -106,7 +106,7 @@ public class AdminBackingBean implements Serializable {
 						+ "    </body>\n"
 						+ "    <footer><p  style=\"font-family: calibri, serif; font-size:12pt; color: black\"><b>Muchas gracias por utilizar nuestros servicios</b></p></footer>\n"
 						+ "</html>");
-				nc.enviarCorreo(ticket.getIdUsuarioCreador(), contenido.toString());
+				//nc.enviarCorreo(ticket.getIdUsuarioCreador(), contenido.toString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

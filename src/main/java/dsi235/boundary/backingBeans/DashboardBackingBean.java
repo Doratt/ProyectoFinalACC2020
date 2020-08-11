@@ -99,7 +99,7 @@ public class DashboardBackingBean implements Serializable {
 								+ "</html>\n" + "");
 				init();
 				this.ticket = new Ticket();
-				nc.enviarCorreo(sessionBean.getUsuarioLogueado(), contenido.toString());
+				//nc.enviarCorreo(sessionBean.getUsuarioLogueado(), contenido.toString());
 			} catch (Exception e) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 						"Error!", "Parece que hubo un problema con la creación de tu ticket"));
@@ -133,7 +133,7 @@ public class DashboardBackingBean implements Serializable {
 							+ "    </body>\n"
 							+ "    <footer><p  style=\"font-family: calibri, serif; font-size:12pt; color: black\"><b>Muchas gracias por utilizar nuestros servicios</b></p></footer>\n"
 							+ "</html>\n" + "");
-					nc.enviarCorreo(ticketEncargado.getIdUsuario(), contenido.toString());
+					//nc.enviarCorreo(ticketEncargado.getIdUsuario(), contenido.toString());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
